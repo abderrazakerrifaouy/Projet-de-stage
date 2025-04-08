@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Projet_de_stage</string>
+    <string name="create_password_title">إنشاء كلمة سر</string>
+    <string name="password_requirements">يرجى إنشاء كلمة سر مكونة من 6 أخرف أبجدية أو أرقام على الأقل.\nويجب أن تكون كلمة السر شيئاً يتعذر على الآخرين تخمينه.</string>
+    <string name="password_hint">كلمة السر</string>
+    <string name="next">التالي</string>
+    <string name="search_for_account">بحث عن حسابي</string>
+
+    <!-- Name Screen -->
+    <string name="what_is_your_name">ما اسمك؟</string>
+    <string name="name_instructions">أدخل الاسم الذي تستخدمه في الواقع.</string>
+    <string name="first_name">الاسم الأول</string>
+    <string name="last_name">اسم العائلة</string>
+
+    <!-- Phone Screen -->
+    <string name="what_is_your_phone">ما رقم هاتفك الحمول؟</string>
+    <string name="phone_instructions">أدخل رقم الهاتف الحمول الذي يمكن التواصل معك من خلاله. لن يرى أي شخص ذلك في ملفك الشخصي.</string>
+    <string name="phone_hint">رقم الهاتف الحمول</string>
+    <string name="phone_notifications_note">قد تتلقى منا إشعارات عبر واتساب ورسائل SMS. تعرف على الزيد</string>
+    <string name="signup_with_email">تسجيل بالبريد الإلكتروني</string>
+
+    <!-- Birth Date Screen -->
+    <string name="what_is_your_birthdate">ما تاريخ ميلادك؟</string>
+    <string name="birthdate_instructions">يرجى اختيار تاريخ ميلادك. يمكنك تعيين هذا الإعداد إلى \"خاص\" في أي وقت لاحقاً.</string>
+    <string name="why_birthdate">ما ضرورة إدخال تاريخ ميلادي؟</string>
 </resources>

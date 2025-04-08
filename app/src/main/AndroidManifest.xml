@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Projet_de_stage"
         tools:targetApi="31">
         <activity
+            android:name=".view.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -21,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.LoginActivity" />
     </application>
 
 </manifest>

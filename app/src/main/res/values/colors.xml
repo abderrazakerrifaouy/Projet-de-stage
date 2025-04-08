@@ -2,4 +2,67 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#2B38D2</color>
+<!-- Facebook/Meta Blue Color Palette -->
+<color name="blue_50">#E7F3FF</color>
+<color name="blue_100">#D0E6FF</color>
+<color name="blue_200">#A6C8FF</color>
+<color name="blue_300">#7BABFF</color>
+<color name="blue_400">#4D8DFF</color>
+<color name="blue_500">#1877F2</color>  <!-- Primary Brand Color -->
+<color name="blue_600">#1466D6</color>
+<color name="blue_700">#0D5FD9</color>
+<color name="blue_800">#0A4EB4</color>
+<color name="blue_900">#073D8F</color>
+
+<!-- Text Colors -->
+<color name="text_primary">#1C1E21</color>  <!-- Almost black for primary text -->
+<color name="text_secondary">#65676B</color>  <!-- Gray for secondary text -->
+<color name="text_tertiary">#8A8D91</color>  <!-- Lighter gray for tertiary text -->
+<color name="text_link">#1877F2</color>  <!-- Blue for links -->
+<color name="text_white">#FFFFFF</color>  <!-- White text -->
+
+<!-- Background Colors -->
+<color name="background_light">#FFFFFF</color>
+<color name="background_dark">#18191A</color>
+<color name="background_gray">#F0F2F5</color>
+
+<!-- Surface Colors -->
+<color name="surface_light">#FFFFFF</color>
+<color name="surface_dark">#242526</color>
+
+<!-- Border/Divider Colors -->
+<color name="border_light">#CED0D4</color>
+<color name="border_dark">#3E4042</color>
+
+<!-- State Colors -->
+<color name="error">#FA3E3E</color>
+<color name="success">#31A24C</color>
+<color name="warning">#FF9C2E</color>
+<color name="disabled">#DADDE1</color>
+
+<!-- Icon Colors -->
+<color name="icon_primary">#1C1E21</color>
+<color name="icon_secondary">#65676B</color>
+<color name="icon_tertiary">#8A8D91</color>
+<color name="icon_white">#FFFFFF</color>
+
+<!-- Button Colors -->
+<color name="button_primary">#1877F2</color>
+<color name="button_primary_pressed">#1466D6</color>
+<color name="button_secondary">#E4E6EB</color>
+<color name="button_secondary_pressed">#D8DADF</color>
+<color name="button_danger">#FA3E3E</color>
+
+<!-- Special Colors -->
+<color name="green_active">#45BD62</color>  <!-- For active states -->
+<color name="red_notification">#FA3E3E</color>  <!-- For notifications -->
+
+<!-- Transparent Colors -->
+<color name="transparent">#00000000</color>
+<color name="black_50">#80000000</color>  <!-- 50% opacity black -->
+<color name="white_50">#80FFFFFF</color>  <!-- 50% opacity white -->
+
+<!-- WhatsApp Green (if needed) -->
+<color name="whatsapp_green">#25D366</color>
 </resources>

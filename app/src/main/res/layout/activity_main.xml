@@ -1,19 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    android:background="@drawable/bg_gradient"
+    android:id="@+id/main"
+    >
 
+    <RelativeLayout
+        android:id="@+id/bladeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/app_name"
+        android:backgroundTint="#2DFFFFFF"
+        android:padding="24dp"
+        android:rotation="45">
+
+
+
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="88dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="276dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginBottom="221dp"
+        android:src="@drawable/app_name" />
+    <!-- App Name -->
     <TextView
+        android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="BladeLink"
+        android:textSize="32sp"
+        android:textColor="#2C3E50"
+        android:layout_centerInParent="true"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Loading Line -->
+    <ProgressBar
+        android:id="@+id/loadingBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="120dp"
+        android:layout_height="4dp"
+        android:layout_below="@id/appName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:progressTint="#E74C3C"
+        android:indeterminate="true"/>
+
+
+</RelativeLayout>

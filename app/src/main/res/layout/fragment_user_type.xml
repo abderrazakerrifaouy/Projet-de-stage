@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/background_gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- شعار التطبيق -->
+
+
+        <!-- عنوان رئيسي -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="حلول الحجز الذكي للحلاقين"
+            android:textSize="24sp"
+            android:textColor="@color/button_primary"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- شرح التطبيق -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="يواجه العديد من العملاء صعوبة في حجز مواعيد الحلاقة بشكل منظم، وغالباً ما يعتمدون على الاتصالات الهاتفية التي تؤدي إلى تداخل المواعيد وضياع الوقت. من ناحية أخرى، يعاني الحلاقون وأصحاب المحلات من صعوبة إدارة الجداول يدوياً مما يسبب أخطاء متكررة.\n\nيمنحك تطبيقنا حلاً شاملاً ينظم عملية الحجز ويوفر الوقت للجميع، ويضمن تجربة سلسة وخالية من المتاعب."
+            android:textSize="18sp"
+            android:textColor="@color/black_50"
+            android:lineSpacingExtra="8dp"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- فوائد التطبيق -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="مميزات التطبيق:"
+            android:textSize="20sp"
+            android:textColor="@color/button_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="32dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• حجز مواعيد سريع ومنظم للعملاء"
+                android:textSize="16sp"
+                android:textColor="@color/black_50"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• إدارة سهلة للمواعيد للحلاقين"
+                android:textSize="16sp"
+                android:textColor="@color/black_50"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• تحكم كامل لأصحاب المحلات بالفريق"
+                android:textSize="16sp"
+                android:textColor="@color/black_50"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• نظام تقييم لضمان جودة الخدمة"
+                android:textSize="16sp"
+                android:textColor="@color/black_50"/>
+        </LinearLayout>
+
+        <!-- اختيار نوع المستخدم -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="اختر نوع حسابك:"
+            android:textSize="20sp"
+            android:textColor="@color/button_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <RadioButton
+                android:id="@+id/radioAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="صاحب محل (مدير النظام)"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp"
+                android:padding="12dp"
+                android:background="@drawable/radio_button_background"/>
+
+            <RadioButton
+                android:id="@+id/radioBarber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="حلاق"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp"
+                android:padding="12dp"
+                android:background="@drawable/radio_button_background"/>
+
+            <RadioButton
+                android:id="@+id/radioCustomer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="عميل"
+                android:textSize="18sp"
+                android:padding="12dp"
+                android:background="@drawable/radio_button_background"/>
+        </RadioGroup>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="24dp"
+            android:text="@string/next"
+            app:cornerRadius="6dp"
+            app:backgroundTint="@color/blue_500" />
+    </LinearLayout>
+</ScrollView>
