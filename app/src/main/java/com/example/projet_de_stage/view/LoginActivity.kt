@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.TextView
 
 
 class LoginActivity : AppCompatActivity() {
@@ -19,6 +20,11 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
 
+        }
+
+        val forgotPassword = findViewById<TextView>(R.id.tvForgotPassword)
+        forgotPassword.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
         }
     }
 }

@@ -16,7 +16,7 @@
     <string name="what_is_your_phone">ما رقم هاتفك الحمول؟</string>
     <string name="phone_instructions">أدخل رقم الهاتف الحمول الذي يمكن التواصل معك من خلاله. لن يرى أي شخص ذلك في ملفك الشخصي.</string>
     <string name="phone_hint">رقم الهاتف الحمول</string>
-    <string name="phone_notifications_note">قد تتلقى منا إشعارات عبر واتساب ورسائل SMS. تعرف على الزيد</string>
+    <string name="phone_notifications_note">قد تتلقى منا إشعارات عبر واتساب ورسائل SMS.</string>
     <string name="signup_with_email">تسجيل بالبريد الإلكتروني</string>
 
     <!-- Birth Date Screen -->
