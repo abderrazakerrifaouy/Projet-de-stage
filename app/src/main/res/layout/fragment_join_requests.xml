@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_border"
-            android:hint="hello worled"
+            android:hint="@string/search"
             android:gravity="center"
             android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>

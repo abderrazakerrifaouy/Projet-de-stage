@@ -30,5 +30,6 @@
     <string name="no_ratings_found">لا توجد تقييمات متاحة</string>
     <string name="todo">TODO</string>
     <string name="empty_shops">Empty shops illustration</string>
+    <string name="search">البحث عن طلب ….</string>
 
 </resources>
