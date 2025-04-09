@@ -1,4 +1,4 @@
-package com.example.projet_de_stage.view.fragment
+package com.example.projet_de_stage.fragment
 
 
 
@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.projet_de_stage.R
-import com.google.android.material.button.MaterialButton
 
 class BirthDateFragment : Fragment() {
     private lateinit var nextButton : Button

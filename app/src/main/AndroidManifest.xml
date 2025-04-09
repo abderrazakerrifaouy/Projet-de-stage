@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.ForgotPasswordActivity" />
+        <activity android:name=".view.admin.AdminActivityHome" />
+
     </application>
 
 </manifest>

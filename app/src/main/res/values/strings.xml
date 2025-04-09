@@ -23,4 +23,12 @@
     <string name="what_is_your_birthdate">ما تاريخ ميلادك؟</string>
     <string name="birthdate_instructions">يرجى اختيار تاريخ ميلادك. يمكنك تعيين هذا الإعداد إلى \"خاص\" في أي وقت لاحقاً.</string>
     <string name="why_birthdate">ما ضرورة إدخال تاريخ ميلادي؟</string>
+    <string name="ratings">تقييمات المحلات</string>
+    <string name="add_shop">إضافة محل جديد</string>
+    <string name="all">الكل</string>
+    <string name="with_comments">بالتعليقات</string>
+    <string name="no_ratings_found">لا توجد تقييمات متاحة</string>
+    <string name="todo">TODO</string>
+    <string name="empty_shops">Empty shops illustration</string>
+
 </resources>
