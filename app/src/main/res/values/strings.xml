@@ -31,5 +31,5 @@
     <string name="todo">TODO</string>
     <string name="empty_shops">Empty shops illustration</string>
     <string name="search">البحث عن طلب ….</string>
-
+    <string name="shop_image">صورة المحل</string>
 </resources>
