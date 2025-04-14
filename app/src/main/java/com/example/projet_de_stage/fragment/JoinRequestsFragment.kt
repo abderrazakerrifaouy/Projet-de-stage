@@ -21,19 +21,7 @@ class JoinRequestsFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.joinRequestsRecyclerView)
         val requests = listOf(
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة"),
-            JoinRequest("1", "خالد علي", "خبير حلاقة")
+            JoinRequest("1", "خالد علي", "خبير حلاقة" , "abdo@gmail.com" , "0656561323" , "القاهرة" , "1234567")
         )
 
         recyclerView.adapter = JoinRequestsAdapter(requests) { id, approved ->

@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Projet_de_stage"
         tools:targetApi="31">
         <activity
+            android:name=".view.barberUser.BarberActivityHome"
+            android:exported="false" />
+        <activity
             android:name=".view.RegisterActivity"
             android:exported="false" />
         <activity
@@ -27,7 +30,6 @@
         <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.ForgotPasswordActivity" />
         <activity android:name=".view.admin.AdminActivityHome" />
-
     </application>
 
 </manifest>

@@ -20,12 +20,12 @@ class MyShopsFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.shopsRecyclerView)
         val shops = listOf(
-            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.img),
-            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.img),
-            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.img),
-            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.img),
-            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.img),
-            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.img)
+            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.menupng),
+            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.menupng),
+            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.menupng),
+            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.menupng),
+            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.menupng),
+            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", R.drawable.menupng)
         )
 
         recyclerView.adapter = ShopsAdapter(shops) { shopId ->

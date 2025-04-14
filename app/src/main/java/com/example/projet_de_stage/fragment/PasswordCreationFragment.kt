@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.view.admin.AdminActivityHome
+import com.example.projet_de_stage.view.barberUser.BarberActivityHome
 
 class PasswordCreationFragment : Fragment() {
     private  lateinit var nextBtn : Button
@@ -29,7 +30,7 @@ class PasswordCreationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         nextBtn.setOnClickListener {
-            val intent = Intent(requireContext(), AdminActivityHome::class.java)
+            val intent = Intent(requireContext(), BarberActivityHome::class.java)
             startActivity(intent)
         }
     }
