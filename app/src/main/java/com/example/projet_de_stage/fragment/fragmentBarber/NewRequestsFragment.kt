@@ -1,4 +1,4 @@
-package com.example.projet_de_stage.fragment
+package com.example.projet_de_stage.fragment.fragmentBarber
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.adapter.NewRequestsAdapter
+import com.example.projet_de_stage.adapter.adabterBarber.NewRequestsAdapter
 import com.example.projet_de_stage.data.Appointment
 import java.time.LocalDate
 
@@ -45,7 +45,16 @@ class NewRequestsFragment : Fragment() {
 
         // Load your data - example:
         val appointments = listOf(
-            Appointment("1", "أحمد محمد", "10:00 ص", "حلاقة + لحية", "pending" , LocalDate.of(2025, 4, 13) , "shop1", "barber1"),
+            Appointment(
+                "1",
+                "أحمد محمد",
+                "10:00 ص",
+                "حلاقة + لحية",
+                "pending",
+                LocalDate.of(2025, 4, 13),
+                "shop1",
+                "barber1"
+            ),
         )
         adapter.updateData(appointments)
     }

@@ -1,4 +1,4 @@
-package com.example.projet_de_stage.adapter
+package com.example.projet_de_stage.adapter.adabterBarber
 
 import android.view.LayoutInflater
 import android.view.View

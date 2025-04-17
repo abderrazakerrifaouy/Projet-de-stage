@@ -1,12 +1,11 @@
-package com.example.projet_de_stage.adapter
+package com.example.projet_de_stage.adapter.adabterAdmin
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.projet_de_stage.fragment.AppointmentsFragment
-import com.example.projet_de_stage.fragment.JoinRequestsFragment
-import com.example.projet_de_stage.fragment.MyShopsFragment
-import com.example.projet_de_stage.fragment.RatingsFragment
+import com.example.projet_de_stage.fragment.fragmentAdmin.AppointmentsFragment
+import com.example.projet_de_stage.fragment.fragmentAdmin.JoinRequestsFragment
+import com.example.projet_de_stage.fragment.fragmentAdmin.MyShopsFragment
 
 class ShopManagementPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
 

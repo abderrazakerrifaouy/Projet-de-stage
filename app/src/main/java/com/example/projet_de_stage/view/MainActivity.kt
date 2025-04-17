@@ -7,6 +7,9 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projet_de_stage.R
+import com.example.projet_de_stage.view.admin.AdminActivityHome
+import com.example.projet_de_stage.view.barberUser.BarberActivityHome
+import com.example.projet_de_stage.view.client.HomeActivityClient
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, AdminActivityHome::class.java)
             startActivity(intent)
             finish()
         }, 4000)

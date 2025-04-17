@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.fragment.AppointmentsFragmentBareber
-import com.example.projet_de_stage.fragment.BarberHome
+import com.example.projet_de_stage.fragment.fragmentBarber.AppointmentsFragmentBareber
+import com.example.projet_de_stage.fragment.fragmentBarber.BarberHome
 import com.example.projet_de_stage.fragment.ProfileFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView

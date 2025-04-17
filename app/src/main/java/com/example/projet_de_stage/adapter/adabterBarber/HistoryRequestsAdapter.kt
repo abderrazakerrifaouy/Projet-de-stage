@@ -1,4 +1,4 @@
-package com.example.projet_de_stage.adapter
+package com.example.projet_de_stage.adapter.adabterBarber
 
 import android.graphics.Color
 import android.os.Build
@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.example.projet_de_stage.data.Appointment
 import com.example.projet_de_stage.R
-
+import com.example.projet_de_stage.data.Appointment
 
 class HistoryRequestsAdapter : RecyclerView.Adapter<HistoryRequestsAdapter.HistoryViewHolder>() {
 
@@ -29,6 +28,7 @@ class HistoryRequestsAdapter : RecyclerView.Adapter<HistoryRequestsAdapter.Histo
         return HistoryViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.bind(historyList[position])
     }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- شريط البحث المعدل -->
+    <com.google.android.material.search.SearchBar
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ابحث عن صالون حلاقة"
+        app:strokeColor="@color/colorPrimary"
+        app:strokeWidth="1dp"
+        style="@style/Widget.Material3.SearchBar"
+        android:layout_margin="8dp">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="ابحث هنا..."
+            app:iconifiedByDefault="false"/>
+    </com.google.android.material.search.SearchBar>
+
+    <!-- باقي المحتوى -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBarbershops"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

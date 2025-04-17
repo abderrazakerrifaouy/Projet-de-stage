@@ -68,4 +68,9 @@
     <color name="whatsapp_green">#25D366</color>
     <color name="chip_selector">@color/white</color>
     <color name="chip_selected">#E3F2FD</color>
+
+
+    <color name="green_500">#4CAF50</color>
+    <color name="red_500">#F44336</color>
+    <color name="yellow_600">#FFB300</color>
 </resources>

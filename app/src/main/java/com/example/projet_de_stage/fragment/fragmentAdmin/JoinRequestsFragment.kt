@@ -1,6 +1,5 @@
-package com.example.projet_de_stage.fragment
+package com.example.projet_de_stage.fragment.fragmentAdmin
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.adapter.JoinRequestsAdapter
+import com.example.projet_de_stage.adapter.adabterAdmin.JoinRequestsAdapter
 import com.example.projet_de_stage.data.JoinRequest
-
 
 class JoinRequestsFragment : Fragment() {
 
@@ -21,15 +19,26 @@ class JoinRequestsFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.joinRequestsRecyclerView)
         val requests = listOf(
-            JoinRequest("1", "خالد علي", "خبير حلاقة" , "abdo@gmail.com" , "0656561323" , "القاهرة" , "1234567")
+            JoinRequest(
+                "1",
+                "خالد علي",
+                "خبير حلاقة",
+                "abdo@gmail.com",
+                "0656561323",
+                "القاهرة",
+                "1234567"
+            )
         )
 
         recyclerView.adapter = JoinRequestsAdapter(requests) { id, approved ->
-            Toast.makeText(requireContext(), "الطلب $id ${if (approved) "مقبول" else "مرفوض"}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "الطلب $id ${if (approved) "مقبول" else "مرفوض"}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         return view
     }
 }
-

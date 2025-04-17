@@ -1,4 +1,4 @@
-package com.example.projet_de_stage.fragment
+package com.example.projet_de_stage.fragment.fragmentBarber
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.adapter.RatingsAdapter
+import com.example.projet_de_stage.adapter.adabterBarber.RatingsAdapter
 import com.example.projet_de_stage.data.Rating
-
 
 class RatingsFragment : Fragment() {
 

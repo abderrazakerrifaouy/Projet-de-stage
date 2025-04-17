@@ -1,4 +1,4 @@
-package com.example.projet_de_stage.fragment
+package com.example.projet_de_stage.fragment.fragmentBarber
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.adapter.AppointmentsManagerAdapter
+import com.example.projet_de_stage.adapter.adabterBarber.AppointmentsManagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

@@ -1,4 +1,4 @@
-package com.example.projet_de_stage.adapter
+package com.example.projet_de_stage.adapter.adabterAdmin
 
 import android.view.LayoutInflater
 import android.view.View

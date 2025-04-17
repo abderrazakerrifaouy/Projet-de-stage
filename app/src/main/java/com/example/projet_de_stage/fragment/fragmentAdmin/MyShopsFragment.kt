@@ -1,4 +1,4 @@
-package com.example.projet_de_stage.fragment
+package com.example.projet_de_stage.fragment.fragmentAdmin
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.adapter.ShopsAdapter
+import com.example.projet_de_stage.adapter.adabterAdmin.ShopsAdapter
 import com.example.projet_de_stage.data.Shop
-
 
 class MyShopsFragment : Fragment() {
 
@@ -20,9 +19,9 @@ class MyShopsFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.shopsRecyclerView)
         val shops = listOf(
-            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)","safi", R.drawable.menupng),
-            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)","safi", R.drawable.menupng),
-            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)","safi", R.drawable.menupng),
+            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", "safi", R.drawable.menupng),
+            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", "safi", R.drawable.menupng),
+            Shop("1", "صالون الرجال", "4.5", "(50 تقييم)", "safi", R.drawable.menupng),
         )
 
         recyclerView.adapter = ShopsAdapter(shops) { shopId ->

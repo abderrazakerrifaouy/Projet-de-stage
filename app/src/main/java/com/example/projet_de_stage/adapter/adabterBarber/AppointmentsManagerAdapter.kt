@@ -1,12 +1,11 @@
-package com.example.projet_de_stage.adapter
+package com.example.projet_de_stage.adapter.adabterBarber
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.projet_de_stage.fragment.AcceptedRequestsFragment
-import com.example.projet_de_stage.fragment.HistoryRequestsFragment
-import com.example.projet_de_stage.fragment.NewRequestsFragment
-
+import com.example.projet_de_stage.fragment.fragmentBarber.AcceptedRequestsFragment
+import com.example.projet_de_stage.fragment.fragmentBarber.HistoryRequestsFragment
+import com.example.projet_de_stage.fragment.fragmentBarber.NewRequestsFragment
 
 class AppointmentsManagerAdapter (activity : FragmentActivity) : FragmentStateAdapter(activity) {
 

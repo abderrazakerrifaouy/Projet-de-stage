@@ -29,6 +29,7 @@ data class Barber(
     val rating: Float = 0f
 ): Parcelable
 
+@Parcelize
 data class Customer(
     val id: String,
     val name: String,
@@ -37,7 +38,7 @@ data class Customer(
     val address: String,
     val password: String,
     val imageRes: Int
-)
+): Parcelable
 
 data class Appointment(
     val id: String,
