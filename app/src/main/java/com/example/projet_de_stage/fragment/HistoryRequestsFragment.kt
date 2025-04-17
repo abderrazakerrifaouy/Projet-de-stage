@@ -40,10 +40,7 @@ class HistoryRequestsFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun loadHistoryData() {
         val historyData = listOf(
-            Appointment("1", "أحمد محمد", "10:00 ص", "حلاقة + لحية", "completed", LocalDate.of(2025, 4, 13)),
-            Appointment("2", "محمد علي", "11:30 ص", "حلاقة فقط", "canceled", LocalDate.of(2025, 1, 13)),
-            Appointment("3", "سعيد عبدالله", "02:00 م", "لحية + تنظيف", "rejected", LocalDate.of(2025, 3, 13)),
-            Appointment("4", "خالد حسن", "03:30 م", "حلاقة أطفال", "completed", LocalDate.of(2025, 2, 13))
+            Appointment("1", "أحمد محمد", "10:00 ص", "حلاقة + لحية", "completed", LocalDate.of(2025, 4, 13) , "shop1", "barber1"),
         )
 
         adapter.submitList(historyData)

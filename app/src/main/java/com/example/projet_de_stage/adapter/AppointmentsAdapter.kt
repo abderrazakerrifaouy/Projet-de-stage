@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Appointment
+import com.example.projet_de_stage.R
 
 class AppointmentsAdapter(
     private val appointments: List<Appointment>,

@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Appointment
+import com.example.projet_de_stage.R
 import java.time.LocalDate
 
 class HomeRequestsAdapter() : RecyclerView.Adapter<HomeRequestsAdapter.NewRequestViewHolder>()

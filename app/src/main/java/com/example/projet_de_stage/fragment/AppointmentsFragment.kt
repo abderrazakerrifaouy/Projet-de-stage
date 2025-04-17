@@ -23,7 +23,7 @@ class AppointmentsFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.appointmentsRecyclerView)
         val appointments = listOf(
-            Appointment("1", "أحمد محمد", "10:00 ص", "حلاقة + لحية", "pending", LocalDate.of(2025, 4, 13)),
+            Appointment("1", "أحمد محمد", "10:00 ص", "حلاقة + لحية", "pending", LocalDate.of(2025, 4, 13) , "abdo" , "hsduihc"),
         )
 
         recyclerView.adapter = AppointmentsAdapter(appointments) { id, accepted ->

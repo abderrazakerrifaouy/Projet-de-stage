@@ -39,11 +39,7 @@ class BarberHome : Fragment() {
 
         // Load your data - example:
         val appointments = listOf(
-            Appointment("1", "أxد محمد", "10:00 ص", "حلاقة + لحية", "accepted" , LocalDate.of(2025, 4, 13)),
-            Appointment("1", "أد محمد", "10:00 ص", "حلاقة + لحية", "accepted" , LocalDate.of(2025, 4, 12)),
-            Appointment("1", "أsد محمد", "10:00 ص", "حلاقة + لحية", "accepted" , LocalDate.of(2025, 4, 13)),
-            Appointment("1", "أwد محمد", "10:00 ص", "حلاقة + لحية", "accepted" , LocalDate.of(2025, 4, 12)),
-            Appointment("1", "أsد محمد", "10:00 ص", "حلاقة + لحية", "accepted" , LocalDate.of(2025, 4, 13)),
+            Appointment("1", "أxد محمد", "10:00 ص", "حلاقة + لحية", "accepted" , LocalDate.of(2025, 4, 13) , "shop1", "barber1"),
         )
         adapter.updateData(appointments)
     }

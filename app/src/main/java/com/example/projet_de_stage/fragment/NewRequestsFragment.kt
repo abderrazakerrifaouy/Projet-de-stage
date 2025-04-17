@@ -45,8 +45,7 @@ class NewRequestsFragment : Fragment() {
 
         // Load your data - example:
         val appointments = listOf(
-            Appointment("1", "أحمد محمد", "10:00 ص", "حلاقة + لحية", "pending" , LocalDate.of(2025, 4, 13)),
-            Appointment("2", "محمد علي", "11:30 ص", "حلاقة فقط", "accepted" , LocalDate.of(2025, 4, 13))
+            Appointment("1", "أحمد محمد", "10:00 ص", "حلاقة + لحية", "pending" , LocalDate.of(2025, 4, 13) , "shop1", "barber1"),
         )
         adapter.updateData(appointments)
     }
