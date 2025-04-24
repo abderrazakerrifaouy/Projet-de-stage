@@ -12,7 +12,6 @@ data class ShopOwner(
     val phone: String,
     val address: String,
     val password: String,
-    val shopId: String
 )
 
 @Parcelize
@@ -68,7 +67,9 @@ data class Shop(
     val reviews: String,
     val address: String,
     val imageRes: Int,
-    val barbers: List<Barber> = emptyList() // قائمة الحلاقين في المحل
+    val shopOwnerId : String,
+    val barbers: List<Barber> = emptyList() ,
+
 ): Parcelable
 
 data class Rating(

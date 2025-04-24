@@ -37,7 +37,8 @@ class FragmentListBarberShop : Fragment() {
                 rating = "4.8",
                 reviews = "120",
                 address = "الرياض، حي الملك فهد",
-                imageRes = R.drawable.ic_barber, // Replace with your actual image
+                imageRes = R.drawable.ic_barber,
+                shopOwnerId = "0" ,
                 barbers = listOf(
                     Barber(
                         id = "1",
@@ -48,7 +49,8 @@ class FragmentListBarberShop : Fragment() {
                         address = "الرياض",
                         password = "password123",
                         shopId = "1",
-                        imageRes = R.drawable.ic_barber
+                        imageRes = R.drawable.ic_barber ,
+
                     ),
                     Barber(
                         id = "2",
@@ -70,6 +72,7 @@ class FragmentListBarberShop : Fragment() {
                 reviews = "85",
                 address = "الرياض، حي النخيل",
                 imageRes = R.drawable.ic_barber,
+                shopOwnerId ="0",
                 barbers = listOf(
                     Barber(
                         id = "3",
