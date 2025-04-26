@@ -105,6 +105,7 @@ class MyShopsFragment : Fragment() {
 
 
             progressBar.visibility = View.GONE
+
             swipeRefreshLayout.isRefreshing = false
         }
     }
