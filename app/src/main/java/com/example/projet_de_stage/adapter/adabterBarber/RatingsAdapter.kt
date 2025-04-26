@@ -27,7 +27,7 @@ class RatingsAdapter(
 
     override fun onBindViewHolder(holder: RatingViewHolder, position: Int) {
         val item = ratings[position]
-        holder.tvShopName.text = item.shopName
+//        holder.tvShopName.text = item.shopName
         holder.tvCustomer.text = item.customer
         holder.tvRatingValue.text = item.rating
         holder.tvReview.text = item.comment

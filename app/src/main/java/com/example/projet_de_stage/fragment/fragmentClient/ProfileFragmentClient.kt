@@ -44,7 +44,7 @@ class ProfileFragmentClient : Fragment() {
 
         // For testing, create a dummy customer
         customer = Customer(
-            id = "1",
+            uid = "1",
             name = "محمد علي",
             email = "customer@example.com",
             phone = "+966501234567",

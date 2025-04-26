@@ -34,31 +34,27 @@ class FragmentListBarberShop : Fragment() {
             Shop(
                 id = "1",
                 name = "صالون الرجال الفاخر",
-                rating = "4.8",
-                reviews = "120",
                 address = "الرياض، حي الملك فهد",
                 imageRes = R.drawable.ic_barber,
                 shopOwnerId = "0" ,
                 barbers = listOf(
                     Barber(
-                        id = "1",
+                        uid = "1",
                         name = "أحمد",
                         experience = "5 سنوات",
                         email = "ahmed@example.com",
                         phone = "0501234567",
-                        address = "الرياض",
                         password = "password123",
                         shopId = "1",
                         imageRes = R.drawable.ic_barber ,
 
                     ),
                     Barber(
-                        id = "2",
+                        uid = "2",
                         name = "محمد",
                         experience = "3 سنوات",
                         email = "mohamed@example.com",
                         phone = "0507654321",
-                        address = "الرياض",
                         password = "password123",
                         shopId = "1",
                         imageRes = R.drawable.ic_barber
@@ -68,19 +64,16 @@ class FragmentListBarberShop : Fragment() {
             Shop(
                 id = "2",
                 name = "صالون الحلاقة المتميز",
-                rating = "4.5",
-                reviews = "85",
                 address = "الرياض، حي النخيل",
                 imageRes = R.drawable.ic_barber,
                 shopOwnerId ="0",
                 barbers = listOf(
                     Barber(
-                        id = "3",
+                        uid = "3",
                         name = "خالد",
                         experience = "7 سنوات",
                         email = "khaled@example.com",
                         phone = "0501112233",
-                        address = "الرياض",
                         password = "password123",
                         shopId = "2",
                         imageRes = R.drawable.ic_barber,

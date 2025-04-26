@@ -9,7 +9,8 @@
     <!-- المحتوى الكامل -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="MissingClass">
 
         <!-- Header -->
         <LinearLayout
@@ -21,6 +22,7 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/headerTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -33,51 +35,24 @@
         </LinearLayout>
 
         <!-- Shops List -->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/headerLayout"
+            >
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/shopsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/headerLayout"
             android:padding="8dp"
             android:clipToPadding="false"
             tools:listitem="@layout/item_shop"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <!-- Empty State -->
-        <LinearLayout
-            android:id="@+id/emptyStateLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/headerLayout"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:padding="32dp">
 
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@drawable/app_name"
-                app:backgroundTint="@color/colorPrimary"
-                android:contentDescription="@string/empty_shops"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="لا يوجد لديك محلات مسجلة"
-                android:textSize="18sp"
-                android:textColor="@color/button_danger"
-                android:gravity="center"
-                android:layout_marginTop="16dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="إضافة محل جديد"
-                android:layout_marginTop="24dp"
-                android:textColor="@color/white"
-                app:icon="@drawable/ic_add"
-                app:backgroundTint="@color/colorPrimary"/>
-        </LinearLayout>
     </RelativeLayout>
 
     <!-- FAB ثابت فوق FrameLayout -->
@@ -91,4 +66,11 @@
         app:backgroundTint="@color/colorPrimary"
         app:srcCompat="@drawable/ic_add"
         app:tint="@color/white"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
 </FrameLayout>

@@ -23,11 +23,17 @@ class JoinRequestsFragment : Fragment() {
                 "1",
                 "خالد علي",
                 "خبير حلاقة",
-                "abdo@gmail.com",
-                "0656561323",
-                "القاهرة",
-                "1234567"
-            )
+                "1",
+                "1",
+                ""
+            ),JoinRequest(
+                "1",
+                "خالد علي",
+                "خبير حلاقة",
+                "1",
+                "1",
+                ""
+            ),
         )
 
         recyclerView.adapter = JoinRequestsAdapter(requests) { id, approved ->

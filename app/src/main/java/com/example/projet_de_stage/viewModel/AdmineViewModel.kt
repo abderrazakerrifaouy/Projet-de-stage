@@ -1,0 +1,79 @@
+package com.example.projet_de_stage.viewModel
+
+import android.net.Uri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.projet_de_stage.data.Shop
+import com.example.projet_de_stage.data.ShopOwner
+import com.example.projet_de_stage.repository.ShopOwnerRepository
+import com.example.projet_de_stage.repository.ShopRepository
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+
+class AdmineViewModel : ViewModel() {
+
+    private val shopRepository = ShopRepository()
+    private val shopOwnerRepository = ShopOwnerRepository()
+
+    private val _shops = MutableLiveData<List<Shop>>()
+    val shops: LiveData<List<Shop>> get() = _shops
+
+    private val _shopCreationStatus = MutableLiveData<Boolean>()
+    val shopCreationStatus: LiveData<Boolean> = _shopCreationStatus
+
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
+
+    private val _shopOwner = MutableLiveData<ShopOwner?>()
+    val shopOwner: LiveData<ShopOwner?> get() = _shopOwner
+
+    fun getSopOwnerById(id: String) {
+        return shopOwnerRepository.getShopOwnerById(id){
+            _shopOwner.value = it
+        }
+
+    }
+    fun getShopOwnerById(id: String, callback: (ShopOwner?) -> Unit) {
+        shopOwnerRepository.getShopOwnerById(id, callback)
+    }
+
+    // دالة لإنشاء المحل
+    fun createShop(shop: Shop, imageUri: Uri?) {
+        viewModelScope.launch {
+            try {
+                shopRepository.createShopWithImage(shop, imageUri,
+                    onSuccess = {
+                        _shopCreationStatus.value = true
+                    },
+                    onFailure = { exception ->
+                        _errorMessage.value = "خطأ في إنشاء المحل: ${exception.message}"
+                        _shopCreationStatus.value = false
+                    }
+                )
+            } catch (e: Exception) {
+                _errorMessage.value = "خطأ: ${e.message}"
+                _shopCreationStatus.value = false
+            }
+        }
+    }
+
+    suspend fun getShopsByOwnerIdSuspend(ownerId: String): List<Shop> {
+        return try {
+            val allShops = shopRepository.getAllShops()
+            allShops.filter { it.idOwner == ownerId }
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+    fun fetchShopsByOwnerId(ownerId: String) {
+        viewModelScope.launch {
+            val shops = shopRepository.getShopsByOwnerId(ownerId)
+            _shops.postValue(shops)
+        }
+    }
+
+
+}

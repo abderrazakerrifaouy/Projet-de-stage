@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <permission android:name="INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -35,6 +36,7 @@
         <activity android:name=".view.admin.AdminActivityHome" />
         <activity android:name=".view.client.BarbershopDetails" />
         <activity android:name=".view.client.RequestClient" />
+        <activity android:name=".view.admin.CreateShopActivity"/>
     </application>
 
 </manifest>

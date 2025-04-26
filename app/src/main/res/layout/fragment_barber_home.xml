@@ -14,6 +14,7 @@
 
         <!-- Current Shop Card -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/shopDetailsLayoutOf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
@@ -28,6 +29,7 @@
                 android:padding="16dp">
 
                 <TextView
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="صالونك الحالي"
@@ -92,6 +94,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
+            android:id="@+id/shopDetailsLayoutOn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
@@ -146,19 +149,12 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btnBrowseShops"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="عرض المحلات المتاحة"
-                    android:backgroundTint="@color/blue_700"
-                    style="@style/Widget.Material3.Button"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- Today's Appointments -->
         <TextView
+            android:id="@+id/tvShopStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="مواعيد اليوم"

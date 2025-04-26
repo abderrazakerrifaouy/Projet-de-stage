@@ -147,7 +147,7 @@ class RequestClient : AppCompatActivity() {
         val appointment = hashMapOf(
             "userId" to userId,
             "shopId" to shop?.id,
-            "barberId" to barber?.id,
+            "barberId" to barber?.uid,
             "service" to selectedService,
             "date" to selectedDate,
             "time" to selectedTime,

@@ -1,82 +1,91 @@
 package com.example.projet_de_stage.data
 
+import android.os.Build
 import android.os.Parcelable
+import androidx.annotation.RequiresApi
+import com.example.projet_de_stage.R
 import kotlinx.android.parcel.Parcelize
 import java.time.LocalDate
 
 // User types
+@Parcelize
 data class ShopOwner(
-    val id: String,
-    val name: String,
-    val email: String,
-    val phone: String,
-    val address: String,
-    val password: String,
-)
+    var uid: String = "",
+    var name: String = "",
+    var email: String = "",
+    val phone: String = "",
+    val address: String = "",
+    var password: String = "",
+    val shopId: String= "",
+    val imageRes: Int = R.drawable.my_profile,
+    var birthDate: String = ""
+): Parcelable
 
 @Parcelize
 data class Barber(
-    val id: String,
-    val name: String,
-    val experience: String,
-    val email: String,
-    val phone: String,
-    val address: String,
-    val password: String,
-    val shopId: String,
-    val imageRes: Int ,
+    var uid: String = "",
+    var name: String = "",
+    val experience: String = "",
+    var email: String = "",
+    val phone: String = "",
+    var password: String = "",
+    var birthDate: String = "",
+    val shopId: String = "",
+    val imageRes: Int = R.drawable.my_profile,
     val rating: Float = 0f
 ): Parcelable
 
 @Parcelize
 data class Customer(
-    val id: String,
-    val name: String,
-    val email: String,
-    val phone: String,
-    val address: String,
-    val password: String,
-    val imageRes: Int
+    var uid: String = "",
+    var name: String = "",
+    var email: String = "",
+    val phone: String = "",
+    var birthDate: String = "",
+    val address: String = "",
+    var password: String = "",
+    val imageRes: Int = R.drawable.my_profile,
 ): Parcelable
 
-data class Appointment(
-    val id: String,
-    val clientName: String,
-    val time: String,
-    val service: String,
-    var status: String,  // "مكتمل", "ملغي", "قيد الانتظار", etc.
-    val date: LocalDate,
-    val shopId: String ,
-    val barberId: String
+@RequiresApi(Build.VERSION_CODES.O)
+data class Appointment (
+    val id: String = "",
+    val clientName: String = "",
+    val time: String = "",
+    val service: String = "",
+    var status: String = "",  // "مكتمل", "ملغي", "قيد الانتظار", etc.
+    val date: LocalDate = LocalDate.now(),
+    val shopId: String = "",
+    val barberId: String = ""
 )
 
 data class JoinRequest(
-    val id: String,
-    val name: String,
-    val experience: String,
-    val email: String,
-    val phone: String,
-    val address: String,
-    val password: String
+    val id: String = "",
+    val experience: String = "",
+    val idBarber: String = "",
+    val idShopOwner: String = "",
+    var date: String = "" ,
+    val status: String = ""
 )
 @Parcelize
 data class Shop(
-    val id: String,
-    val name: String,
-    val rating: String,
-    val reviews: String,
-    val address: String,
-    val imageRes: Int,
-    val shopOwnerId : String,
-    val barbers: List<Barber> = emptyList() ,
+    val id: String = "",
+    val name: String = "",
+    val idOwner: String = "",
+    val address: String = "",
+    val nbarbers: Int = 3,
+    val imageRes: Int = R.drawable.my_profile,
+    val imageUrl: String = "", // ← هذا الجديد
+    val barbers: List<Barber> = emptyList()
+) : Parcelable
 
-): Parcelable
 
 data class Rating(
-    val id: String,
-    val shopName: String,
-    val customer: String,
-    val rating: String,
-    val comment: String,
-    val date: String
+    val id: String = "",
+    val chopId: String = "",
+    val barberName: String = "",
+    val customer: String = "",
+    val rating: String = "",
+    val comment: String = "",
+    val date: String = ""
 )

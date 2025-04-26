@@ -29,7 +29,6 @@ class JoinRequestsAdapter(
 
     override fun onBindViewHolder(holder: JoinRequestViewHolder, position: Int) {
         val item = requests[position]
-        holder.tvName.text = item.name
         holder.tvExperience.text = item.experience
         holder.btnAcceptRequest.setOnClickListener { onAction(item.id, true) }
         holder.btnRejectRequest.setOnClickListener { onAction(item.id, false) }

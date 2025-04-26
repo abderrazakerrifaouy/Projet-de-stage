@@ -1,15 +1,19 @@
-package com.example.projet_de_stage.fragment
+package com.example.projet_de_stage.fragment.fragmentBarber
 
+import android.annotation.SuppressLint
+import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.projet_de_stage.data.Barber
+import androidx.fragment.app.Fragment
 import com.example.projet_de_stage.R
+import com.example.projet_de_stage.data.Barber
+import com.example.projet_de_stage.view.LoginActivity
 
 class ProfileFragment : Fragment() {
     private lateinit var barber: Barber
@@ -20,7 +24,9 @@ class ProfileFragment : Fragment() {
     private lateinit var tvPhone: TextView
     private lateinit var tvAddress: TextView
     private lateinit var btnEditProfile: Button
+    private lateinit var btnLogAut: Button
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +42,7 @@ class ProfileFragment : Fragment() {
         tvPhone = view.findViewById(R.id.tvPhone)
         tvAddress = view.findViewById(R.id.tvAddress)
         btnEditProfile = view.findViewById(R.id.btnEditProfile)
+        btnLogAut = view.findViewById(R.id.btnLogAut)
 
         return view
     }
@@ -48,13 +55,25 @@ class ProfileFragment : Fragment() {
 //            barber = it
 //            bindBarberData()
 //        }
+        btnLogAut.setOnClickListener {
+            // مسح الـ UID من SharedPreferences ثم الانتقال لشاشة تسجيل الدخول
+            val prefs = requireContext().getSharedPreferences("prefs", MODE_PRIVATE)
+            prefs.edit()
+                .putString("uid", "")
+                .apply()
+
+            // التنقل إلى LoginActivity وإنهاء الـ Activity الحالي
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+        // For testing, create a dummy barber
         barber = Barber(
-            id = "1",
+            uid = "1",
             name = "أحمد محمد",
             experience = "0",
-            email = "john.c.breckinridge@altostrat " ,
+            email = "john.c.breckinridge@altostrat ",
             phone = "+966501234567",
-            address = "safi ",
             password = "password123",
             shopId = "shop123",
             imageRes = R.drawable.my_profile,
@@ -73,7 +92,6 @@ class ProfileFragment : Fragment() {
         tvExperience.text = "خبرة: ${barber.experience} سنوات"
         tvEmail.text = barber.email
         tvPhone.text = barber.phone
-        tvAddress.text = barber.address
     }
 
     companion object {

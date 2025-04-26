@@ -10,6 +10,10 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.projet_de_stage.R
+import com.example.projet_de_stage.data.Barber
+import com.example.projet_de_stage.data.Customer
+import com.example.projet_de_stage.data.ShopOwner
+import com.example.projet_de_stage.data.UserType
 
 
 class WelcomeFragment : Fragment() {
@@ -43,10 +47,31 @@ class WelcomeFragment : Fragment() {
                 return@setOnClickListener
             }
 
+
             val radioButton = view.findViewById<RadioButton>(selectedId)
 
             // الانتقال إلى Fragment جديد
+            val bundle = Bundle()
             val nameFragment = NameInputFragment() // يجب أن يكون Fragment وليس Activity
+            when(selectedId){
+                R.id.radioBarber -> {
+                    bundle.putParcelable("user", Barber())
+                    bundle.putString("userType", UserType.Barber.name)
+
+                }
+                R.id.radioAdmin ->{
+                    bundle.putParcelable("user", ShopOwner())
+                    bundle.putString("userType", UserType.ShopOwner.name)
+                }
+
+
+                R.id.radioCustomer -> {
+                    bundle.putParcelable("user", Customer())
+                    bundle.putString("userType", UserType.Customer.name)
+                }
+
+            }
+            nameFragment.arguments = bundle
 
             parentFragmentManager.beginTransaction()
                 .setCustomAnimations(
@@ -61,3 +86,5 @@ class WelcomeFragment : Fragment() {
         }
     }
 }
+
+

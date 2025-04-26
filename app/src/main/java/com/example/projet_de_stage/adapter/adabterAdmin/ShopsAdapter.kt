@@ -1,5 +1,6 @@
 package com.example.projet_de_stage.adapter.adabterAdmin
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Shop
 
 class ShopsAdapter(
-    private val shops: List<Shop>,
+    private var shops: List<Shop>,
     private val onManageClick: (String) -> Unit
 ) : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
 
@@ -32,12 +33,16 @@ class ShopsAdapter(
         val shop = shops[position]
         holder.ivShopImage.setImageResource(shop.imageRes)
         holder.tvShopName.text = shop.name
-        holder.tvRating.text = shop.rating
-        holder.tvReviewsCount.text = shop.reviews
         holder.btnManageShop.setOnClickListener {
             onManageClick(shop.id)
         }
     }
 
     override fun getItemCount(): Int = shops.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newShops: List<Shop>) {
+        this.shops = newShops
+        notifyDataSetChanged()
+    }
 }

@@ -8,11 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.projet_de_stage.R
+import com.example.projet_de_stage.data.Barber
+import com.example.projet_de_stage.data.Customer
+import com.example.projet_de_stage.data.ShopOwner
+import com.example.projet_de_stage.data.UserType
+import com.google.android.material.textfield.TextInputEditText
 
 class BirthDateFragment : Fragment() {
     private lateinit var nextButton : Button
+    private lateinit var userType: UserType
+    private lateinit var userTypeString: String
+    private lateinit var birthDate : EditText
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,6 +32,9 @@ class BirthDateFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.birth_date, container, false)
+        birthDate = view.findViewById(R.id.birthdateDisplay)
+        userTypeString = arguments?.getString("userType").toString()
+        userType = UserType.valueOf(userTypeString)
 
         nextButton = view.findViewById(R.id.nextButton)
         return view
@@ -28,9 +42,40 @@ class BirthDateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val bundle  = Bundle()
         nextButton.setOnClickListener {
+
+            val birthDateText = birthDate.text.toString()
+            when (userType) {
+                UserType.Barber -> {
+                    val barber = arguments?.getParcelable("user")?: Barber()
+                    barber.birthDate = birthDateText
+                    bundle.putParcelable("user", barber)
+                    Toast.makeText(requireContext(), "Barber: $barber", Toast.LENGTH_SHORT).show()
+                }
+                UserType.Customer -> {
+                    val customer = arguments?.getParcelable("user")?: Customer()
+                    customer.birthDate = birthDateText
+                    bundle.putParcelable("user",customer)
+                    Toast.makeText(requireContext(), "Customer: $customer", Toast.LENGTH_SHORT).show()
+                }
+                UserType.ShopOwner -> {
+                    val shopOwner = arguments?.getParcelable("user")?: ShopOwner()
+                    shopOwner.birthDate = birthDateText
+                    bundle.putParcelable("user",shopOwner)
+                    Toast.makeText(requireContext(), "ShopOwner: $shopOwner", Toast.LENGTH_SHORT).show()
+                }
+            }
+            bundle.putString("userType",userType.name)
+
+
+
+
+
+
+
             val phoneNumberFragment = PhoneNumberFragment()
+            phoneNumberFragment.arguments = bundle
             parentFragmentManager.beginTransaction()
                 .setCustomAnimations(
                     R.anim.slide_in,  // حركة الدخول

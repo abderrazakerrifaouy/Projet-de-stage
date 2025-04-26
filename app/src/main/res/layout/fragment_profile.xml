@@ -151,6 +151,16 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/colorPrimary"
         style="@style/Widget.Material3.Button"/>
+    <Button
+        android:id="@+id/btnLogAut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" تسجيل الخروج"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        style="@style/Widget.Material3.Button"/>
 
 
 
