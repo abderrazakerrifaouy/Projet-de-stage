@@ -1,5 +1,6 @@
 package com.example.projet_de_stage.view.admin
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -26,11 +27,13 @@ class CreateShopActivity : AppCompatActivity() {
     private lateinit var etName: EditText
     private lateinit var etDescription: EditText
     private lateinit var etAddress: EditText
+    private lateinit var nbarbers: EditText
     private lateinit var btnSubmit: Button
     private lateinit var ivShopImage: ImageView
     private val PICK_IMAGE_REQUEST = 1
     private val viewModelAuth = AuthViewModel(AuthRepository())
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_shop)
@@ -61,6 +64,7 @@ class CreateShopActivity : AppCompatActivity() {
         etAddress = findViewById(R.id.etLocation)
         btnSubmit = findViewById(R.id.btnSubmit)
         ivShopImage = findViewById(R.id.ivShopImage)
+        nbarbers = findViewById(R.id.NBarbers)
 
         // اختيار صورة
         findViewById<Button>(R.id.btnUploadImage).setOnClickListener {
@@ -89,11 +93,12 @@ class CreateShopActivity : AppCompatActivity() {
                 name = etName.text.toString(),
                 idOwner = admine!!.uid,
                 address = etAddress.text.toString(),
-                imageRes = R.drawable.my_profile // استخدام صورة افتراضية إذا لم يتم رفع صورة
+                imageRes = R.drawable.my_profile , // استخدام صورة افتراضية إذا لم يتم رفع صورة
+                nbarbers = nbarbers.text.toString().toInt()
             )
 
             // إرسال البيانات
-            viewModel.createShop(shop, imageUri)
+            viewModel.createShop(shop, imageUri , this@CreateShopActivity)
         }
 
         // متابعة حالة إنشاء المحل

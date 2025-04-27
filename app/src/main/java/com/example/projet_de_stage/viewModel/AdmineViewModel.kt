@@ -1,5 +1,6 @@
 package com.example.projet_de_stage.viewModel
 
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -41,10 +42,11 @@ class AdmineViewModel : ViewModel() {
     }
 
     // دالة لإنشاء المحل
-    fun createShop(shop: Shop, imageUri: Uri?) {
+    fun createShop(shop: Shop, imageUri: Uri?, context: Context) {
         viewModelScope.launch {
             try {
-                shopRepository.createShopWithImage(shop, imageUri,
+                shopRepository.createShopWithImage(
+                    shop, imageUri, context,
                     onSuccess = {
                         _shopCreationStatus.value = true
                     },

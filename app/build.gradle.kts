@@ -38,6 +38,14 @@ android {
 }
 
 dependencies {
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+    implementation ("androidx.fragment:fragment-ktx:1.8.6")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation ("com.cloudinary:kotlin-url-gen:1.7.0")
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
     implementation ("com.google.firebase:firebase-storage-ktx")
     implementation ("com.google.firebase:firebase-auth:22.3.0")
@@ -49,7 +57,6 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.auth)
-    implementation(libs.androidx.swiperefreshlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

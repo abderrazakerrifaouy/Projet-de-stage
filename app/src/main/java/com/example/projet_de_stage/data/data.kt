@@ -63,7 +63,7 @@ data class JoinRequest(
     val id: String = "",
     val experience: String = "",
     val idBarber: String = "",
-    val idShopOwner: String = "",
+    val idShop: String = "",
     var date: String = "" ,
     val status: String = ""
 )

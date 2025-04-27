@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Shop
 
@@ -31,7 +32,13 @@ class ShopsAdapter(
 
     override fun onBindViewHolder(holder: ShopViewHolder, position: Int) {
         val shop = shops[position]
-        holder.ivShopImage.setImageResource(shop.imageRes)
+        if (shop.imageUrl.isNotEmpty()) {
+            Glide.with(holder.itemView.context)
+                .load(shop.imageUrl)
+                .into(holder.ivShopImage)
+        }else{
+            holder.ivShopImage.setImageResource(shop.imageRes)
+        }
         holder.tvShopName.text = shop.name
         holder.btnManageShop.setOnClickListener {
             onManageClick(shop.id)

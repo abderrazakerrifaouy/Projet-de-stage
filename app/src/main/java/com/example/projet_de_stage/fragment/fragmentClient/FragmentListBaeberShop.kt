@@ -36,7 +36,6 @@ class FragmentListBarberShop : Fragment() {
                 name = "صالون الرجال الفاخر",
                 address = "الرياض، حي الملك فهد",
                 imageRes = R.drawable.ic_barber,
-                shopOwnerId = "0" ,
                 barbers = listOf(
                     Barber(
                         uid = "1",
@@ -66,7 +65,6 @@ class FragmentListBarberShop : Fragment() {
                 name = "صالون الحلاقة المتميز",
                 address = "الرياض، حي النخيل",
                 imageRes = R.drawable.ic_barber,
-                shopOwnerId ="0",
                 barbers = listOf(
                     Barber(
                         uid = "3",

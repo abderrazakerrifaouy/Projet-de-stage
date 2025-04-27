@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imageViewShop"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/my_profile"
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingStart="12dp">
+
+                <TextView
+                    android:id="@+id/textViewShopName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shop Name"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/textViewShopAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textSize="14sp"
+                    android:textColor="#757575"/>
+
+                <TextView
+                    android:id="@+id/textViewBarberCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3 حلاقين"
+                    android:textSize="14sp"
+                    android:textColor="@color/blue_200"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonRequestJoin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="طلب الانضمام"
+            android:backgroundTint="@color/blue_500"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
