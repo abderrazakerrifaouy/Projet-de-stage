@@ -130,7 +130,7 @@ class BarberHome : Fragment() {
         val appointments = listOf(
             Appointment(
                 id = "1",
-                clientName = "أ. محمد",
+                clientId = "أ. محمد",
                 time = "10:00 ص",
                 service = "حلاقة + لحية",
                 status = "accepted",

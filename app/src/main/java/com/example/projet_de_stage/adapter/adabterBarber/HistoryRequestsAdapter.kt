@@ -46,7 +46,7 @@ class HistoryRequestsAdapter : RecyclerView.Adapter<HistoryRequestsAdapter.Histo
         fun bind(appointment: Appointment) {
             tvDate.text = appointment.date.toString()
             tvTime.text = appointment.time
-            tvCustomer.text = appointment.clientName
+            tvCustomer.text = appointment.clientId
             tvService.text = appointment.service
 
             when (appointment.status) {

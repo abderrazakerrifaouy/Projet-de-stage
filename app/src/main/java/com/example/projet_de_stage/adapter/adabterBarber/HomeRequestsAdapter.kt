@@ -50,7 +50,7 @@ class HomeRequestsAdapter(
         fun bind(appointment: Appointment) {
             tvTime.text = appointment.time
             tvDateTime.text = appointment.date.toString() // Display the date
-            tvCustomerName.text = appointment.clientName
+            tvCustomerName.text = appointment.clientId
             tvServices.text = appointment.service
 
             // Handle button click for accepting the request

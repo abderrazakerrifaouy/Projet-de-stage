@@ -48,7 +48,7 @@ class NewRequestsAdapter(
         fun bind(appointment: Appointment) {
             tvTime.text = appointment.time
             tvDateTime.text = "" // Add date if available in your Appointment class
-            tvCustomerName.text = appointment.clientName
+            tvCustomerName.text = appointment.clientId
             tvServices.text = appointment.service
 
             // Set button texts and behaviors for NEW requests

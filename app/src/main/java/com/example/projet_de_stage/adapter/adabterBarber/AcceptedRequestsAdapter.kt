@@ -39,7 +39,7 @@ class AcceptedRequestsAdapter(
         fun bind(appointment: Appointment) {
             itemView.findViewById<TextView>(R.id.tvTime).text = appointment.time
             itemView.findViewById<TextView>(R.id.tvDateTime).text = "" // Add date if available
-            itemView.findViewById<TextView>(R.id.tvCustomerName).text = appointment.clientName
+            itemView.findViewById<TextView>(R.id.tvCustomerName).text = appointment.clientId
             itemView.findViewById<TextView>(R.id.tvServices).text = appointment.service
 
             // Since these are already accepted requests, we might want to change button behavior

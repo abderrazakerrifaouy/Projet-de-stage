@@ -1,6 +1,7 @@
 package com.example.projet_de_stage.view.client
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -21,6 +22,7 @@ class HomeActivityClient : AppCompatActivity() {
         setContentView(R.layout.activity_home_client)
 
         customer = intent.getParcelableExtra<Customer>("customer")!!
+        Toast.makeText(this, customer.name, Toast.LENGTH_SHORT).show()
         // Set up bottom navigation
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigation?.setOnNavigationItemSelectedListener { item ->

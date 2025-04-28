@@ -51,11 +51,11 @@ data class Customer(
 @RequiresApi(Build.VERSION_CODES.O)
 data class Appointment (
     val id: String = "",
-    val clientName: String = "",
+    val clientId: String = "",
     val time: String = "",
     val service: String = "",
     var status: String = "",  // "مكتمل", "ملغي", "قيد الانتظار", etc.
-    val date: LocalDate = LocalDate.now(),
+    val date: LocalDate = LocalDate.now().plusDays(1), // Default to tomorrow,
     val shopId: String = "",
     val barberId: String = ""
 )

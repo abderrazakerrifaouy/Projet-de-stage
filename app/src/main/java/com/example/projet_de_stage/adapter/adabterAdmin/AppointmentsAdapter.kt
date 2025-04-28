@@ -30,7 +30,7 @@ class AppointmentsAdapter(
 
     override fun onBindViewHolder(holder: AppointmentViewHolder, position: Int) {
         val item = appointments[position]
-        holder.tvClientName.text = item.clientName
+        holder.tvClientName.text = item.clientId
         holder.tvTime.text = item.time
         holder.tvService.text = item.service
         holder.tvStatus.text = item.status

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.adapter.adapterClient.BarberAdapter
 import com.example.projet_de_stage.data.Barber
+import com.example.projet_de_stage.data.Customer
 import com.example.projet_de_stage.data.Shop
 import kotlin.jvm.java
 import kotlin.let
@@ -33,18 +34,19 @@ class BarbershopDetails : AppCompatActivity() {
         rvBarbers = findViewById(R.id.rvBarbers)
 
         val shop = intent.getParcelableExtra("SHOP_DATA", Shop::class.java)
-        shop?.let { setupUI(it) }
+        val client = intent.getParcelableExtra("CLIENT_DATA", Customer::class.java)
+        shop?.let { setupUI(it , client) }
     }
 
-    private fun setupUI(shop: Shop) {
+    private fun setupUI(shop: Shop, client: Customer?) {
         ivShopBanner.setImageResource(shop.imageRes)
         tvShopName.text = shop.name
 
         barberAdapter = BarberAdapter(shop.barbers) { selectedBarber ->
-            showBarberSelectedDialog(selectedBarber)
             val intent = Intent(this, RequestClient::class.java)
             intent.putExtra("SHOP_DATA", shop)
             intent.putExtra("BARBER_DATA", selectedBarber)
+            intent.putExtra("CLIENT_DATA", client)
             startActivity(intent)
         }
 
@@ -52,11 +54,5 @@ class BarbershopDetails : AppCompatActivity() {
         rvBarbers.adapter = barberAdapter
     }
 
-    private fun showBarberSelectedDialog(barber: Barber) {
-        AlertDialog.Builder(this)
-            .setTitle("Barber Selected")
-            .setMessage("You have selected ${barber.name}")
-            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-            .show()
-    }
+
 }

@@ -38,7 +38,7 @@ class HistoryFragmentClient : Fragment() {
         val sampleAppointments = listOf(
             Appointment(
                 id = "1",
-                clientName = "Ahmed Mohamed",
+                clientId = "Ahmed Mohamed",
                 time = "10:00 ص",
                 service = "حلاقة + لحية",
                 status = "مكتمل",
@@ -48,7 +48,7 @@ class HistoryFragmentClient : Fragment() {
             ),
             Appointment(
                 id = "2",
-                clientName = "Mohamed Ali",
+                clientId = "Mohamed Ali",
                 time = "02:30 م",
                 service = "حلاقة فقط",
                 status = "ملغي",
@@ -58,7 +58,7 @@ class HistoryFragmentClient : Fragment() {
             ),
             Appointment(
                 id = "3",
-                clientName = "Youssef Ahmed",
+                clientId = "Youssef Ahmed",
                 time = "11:15 ص",
                 service = "تسريحة شعر",
                 status = "مكتمل",
