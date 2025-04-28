@@ -106,6 +106,23 @@ class AdmineViewModel : ViewModel() {
     }
 
 
+    fun addBarberToShop(shopId: String, barber: Barber) {
+        viewModelScope.launch {
+            try {
+                shopRepository.addBarberToShop(shopId, barber,
+                    onSuccess = {
+                        // تحديث حالة النجاح
+                        _barber.postValue(barber)
+                    },
+                    onFailure = { exception ->
+                        _errorMessage.postValue("فشل في إضافة الحلاق: ${exception.message}")
+                    }
+                )
+            } catch (e: Exception) {
+                _errorMessage.postValue("خطأ: ${e.message}")
+            }
+        }
+    }
 
 
 }

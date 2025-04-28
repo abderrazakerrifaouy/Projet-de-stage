@@ -2,6 +2,7 @@ package com.example.projet_de_stage.repository
 
 import android.content.Context
 import android.net.Uri
+import com.example.projet_de_stage.data.Barber
 import com.example.projet_de_stage.data.Shop
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -109,6 +110,41 @@ class ShopRepository {
         }
     }
 
+    fun addBarberToShop(
+        shopId: String,
+        barber: Barber,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val shopRef = collection.document(shopId)
 
+        shopRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    // الحصول على الـ Shop من الـ Firestore
+                    val shop = documentSnapshot.toObject(Shop::class.java)
+
+                    // التأكد أن shop ليس فارغًا
+                    if (shop != null) {
+                        // إضافة الـ Barber إلى قائمة barbers
+                        val updatedBarbersList = shop.barbers.toMutableList()
+                        updatedBarbersList.add(barber)
+
+                        // إنشاء Shop جديد مع قائمة barbers المحدثة
+                        val updatedShop = shop.copy(barbers = updatedBarbersList)
+
+                        // تحديث الـ Firestore بالـ Shop الجديد
+                        shopRef.set(updatedShop)
+                            .addOnSuccessListener { onSuccess() }
+                            .addOnFailureListener { onFailure(it) }
+                    } else {
+                        onFailure(Exception("Shop not found"))
+                    }
+                } else {
+                    onFailure(Exception("Shop does not exist"))
+                }
+            }
+            .addOnFailureListener { onFailure(it) }
+    }
 
 }

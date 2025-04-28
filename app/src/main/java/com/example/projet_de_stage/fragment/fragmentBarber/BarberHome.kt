@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.adapter.adabterBarber.HomeRequestsAdapter
 import com.example.projet_de_stage.adapter.adapterBarber.ShopAdapterBarber
@@ -33,8 +35,15 @@ class BarberHome : Fragment() {
     private lateinit var caretShopOn: CardView
     private lateinit var caretShopOff: CardView
     private lateinit var tvShopStatus: TextView
+    private lateinit var tvShopName : TextView
+    private lateinit var tvShopLocation : TextView
+    private lateinit var ivShopImage : ImageView
 
-    private val homeRequestsAdapter = HomeRequestsAdapter()
+
+    private val homeRequestsAdapter = HomeRequestsAdapter{ appointment ->
+        Toast.makeText(requireContext(), "تم قبول الطلب بنجاح", Toast.LENGTH_SHORT).show()
+
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     private val shopAdapterBarber = ShopAdapterBarber { shop ->
         onRequestJoinShop(shop)
@@ -55,6 +64,9 @@ class BarberHome : Fragment() {
         caretShopOn = view.findViewById(R.id.shopDetailsLayoutOn)
         caretShopOff = view.findViewById(R.id.shopDetailsLayoutOff) // كنت كاتبها غلط
         tvShopStatus = view.findViewById(R.id.tvShopStatus)
+        tvShopName = view.findViewById(R.id.tvShopName)
+        tvShopLocation = view.findViewById(R.id.tvShopLocation)
+        ivShopImage = view.findViewById(R.id.ivShopImage)
 
         barber = arguments?.getParcelable("barber") ?: throw IllegalArgumentException("Barber not found")
 
@@ -85,7 +97,7 @@ class BarberHome : Fragment() {
             showNoShopUI()
         } else {
             // Barber منضم لمحل
-            showShopDetailsUI()
+            showShopDetailsUI(shop)
         }
     }
 
@@ -101,10 +113,19 @@ class BarberHome : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun showShopDetailsUI() {
+    private fun showShopDetailsUI(shop: Shop?) {
         caretShopOn.visibility = View.VISIBLE
         caretShopOff.visibility = View.GONE
-        recyclerView.adapter = homeRequestsAdapter
+
+        tvShopName.text = shop?.name
+        tvShopLocation.text = shop?.address
+        if (shop?.imageUrl?.isNotEmpty() == true) {
+            Glide.with(requireContext())
+                .load(shop.imageUrl)
+                .into(ivShopImage)
+        }else{
+            ivShopImage.setImageResource(R.drawable.my_profile)
+        }
 
         val appointments = listOf(
             Appointment(
@@ -113,7 +134,7 @@ class BarberHome : Fragment() {
                 time = "10:00 ص",
                 service = "حلاقة + لحية",
                 status = "accepted",
-                date = LocalDate.of(2025, 4, 13),
+                date = LocalDate.now(),
                 shopId = "${shop!!.id}",
                 barberId = "${barber.uid}"
             ),
@@ -121,6 +142,7 @@ class BarberHome : Fragment() {
         )
 
         homeRequestsAdapter.updateData(appointments)
+        recyclerView.adapter = homeRequestsAdapter
     }
 
 
@@ -143,6 +165,7 @@ class BarberHome : Fragment() {
             } else {
                 Toast.makeText(requireContext(), "لم يتم إرسال طلب الانضمام", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
 

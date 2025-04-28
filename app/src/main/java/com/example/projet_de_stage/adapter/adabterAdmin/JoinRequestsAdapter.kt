@@ -14,7 +14,7 @@ import com.example.projet_de_stage.viewModel.AdmineViewModel
 
 class JoinRequestsAdapter(
     private var requests: List<JoinRequest>,
-    private val onAction: (String, Boolean) -> Unit,
+    private val onAction: (String, Boolean , Barber? , String?) -> Unit,
     private val admineViewModel: AdmineViewModel // نمرروه من برا
 ) : RecyclerView.Adapter<JoinRequestsAdapter.JoinRequestViewHolder>() {
 
@@ -46,10 +46,11 @@ class JoinRequestsAdapter(
             holder.tvName.text = barber?.name ?: "غير معروف"
             holder.tvRating.text = barber?.rating?.toString() ?: "غير متوفر"
             holder.tvReviewsCount.text = "(${barber?.Nrating} تقيي)"
-        }
 
-        holder.btnAcceptRequest.setOnClickListener { onAction(item.id, true) }
-        holder.btnRejectRequest.setOnClickListener { onAction(item.id, false) }
+
+        holder.btnAcceptRequest.setOnClickListener { onAction(item.id, true , barber , item.idShop ) }
+        holder.btnRejectRequest.setOnClickListener { onAction(item.id, false , barber , item.idShop) }
+        }
     }
 
     override fun getItemCount(): Int = requests.size

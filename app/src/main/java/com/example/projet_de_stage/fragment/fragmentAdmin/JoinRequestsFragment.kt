@@ -25,14 +25,20 @@ class JoinRequestsFragment : Fragment() {
         recyclerView = view.findViewById(R.id.joinRequestsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val adapter = JoinRequestsAdapter(emptyList(), { id, approved ->
+        val adapter = JoinRequestsAdapter(emptyList(), { id, approved, barber , idShop ->
             // الكود هنا لإظهار Toast مع نتيجة القبول أو الرفض
+            var message = ""
+            if (approved) {
+                message = "الطلب $id مقبول من قبل ${barber?.name ?: "غير معروف"}"
+                viewModel.addBarberToShop(idShop ?: "", barber!!)
+            } else {
+                message = "الطلب $id مرفوض من قبل ${barber?.name ?: "غير معروف"}"
+            }
             Toast.makeText(
                 requireContext(),
-                "الطلب $id ${if (approved) "مقبول" else "مرفوض"}",
+                message,
                 Toast.LENGTH_SHORT
             ).show()
-
         }, viewModel)
         recyclerView.adapter = adapter
 

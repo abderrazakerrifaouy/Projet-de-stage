@@ -51,6 +51,12 @@
             android:layout_height="wrap_content"
             android:text="الوقت: 10:00 ص"
             android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/tvDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="الوقت: 10:00 ص"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tvServices"
