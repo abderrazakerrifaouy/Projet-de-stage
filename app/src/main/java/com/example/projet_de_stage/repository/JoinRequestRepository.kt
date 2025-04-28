@@ -49,12 +49,12 @@ class JoinRequestRepository {
             .addOnFailureListener { e -> onFailure(e) }
     }
 
-    fun getRequestsByBarber(
-        barberId: String,
+    fun getRequestsByShopOwnerIdId(
+        shopOwnerId: String,
         onSuccess: (List<JoinRequest>) -> Unit,
         onFailure: (Exception) -> Unit
     ) {
-        collection.whereEqualTo("idBarber", barberId)
+        collection.whereEqualTo("idShopOwner", shopOwnerId)
             .get()
             .addOnSuccessListener { qs ->
                 onSuccess(qs.documents.mapNotNull { it.toObject(JoinRequest::class.java) })

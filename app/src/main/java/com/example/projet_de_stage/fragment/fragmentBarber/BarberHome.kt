@@ -131,9 +131,10 @@ class BarberHome : Fragment() {
             id = id,
             experience = barber.experience,
             idBarber = barber.uid,
-            idShop = shop.idOwner,
+            idShop = shop.id,
             date = LocalDate.now().toString(),
-            status = "pending"
+            status = "pending" ,
+            idShopOwner = shop.idOwner
         )
         barberViewModel.createJoinRequests(joinRequest) { success ->
             if (success) {

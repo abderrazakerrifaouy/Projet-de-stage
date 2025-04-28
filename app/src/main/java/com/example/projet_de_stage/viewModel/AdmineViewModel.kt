@@ -6,8 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projet_de_stage.data.Barber
+import com.example.projet_de_stage.data.JoinRequest
 import com.example.projet_de_stage.data.Shop
 import com.example.projet_de_stage.data.ShopOwner
+import com.example.projet_de_stage.repository.BarberRepository
+import com.example.projet_de_stage.repository.JoinRequestRepository
 import com.example.projet_de_stage.repository.ShopOwnerRepository
 import com.example.projet_de_stage.repository.ShopRepository
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,9 +19,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class AdmineViewModel : ViewModel() {
-
+    private val repositoryJoinRequests = JoinRequestRepository()
     private val shopRepository = ShopRepository()
     private val shopOwnerRepository = ShopOwnerRepository()
+    private val barberRepository = BarberRepository()
 
     private val _shops = MutableLiveData<List<Shop>>()
     val shops: LiveData<List<Shop>> get() = _shops
@@ -31,12 +36,14 @@ class AdmineViewModel : ViewModel() {
     private val _shopOwner = MutableLiveData<ShopOwner?>()
     val shopOwner: LiveData<ShopOwner?> get() = _shopOwner
 
-    fun getSopOwnerById(id: String) {
-        return shopOwnerRepository.getShopOwnerById(id){
-            _shopOwner.value = it
-        }
+    private val _joinRequests = MutableLiveData<List<JoinRequest>>()
+    val joinRequests: LiveData<List<JoinRequest>> get() = _joinRequests
 
-    }
+
+    private val _barber = MutableLiveData<Barber?>()
+    val barber: LiveData<Barber?> get() = _barber
+
+
     fun getShopOwnerById(id: String, callback: (ShopOwner?) -> Unit) {
         shopOwnerRepository.getShopOwnerById(id, callback)
     }
@@ -70,12 +77,35 @@ class AdmineViewModel : ViewModel() {
             emptyList()
         }
     }
-    fun fetchShopsByOwnerId(ownerId: String) {
+
+
+    fun getJoinRequestsByShopOwnerId(shopOwnerId: String) {
         viewModelScope.launch {
-            val shops = shopRepository.getShopsByOwnerId(ownerId)
-            _shops.postValue(shops)
+            repositoryJoinRequests.getRequestsByShopOwnerIdId(
+                shopOwnerId,
+                onSuccess = { requests ->
+                    _joinRequests.postValue(requests)
+                },
+                onFailure = { exception ->
+                    _errorMessage.postValue("فشل في جلب الطلبات: ${exception.message}")
+                }
+            )
         }
     }
+
+    fun getBarberById(id: String) {
+        barberRepository.getBarberById(
+            id,
+            onSuccess = { barber ->
+                _barber.postValue(barber)
+            },
+            onFailure = { exception ->
+                _errorMessage.postValue("فشل في جلب الببر: ${exception.message}")
+            }
+        )
+    }
+
+
 
 
 }

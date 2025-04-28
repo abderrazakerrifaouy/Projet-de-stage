@@ -32,7 +32,8 @@ data class Barber(
     var birthDate: String = "",
     val shopId: String = "",
     val imageRes: Int = R.drawable.my_profile,
-    val rating: Float = 0f
+    val rating: Float = 0f ,
+    val Nrating: Int = 0
 ): Parcelable
 
 @Parcelize
@@ -65,7 +66,8 @@ data class JoinRequest(
     val idBarber: String = "",
     val idShop: String = "",
     var date: String = "" ,
-    val status: String = ""
+    val status: String = "" ,
+    val idShopOwner: String = ""
 )
 @Parcelize
 data class Shop(
