@@ -134,7 +134,7 @@ class BarberHome : Fragment() {
                 time = "10:00 ص",
                 service = "حلاقة + لحية",
                 status = "accepted",
-                date = LocalDate.now(),
+                date = LocalDate.now().toString(),
                 shopId = "${shop!!.id}",
                 barberId = "${barber.uid}"
             ),

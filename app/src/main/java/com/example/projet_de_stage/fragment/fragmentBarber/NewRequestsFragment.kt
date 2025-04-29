@@ -51,7 +51,7 @@ class NewRequestsFragment : Fragment() {
                 "10:00 ص",
                 "حلاقة + لحية",
                 "pending",
-                LocalDate.of(2025, 4, 13),
+                LocalDate.of(2025, 4, 13).toString(),
                 "shop1",
                 "barber1"
             ),

@@ -29,7 +29,7 @@ class AppointmentsFragment : Fragment() {
                 "10:00 ص",
                 "حلاقة + لحية",
                 "pending",
-                LocalDate.of(2025, 4, 13),
+                LocalDate.of(2025, 4, 13).toString(),
                 "abdo",
                 "hsduihc"
             ),

@@ -41,9 +41,9 @@ data class Customer(
     var uid: String = "",
     var name: String = "",
     var email: String = "",
-    val phone: String = "",
+    var phone: String = "",
     var birthDate: String = "",
-    val address: String = "",
+    var address: String = "",
     var password: String = "",
     val imageRes: Int = R.drawable.my_profile,
 ): Parcelable
@@ -54,8 +54,8 @@ data class Appointment (
     val clientId: String = "",
     val time: String = "",
     val service: String = "",
-    var status: String = "",  // "مكتمل", "ملغي", "قيد الانتظار", etc.
-    val date: LocalDate = LocalDate.now().plusDays(1), // Default to tomorrow,
+    var status: String = "",  // pending // accepted // rejected // canceled // completed
+    val date: String = LocalDate.now().plusDays(1).toString(),  // Default to tomorrow,
     val shopId: String = "",
     val barberId: String = ""
 )

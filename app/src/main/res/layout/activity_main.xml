@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BladeLink"
-        android:textSize="32sp"
+        android:textSize="42sp"
         android:textColor="#2C3E50"
         android:layout_centerInParent="true"
         android:textStyle="bold"

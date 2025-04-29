@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Appointment
+import androidx.core.graphics.toColorInt
 
 class HistoryRequestsAdapter : RecyclerView.Adapter<HistoryRequestsAdapter.HistoryViewHolder>() {
 
@@ -52,19 +53,19 @@ class HistoryRequestsAdapter : RecyclerView.Adapter<HistoryRequestsAdapter.Histo
             when (appointment.status) {
                 "completed" -> {
                     tvStatus.text = "مكتمل"
-                    tvStatus.setTextColor(Color.parseColor("#4CAF50")) // Green
+                    tvStatus.setTextColor("#4CAF50".toColorInt()) // Green
                 }
                 "canceled" -> {
                     tvStatus.text = "ملغي"
-                    tvStatus.setTextColor(Color.parseColor("#F44336")) // Red
+                    tvStatus.setTextColor("#F44336".toColorInt()) // Red
                 }
                 "rejected" -> {
                     tvStatus.text = "مرفوض"
-                    tvStatus.setTextColor(Color.parseColor("#FF9800")) // Orange
+                    tvStatus.setTextColor("#FF9800".toColorInt()) // Orange
                 }
                 else -> {
                     tvStatus.text = appointment.status
-                    tvStatus.setTextColor(Color.parseColor("#9E9E9E")) // Gray
+                    tvStatus.setTextColor("#9E9E9E".toColorInt()) // Gray
                 }
             }
         }

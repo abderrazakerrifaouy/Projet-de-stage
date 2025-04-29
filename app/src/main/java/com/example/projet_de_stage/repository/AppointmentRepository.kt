@@ -39,6 +39,37 @@ class AppointmentRepository {
             }
             .addOnFailureListener { e -> onFailure(e) }
     }
+    /**
+     * تجلب قائمة المواعيد (Appointment) الخاصة بالعميل من Firestore
+     *
+     * @param customerId معرف العميل
+     * @param onSuccess يعاد استدعاؤه مع اللائحة عند النجاح
+     * @param onFailure يعاد استدعاؤه مع الاستثناء عند الفشل
+     */
+    fun getAppointmentsByCustomerId(
+        customerId: String,
+        onSuccess: (List<Appointment>) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        firestoreCollection
+            .whereEqualTo("clientId", customerId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                // نحول كل مستند لكائن Appointment إذا أمكن
+                val appointments = querySnapshot.documents
+                    .mapNotNull { it.toObject(Appointment::class.java) }
+                onSuccess(appointments)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+
+    fun getAllAppointmentsByBarberId(uid : String){
+
+    }
+
 
 
 }

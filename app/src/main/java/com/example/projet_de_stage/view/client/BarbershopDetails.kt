@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.adapter.adapterClient.BarberAdapter
 import com.example.projet_de_stage.data.Barber
@@ -39,7 +40,14 @@ class BarbershopDetails : AppCompatActivity() {
     }
 
     private fun setupUI(shop: Shop, client: Customer?) {
-        ivShopBanner.setImageResource(shop.imageRes)
+//        ivShopBanner.setImageResource(shop.imageRes)
+        if (shop.imageUrl.isNotEmpty()) {
+            Glide.with(this)
+                .load(shop.imageUrl)
+                .into(ivShopBanner)
+        } else {
+            ivShopBanner.setImageResource(R.drawable.app_name)
+        }
         tvShopName.text = shop.name
 
         barberAdapter = BarberAdapter(shop.barbers) { selectedBarber ->

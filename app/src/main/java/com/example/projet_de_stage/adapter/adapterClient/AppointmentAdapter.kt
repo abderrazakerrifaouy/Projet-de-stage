@@ -1,5 +1,6 @@
 package com.example.projet_de_stage.adapter.adapterClient
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,7 @@ import com.example.projet_de_stage.data.Appointment
 import java.time.format.DateTimeFormatter
 
 class AppointmentAdapter(
-    private val appointments: List<Appointment>,
+    private val appointments: MutableList<Appointment>,
     private val onItemClick: (Appointment) -> Unit = {}
 ) : RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder>() {
 
@@ -60,5 +61,11 @@ class AppointmentAdapter(
             }
             tvStatus.setBackgroundResource(backgroundRes)
         }
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newAppointments: List<Appointment>) {
+        appointments.clear()
+        appointments.addAll(newAppointments)
+        notifyDataSetChanged()
     }
 }

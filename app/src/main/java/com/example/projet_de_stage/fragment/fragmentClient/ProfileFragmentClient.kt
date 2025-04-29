@@ -1,5 +1,7 @@
 package com.example.projet_de_stage.fragment.fragmentClient
 
+import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Customer
+import com.example.projet_de_stage.view.client.UpdateCustomerProfileActivity
 import kotlin.apply
 
 class ProfileFragmentClient : Fragment() {
@@ -20,6 +24,7 @@ class ProfileFragmentClient : Fragment() {
     private lateinit var tvPhone: TextView
     private lateinit var tvAddress: TextView
     private lateinit var btnEditProfile: Button
+    private lateinit var btnLogAutClient: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +40,7 @@ class ProfileFragmentClient : Fragment() {
         tvPhone = view.findViewById(R.id.tvPhone)
         tvAddress = view.findViewById(R.id.tvAddress)
         btnEditProfile = view.findViewById(R.id.btnEditProfile)
+        btnLogAutClient = view.findViewById(R.id.btnLogAutClient)
 
         return view
     }
@@ -43,21 +49,24 @@ class ProfileFragmentClient : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // For testing, create a dummy customer
-        customer = Customer(
-            uid = "1",
-            name = "محمد علي",
-            email = "customer@example.com",
-            phone = "+966501234567",
-            address = "الرياض، حي النخيل",
-            password = "password123",
-            imageRes = R.drawable.my_profile
-        )
+        customer = arguments?.getParcelable("customer")!!
 
         bindCustomerData()
 
         btnEditProfile.setOnClickListener {
-            // Handle edit profile button click
+            val intent = Intent( requireContext() , UpdateCustomerProfileActivity::class.java)
+            intent.putExtra("CUSTOMER_DATA", customer)
+            startActivity(intent)
+
         }
+
+        btnLogAutClient.setOnClickListener {
+            val prefs = requireContext().getSharedPreferences("prefs", MODE_PRIVATE)
+            prefs.edit {
+                putString("uid", "")
+            }
+        }
+
     }
 
     private fun bindCustomerData() {
@@ -71,13 +80,5 @@ class ProfileFragmentClient : Fragment() {
         view?.findViewById<TextView>(R.id.tvExperience)?.visibility = View.GONE
     }
 
-    companion object {
-        fun newInstance(customer: Customer): ProfileFragmentClient {
-            return ProfileFragmentClient().apply {
-                arguments = Bundle().apply {
-                    putParcelable("customer", customer)
-                }
-            }
-        }
-    }
+
 }

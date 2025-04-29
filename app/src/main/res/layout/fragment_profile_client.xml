@@ -152,4 +152,14 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/colorPrimary"
         style="@style/Widget.Material3.Button"/>
+    <Button
+        android:id="@+id/btnLogAutClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = "loge aut"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        style="@style/Widget.Material3.Button"/>
 </LinearLayout>

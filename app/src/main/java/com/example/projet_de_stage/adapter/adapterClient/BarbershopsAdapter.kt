@@ -1,11 +1,13 @@
 package com.example.projet_de_stage.adapter.adapterClient
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Shop
 
@@ -35,8 +37,16 @@ class ShopAdapter(
         private val tvLocation: TextView = itemView.findViewById(R.id.tvLocation)
         private val tvBarbersCount: TextView = itemView.findViewById(R.id.tvBarbersCount)
 
+        @SuppressLint("SetTextI18n")
         fun bind(shop: Shop) {
-            ivBarbershop.setImageResource(shop.imageRes)
+            if (shop.imageUrl.isNotEmpty()) {
+                Glide.with(itemView.context)
+                    .load(shop.imageUrl)
+                    .into(ivBarbershop)
+            } else {
+                ivBarbershop.setImageResource(R.drawable.app_name)
+            }
+
             tvBarbershopName.text = shop.name
             tvLocation.text = shop.address
             tvBarbersCount.text = "${shop.barbers.size} حلاقين متاحين"

@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Barber
 import com.example.projet_de_stage.view.LoginActivity
+import com.example.projet_de_stage.viewModel.ClientViewModel
+import androidx.core.content.edit
 
 class ProfileFragment : Fragment() {
     private lateinit var barber: Barber
@@ -58,9 +60,9 @@ class ProfileFragment : Fragment() {
         btnLogAut.setOnClickListener {
             // مسح الـ UID من SharedPreferences ثم الانتقال لشاشة تسجيل الدخول
             val prefs = requireContext().getSharedPreferences("prefs", MODE_PRIVATE)
-            prefs.edit()
-                .putString("uid", "")
-                .apply()
+            prefs.edit() {
+                putString("uid", "")
+            }
 
             // التنقل إلى LoginActivity وإنهاء الـ Activity الحالي
             val intent = Intent(requireContext(), LoginActivity::class.java)
@@ -86,6 +88,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun bindBarberData() {
         profileImage.setImageResource(barber.imageRes)
         tvName.text = barber.name

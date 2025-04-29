@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivProfileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/my_profile"
+            android:contentDescription="Profile Image"
+            android:background="@drawable/circle_background"/>
+
+        <!-- حقول الإدخال -->
+        <EditText
+            android:id="@+id/etName"
+            android:hint="الاسم"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/edittext_border"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:hint="البريد الإلكتروني"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/edittext_border"/>
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:hint="رقم الهاتف"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/edittext_border"/>
+
+        <EditText
+            android:id="@+id/etBirthDate"
+            android:hint="تاريخ الميلاد"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/edittext_border"
+            android:layout_margin="10dp"
+            android:inputType="date"/>
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:hint="العنوان"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/edittext_border"
+            />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:hint="كلمة المرور"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/edittext_border"/>
+
+        <!-- زر الحفظ باللون الرئيسي -->
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="حفظ"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/blue_500"
+            android:padding="12dp"
+            />
+        <!-- مثال لزر ثانوي لو احتاجتيه -->
+        <!--
+        <Button
+            android:id="@+id/btnCancel"
+            android:text="إلغاء"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_button_secondary"
+            android:textColor="@android:color/black"
+            android:padding="12dp"/>
+        -->
+        <ProgressBar
+            android:id="@+id/progressBarClient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

@@ -49,7 +49,7 @@ class AcceptedRequestsFragment : Fragment() {
                 "10:00 ص",
                 "حلاقة + لحية",
                 "pending",
-                LocalDate.of(2025, 4, 13),
+                LocalDate.of(2025, 4, 13).toString(),
                 "shop1",
                 "barber1"
             ),
@@ -59,7 +59,7 @@ class AcceptedRequestsFragment : Fragment() {
                 "11:30 ص",
                 "حلاقة فقط",
                 "accepted",
-                LocalDate.of(2025, 4, 13),
+                LocalDate.of(2025, 4, 13).toString(),
                 "shop2",
                 "barber2"
             )

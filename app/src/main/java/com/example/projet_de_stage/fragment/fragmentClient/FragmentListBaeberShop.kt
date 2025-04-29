@@ -75,4 +75,9 @@ class FragmentListBarberShop : Fragment() {
             recyclerView.adapter = adapter
         }
     }
+
+
+
+
+
 }

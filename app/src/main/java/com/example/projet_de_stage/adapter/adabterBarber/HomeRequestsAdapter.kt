@@ -23,7 +23,7 @@ class HomeRequestsAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<Appointment>) {
         newRequests.clear()
-        newRequests.addAll(newList.filter { it.status == "accepted" && it.date == LocalDate.now() })
+        newRequests.addAll(newList.filter { it.status == "accepted" && it.date == LocalDate.now().toString() })
         notifyDataSetChanged()
     }
 

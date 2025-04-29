@@ -3,30 +3,37 @@ package com.example.projet_de_stage.view.client
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Appointment
 import com.example.projet_de_stage.data.Barber
 import com.example.projet_de_stage.data.Customer
 import com.example.projet_de_stage.data.Shop
 import com.example.projet_de_stage.viewModel.ClientViewModel
+import com.wdullaer.materialdatetimepicker.time.Timepoint
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.Calendar
 import java.util.UUID
 
 class RequestClient : AppCompatActivity() {
-    private var selectedDate: String? = null
-    private var selectedTime: String? = null
     private var selectedService: String = ""
     private val viewModel = ClientViewModel()
+    private lateinit var date : String
+    private lateinit var time : String
+
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +48,13 @@ class RequestClient : AppCompatActivity() {
         val btnSelectTime = findViewById<Button>(R.id.btnSelectTime)
         val btnBook = findViewById<Button>(R.id.btnBook)
         val rgServices = findViewById<RadioGroup>(R.id.rgServices)
+        val ivBarber = findViewById<ImageView>(R.id.ivBarber)
 
         // Get data from intent
         val shop = intent.getParcelableExtra("SHOP_DATA", Shop::class.java)
         val barber = intent.getParcelableExtra("BARBER_DATA", Barber::class.java)
         val client = intent.getParcelableExtra("CLIENT_DATA", Customer::class.java)
+
 
         Toast.makeText(this , " client name : ${client?.name} " , Toast.LENGTH_SHORT).show()
         if (shop == null || barber == null || client == null) {
@@ -57,7 +66,17 @@ class RequestClient : AppCompatActivity() {
         // Set shop and barber info
         tvShopName.text = shop.name
         tvBarberName.text = barber.name
-        barber.rating?.toFloat()?.let { ratingBar.rating = it }
+        barber.rating.toFloat().let { ratingBar.rating = it }
+
+
+        if (shop.imageUrl.isNotEmpty()) {
+            Glide.with(this)
+                .load(shop.imageUrl)
+                .into(ivBarber)
+        } else {
+            ivBarber.setImageResource(shop.imageRes)
+        }
+
 
         // Service selection
         rgServices.setOnCheckedChangeListener { _, checkedId ->
@@ -69,11 +88,44 @@ class RequestClient : AppCompatActivity() {
             }
         }
 
-        // Date picker
-        btnSelectDate.setOnClickListener { showDatePicker() }
+        val blockedAppointments = listOf(
+            Appointment(
+                id = "1",
+                clientId = "client1",
+                time = "09:00",
+                service = "حلاقة الرأس",
+                status = "confirmed",
+                date = "2025-04-30",
+                shopId = "shop1",
+                barberId = "barber1"
+            ),
+            Appointment(
+                id = "2",
+                clientId = "client2",
+                time = "12:00",
+                service = "حلاقة اللحية",
+                status = "confirmed",
+                date = "2025-04-30",
+                shopId = "shop1",
+                barberId = "barber2"
+            ),
+            Appointment(
+                id = "3",
+                clientId = "client3",
+                time = "15:00",
+                service = "حلاقة الرأس واللحية",
+                status = "confirmed",
+                date = "2025-04-05"
+            )
+        )
 
-        // Time picker
-        btnSelectTime.setOnClickListener { showTimePicker() }
+                        // Date picker
+        btnSelectDate.setOnClickListener {
+            showHourRangePicker(this, blockedAppointments) { selectedDate, selectedTime ->
+                // استخدم التاريخ والوقت الذي اختاره
+
+            }
+        }
 
         // Book appointment
         btnBook.setOnClickListener {
@@ -83,49 +135,20 @@ class RequestClient : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("DefaultLocale")
-    private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
-        val datePicker = DatePickerDialog(
-            this,
-            { _, year, month, dayOfMonth ->
-                selectedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
-                findViewById<Button>(R.id.btnSelectDate).text = selectedDate
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
-        datePicker.datePicker.minDate = System.currentTimeMillis()
-        datePicker.show()
-    }
 
-    @SuppressLint("DefaultLocale")
-    private fun showTimePicker() {
-        val calendar = Calendar.getInstance()
-        val timePicker = TimePickerDialog(
-            this,
-            { _, hourOfDay, minute ->
-                selectedTime = String.format("%02d:%02d", hourOfDay, minute)
-                findViewById<Button>(R.id.btnSelectTime).text = selectedTime
-            },
-            calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE),
-            true
-        )
-        timePicker.show()
-    }
+
+
 
     private fun validateInputs(): Boolean {
         if (selectedService.isEmpty()) {
             Toast.makeText(this, "الرجاء اختيار الخدمة", Toast.LENGTH_SHORT).show()
             return false
         }
-        if (selectedDate.isNullOrEmpty()) {
+        if (date.isEmpty()) {
             Toast.makeText(this, "الرجاء اختيار التاريخ", Toast.LENGTH_SHORT).show()
             return false
         }
-        if (selectedTime.isNullOrEmpty()) {
+        if (time.isEmpty()) {
             Toast.makeText(this, "الرجاء اختيار الوقت", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -137,10 +160,10 @@ class RequestClient : AppCompatActivity() {
         val appointment = Appointment(
             id = UUID.randomUUID().toString(),
             clientId = client.uid,
-            time = selectedTime ?: "",
+            time = time,
             service = selectedService,
-            status = "قيد الانتظار",
-            date = LocalDate.parse(selectedDate),
+            status = "pending",
+            date = date,
             shopId = shop.id,
             barberId = barber.uid
         )
@@ -159,4 +182,72 @@ class RequestClient : AppCompatActivity() {
             }
         )
     }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showHourRangePicker(
+        context: Context,
+        blockedAppointments: List<Appointment>, // مواعيد محجوزة
+        onSelected: (String, String) -> Unit
+    ) {
+        val today = LocalDate.now()
+
+        val dpd = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance(
+            { _, year, month, dayOfMonth ->
+                val selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
+
+                // استخراج الساعات المحجوزة لهذا التاريخ
+                val blockedHours = blockedAppointments
+                    .filter { it.date == selectedDate.toString() }
+                    .mapNotNull {
+                        it.time.split(":").getOrNull(0)?.toIntOrNull()
+                    }.toMutableSet()
+
+                val now = LocalDateTime.now()
+                if (selectedDate == today) {
+                    // منع الساعات الماضية في هذا اليوم
+                    val currentHour = now.hour
+                    blockedHours.addAll((0 until currentHour).toList())
+                }
+
+                val availableHours = (9..18).filter { it !in blockedHours }
+
+                if (availableHours.isEmpty()) {
+                    Toast.makeText(context, "لا توجد ساعات متاحة في هذا اليوم", Toast.LENGTH_SHORT).show()
+                    return@newInstance
+                }
+
+                val firstHour = availableHours.first()
+
+                val tpd = com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(
+                    { _, hourOfDay, _, _ ->
+                        val formattedTime = String.format("%02d:00", hourOfDay)
+                        onSelected(selectedDate.toString(), formattedTime)
+                    },
+                    firstHour, 0, true
+                )
+
+                val disabledTimepoints = blockedHours.map { Timepoint(it, 0) }.toTypedArray()
+                if (disabledTimepoints.isNotEmpty()) {
+                    tpd.setDisabledTimes(disabledTimepoints)
+                }
+
+                tpd.setTimeInterval(1, 60)
+                tpd.show((context as AppCompatActivity).supportFragmentManager, "TimePickerDialog")
+            },
+            today.year,
+            today.monthValue - 1,
+            today.dayOfMonth
+        )
+
+        // منع الأيام السابقة
+        dpd.minDate = Calendar.getInstance()
+
+        dpd.show((context as AppCompatActivity).supportFragmentManager, "DatePickerDialog")
+    }
+
+
+
+
 }

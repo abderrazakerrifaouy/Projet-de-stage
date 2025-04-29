@@ -15,7 +15,7 @@ import com.example.projet_de_stage.data.Appointment
 import java.time.LocalDate
 
 class HistoryRequestsFragment : Fragment() {
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerViewBaber: RecyclerView
     private val adapter = HistoryRequestsAdapter()
 
     override fun onCreateView(
@@ -30,9 +30,9 @@ class HistoryRequestsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById(R.id.list_item_history)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
+        recyclerViewBaber = view.findViewById(R.id.list_item_history)
+        recyclerViewBaber.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewBaber.adapter = adapter
 
         loadHistoryData()
     }
@@ -46,7 +46,7 @@ class HistoryRequestsFragment : Fragment() {
                 "10:00 ص",
                 "حلاقة + لحية",
                 "completed",
-                LocalDate.of(2025, 4, 13),
+                LocalDate.of(2025, 4, 13).toString(),
                 "shop1",
                 "barber1"
             ),
