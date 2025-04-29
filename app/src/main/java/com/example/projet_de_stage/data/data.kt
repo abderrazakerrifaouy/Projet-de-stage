@@ -33,7 +33,7 @@ data class Barber(
     val shopId: String = "",
     val imageRes: Int = R.drawable.my_profile,
     val rating: Float = 0f ,
-    val Nrating: Int = 0
+    val nrating: Int = 0
 ): Parcelable
 
 @Parcelize

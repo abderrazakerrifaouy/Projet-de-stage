@@ -1,5 +1,6 @@
 package com.example.projet_de_stage.repository
 
+import android.util.Log
 import com.example.projet_de_stage.data.Appointment
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -66,10 +67,22 @@ class AppointmentRepository {
     }
 
 
-    fun getAllAppointmentsByBarberId(uid : String){
-
+    fun getAllAppointmentsByBarberId(
+        barberId: String,
+        onSuccess: (List<Appointment>) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        firestoreCollection
+            .whereEqualTo("barberId", barberId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val appointments = querySnapshot.documents
+                    .mapNotNull { it.toObject(Appointment::class.java) }
+                onSuccess(appointments)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("FirestoreError", "Failed to fetch appointments", exception)
+                onFailure(exception)
+            }
     }
-
-
-
 }

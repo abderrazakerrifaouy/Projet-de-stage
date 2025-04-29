@@ -1,5 +1,6 @@
 package com.example.projet_de_stage.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,6 +27,9 @@ class ClientViewModel : ViewModel() {
     // LiveData للمواعيد
     private val _appointments = MutableLiveData<List<Appointment>>()
     val appointments: LiveData<List<Appointment>> = _appointments
+
+    private val _appointmentsDate = MutableLiveData<List<Appointment>>()
+    val appointmentsDate: LiveData<List<Appointment>> = _appointmentsDate
 
     // LiveData للأخطاء
     private val _error = MutableLiveData<String?>()
@@ -93,6 +97,7 @@ class ClientViewModel : ViewModel() {
             },
             onFailure = { exception ->
                 _error.postValue(exception.message)
+
                 onFailure(exception)
             }
         )
@@ -112,6 +117,24 @@ class ClientViewModel : ViewModel() {
             },
             onFailure = { exception ->
                 _error.postValue(exception.message)
+            }
+        )
+    }
+
+    fun getAppointmentsByIdBarebr(
+        uid : String ,
+    ){
+        appointmentRepository.getAllAppointmentsByBarberId(
+            barberId = uid ,
+            onSuccess = { list ->
+                _appointmentsDate.postValue(list)
+                Log.e("Firestore", "Failed to fetch appointments ${list.size} ")
+                _error.postValue(list.size.toString())
+            } ,
+            onFailure = { exceptoin ->
+                _error.postValue(exceptoin.message)
+                Log.e("FirestoreError", "Failed to fetch appointments", exceptoin)
+
             }
         )
     }
