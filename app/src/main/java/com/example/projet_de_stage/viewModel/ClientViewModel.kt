@@ -5,9 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.projet_de_stage.data.Appointment
+import com.example.projet_de_stage.data.Barber
 import com.example.projet_de_stage.data.Customer
 import com.example.projet_de_stage.data.Shop
 import com.example.projet_de_stage.repository.AppointmentRepository
+import com.example.projet_de_stage.repository.BarberRepository
 import com.example.projet_de_stage.repository.CustomerRepository
 import com.example.projet_de_stage.repository.ShopRepository
 
@@ -15,6 +17,7 @@ class ClientViewModel : ViewModel() {
     private val clientRepository = CustomerRepository()
     private val shopRepository = ShopRepository()
     private val appointmentRepository = AppointmentRepository()
+    private val barberRepository = BarberRepository()
 
     // LiveData للمحلات
     private val _shops = MutableLiveData<List<Shop>>()
@@ -23,6 +26,12 @@ class ClientViewModel : ViewModel() {
     // LiveData بيانات العميل
     private val _customer = MutableLiveData<Customer?>()
     val customer: LiveData<Customer?> = _customer
+
+    private val _barber = MutableLiveData<Barber?>() // barberId -> barberName
+    val barber: LiveData<Barber?> = _barber
+
+    private val _shop = MutableLiveData<Shop?>()
+    val shop: LiveData<Shop?> = _shop
 
     // LiveData للمواعيد
     private val _appointments = MutableLiveData<List<Appointment>>()
@@ -138,4 +147,31 @@ class ClientViewModel : ViewModel() {
             }
         )
     }
+
+    fun getBarberById(
+         id : String,
+    ){
+        barberRepository.getBarberById(
+            id = id,
+            onSuccess = { barber ->
+                _barber.postValue(barber)
+            },
+            onFailure = { e ->
+                _error.postValue(e.message)
+            })
+    }
+
+    fun getShopById(
+        id : String,
+    ){
+        shopRepository.getShopById(
+            id = id,
+            onSuccess = { shop ->
+                _shop.postValue(shop)
+            },
+            onFailure = { e ->
+                _error.postValue(e.message)
+            })
+    }
+
 }

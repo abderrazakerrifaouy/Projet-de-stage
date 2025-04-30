@@ -1,6 +1,7 @@
 package com.example.projet_de_stage.adapter.adapterClient
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Appointment
+import com.example.projet_de_stage.viewModel.ClientViewModel
 import java.time.format.DateTimeFormatter
 
 class AppointmentAdapter(
@@ -19,6 +21,7 @@ class AppointmentAdapter(
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    private val  viewModel = ClientViewModel()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppointmentViewHolder {
         // Make sure you're inflating the ITEM layout, not fragment layout
@@ -47,11 +50,19 @@ class AppointmentAdapter(
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(appointment: Appointment) {
+            viewModel.getShopById(appointment.shopId)
+            viewModel.getBarberById(appointment.barberId)
             tvDate.text = appointment.date.format(dateFormatter)
             tvTime.text = appointment.time
             tvBarberchop.text = appointment.shopId // Consider changing to shopName if available
             tvService.text = appointment.service
-            tvBarberName.text = appointment.barberId // Consider changing to barberName if available
+            viewModel.barber.observeForever { barber ->
+                tvBarberName.text = barber?.name ?: "Barber Name"
+            }
+            viewModel.shop.observeForever { shop ->
+                tvBarberchop.text = shop?.name ?: "Shop Name"
+            }
+             // Consider changing to barberName if available
 
             tvStatus.text = appointment.status
             val backgroundRes = when (appointment.status) {

@@ -97,6 +97,8 @@ class ShopRepository {
         return snapshot.toObjects(Shop::class.java)
     }
 
+
+
     suspend fun getShopsByOwnerId(ownerId: String): List<Shop> {
         return try {
             val snapshot = collection
@@ -145,6 +147,29 @@ class ShopRepository {
                 }
             }
             .addOnFailureListener { onFailure(it) }
+    }
+    fun getShopById(
+        id: String,
+        onSuccess: (Shop) -> Unit,
+        onFailure: (Exception) -> Unit
+    ){
+        collection.document(id)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val shop = documentSnapshot.toObject(Shop::class.java)
+                    if (shop != null) {
+                        onSuccess(shop)
+                    } else {
+                        onFailure(Exception("Shop not found"))
+                    }
+                    } else {
+                        onFailure(Exception("Shop does not exist"))
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    onFailure(exception)
+                }
     }
 
 }

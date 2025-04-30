@@ -36,6 +36,7 @@ class RequestClient : AppCompatActivity() {
     private lateinit var time: String
     private lateinit var blockedAppointments: MutableList<Appointment>
 
+    @SuppressLint("SuspiciousIndentation")
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +87,6 @@ class RequestClient : AppCompatActivity() {
         }
 
         blockedAppointments = mutableListOf()
-        Toast.makeText(this, barber.uid, Toast.LENGTH_SHORT).show()
 
         // باستخدام Coroutine لجلب البيانات من Firebase بشكل غير متزامن
 
@@ -94,8 +94,6 @@ class RequestClient : AppCompatActivity() {
 
 
         btnSelectDate.setOnClickListener {
-            Toast.makeText(this , blockedAppointments.size.toString() , Toast.LENGTH_SHORT).show()
-
             showHourRangePicker(this, blockedAppointments) { selectedDate, selectedTime ->
                 date = selectedDate
                 time = selectedTime
@@ -168,8 +166,6 @@ class RequestClient : AppCompatActivity() {
                             blockedAppointments.addAll(list)
                 }
             viewModel.error.observe(this) { e ->
-                Toast.makeText(this@RequestClient, "خطأ في جلب المواعيد: $e", Toast.LENGTH_SHORT).show()
-
             }
 
             } catch (e: Exception) {

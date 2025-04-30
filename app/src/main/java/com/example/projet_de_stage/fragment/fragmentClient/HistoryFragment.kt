@@ -51,7 +51,7 @@ class HistoryFragmentClient : Fragment() {
         }
 
         // إعداد RecyclerView و Adapter
-        adapter = AppointmentAdapter(mutableListOf()) { appointment ->
+        adapter = AppointmentAdapter( mutableListOf()) { appointment ->
             Toast.makeText(requireContext(), "تم حذف موعد بنجاح", Toast.LENGTH_SHORT).show()
         }
 
@@ -81,14 +81,4 @@ class HistoryFragmentClient : Fragment() {
         }
     }
 
-    companion object {
-        fun newInstance(customer: Customer): HistoryFragmentClient {
-            val fragment = HistoryFragmentClient()
-            val bundle = Bundle().apply {
-                putParcelable("customer", customer)
-            }
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
 }

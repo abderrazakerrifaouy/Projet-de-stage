@@ -41,7 +41,7 @@ class BarberAdapter(
         fun bind(barber: Barber) {
             tvBarberName.text = barber.name
             ratingBar.rating = barber.rating
-            barber.imageRes?.let { ivBarber.setImageResource(it) }
+            ivBarber.setImageResource(R.drawable.my_profile)
 
             btnSelect.setOnClickListener {
                 onBarberSelected(barber)
