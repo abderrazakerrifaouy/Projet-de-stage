@@ -6,17 +6,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.adapter.adabterBarber.NewRequestsAdapter
-import com.example.projet_de_stage.data.Appointment
-import java.time.LocalDate
+import com.example.projet_de_stage.data.Barber
+import com.example.projet_de_stage.viewModel.BarberViewModel
 
 class NewRequestsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
+    private val brberviewModel = BarberViewModel()
+    private var barber: Barber? = null  // <-- هنا التغيير
+
     private val adapter = NewRequestsAdapter(
         onAcceptClick = { appointment ->
             // Handle additional accept action if needed
@@ -40,22 +44,38 @@ class NewRequestsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        barber = arguments?.getParcelable("barber")
+        Toast.makeText(requireContext(), "Barber ID: ${barber?.uid}", Toast.LENGTH_SHORT).show()
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        // Load your data - example:
-        val appointments = listOf(
-            Appointment(
-                "1",
-                "أحمد محمد",
-                "10:00 ص",
-                "حلاقة + لحية",
-                "pending",
-                LocalDate.of(2025, 4, 13).toString(),
-                "shop1",
-                "barber1"
-            ),
+
+        // استدعاء ViewModel
+        brberviewModel.getAppointmentByBarberIdandStatus(
+            status = "pending",
+            barberId = barber?.uid.toString()
         )
-        adapter.updateData(appointments)
+
+        // بيانات تجريبية
+
+        brberviewModel.appointments.observe(viewLifecycleOwner) { appointments ->
+            adapter.updateData(appointments)
+        }
+        brberviewModel.error.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                Toast.makeText(requireContext(), "Error: $error", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    companion object {
+        fun newInstance(barber: Barber?): NewRequestsFragment {
+            val fragment = NewRequestsFragment()
+            val args = Bundle()
+            args.putParcelable("barber", barber)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

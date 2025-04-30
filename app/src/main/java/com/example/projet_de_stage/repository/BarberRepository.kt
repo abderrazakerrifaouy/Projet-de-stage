@@ -33,12 +33,12 @@ class BarberRepository {
 
     fun updateBarber(
         barber: Barber,
-        onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit
+        onSuccess: (Boolean) -> Unit,
+        onFailure: (Boolean) -> Unit
     ) {
         collection.document(barber.uid).set(barber)
-            .addOnSuccessListener { onSuccess() }
-            .addOnFailureListener { e -> onFailure(e) }
+            .addOnSuccessListener { onSuccess(true) }
+            .addOnFailureListener { onFailure(false) }
     }
 
     fun deleteBarber(

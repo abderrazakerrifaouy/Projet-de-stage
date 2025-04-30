@@ -24,7 +24,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="محمد أحمد"
+                android:text=""
                 android:textSize="18sp"
                 android:layout_marginEnd="20dp"
                 android:textStyle="bold"/>
@@ -35,8 +35,12 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_status_pending"
                 android:padding="4dp"
-                android:text="في الانتظار"
-                android:textColor="@color/white"/>
+                android:text="@string/accepted"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp" />
         </LinearLayout>
 
         <View
@@ -73,21 +77,15 @@
             android:orientation="horizontal"
             android:gravity="end">
 
-            <Button
-                android:id="@+id/btnReject"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="رفض"
-                android:backgroundTint="@color/blue_200"
-                style="@style/Widget.Material3.Button.OutlinedButton"/>
+
 
             <Button
-                android:id="@+id/btnAccept"
+                android:id="@+id/btnInAccept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="قبول"
-                android:backgroundTint="@color/blue_800"
+                android:text="إلغاء"
+                android:backgroundTint="@color/blue_900"
                 style="@style/Widget.Material3.Button"/>
         </LinearLayout>
     </LinearLayout>

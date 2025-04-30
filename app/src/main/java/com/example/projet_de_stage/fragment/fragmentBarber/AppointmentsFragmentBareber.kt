@@ -26,7 +26,10 @@ class AppointmentsFragmentBareber : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adaptere = AppointmentsManagerAdapter(requireActivity())
+        val adaptere = AppointmentsManagerAdapter(
+            requireActivity() ,
+            arguments?.getParcelable("barber")
+        )
         viewPager.adapter = adaptere
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->

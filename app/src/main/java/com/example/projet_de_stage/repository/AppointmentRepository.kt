@@ -67,14 +67,15 @@ class AppointmentRepository {
     }
 
 
-    fun getAllAppointmentsByBarberId(
+    fun getAllAppointmentsByBarberIdandStatus(
+        status : String,
         barberId: String,
         onSuccess: (List<Appointment>) -> Unit,
         onFailure: (Exception) -> Unit
     ) {
         firestoreCollection
             .whereEqualTo("barberId", barberId)
-            .whereEqualTo("status", "accepted")
+            .whereEqualTo("status", status)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val appointments = querySnapshot.documents
@@ -85,5 +86,40 @@ class AppointmentRepository {
                 Log.e("FirestoreError", "Failed to fetch appointments", exception)
                 onFailure(exception)
             }
+    }
+
+
+    fun getAllAppointmentsByBarberId(
+        barberId: String,
+        onSuccess: (List<Appointment>) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        firestoreCollection
+            .whereEqualTo("barberId", barberId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val appointments = querySnapshot.documents
+                    .mapNotNull { it.toObject(Appointment::class.java) }
+                onSuccess(appointments)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("FirestoreError", "Failed to fetch appointments", exception)
+                onFailure(exception)
+            }
+    }
+
+    fun updateAppointmentStatus(
+        appointmentId: String,
+        newStatus: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        firestoreCollection.document(appointmentId)
+            .update("status", newStatus)
+            .addOnSuccessListener {
+                realtimeAppointments.child(appointmentId).child("status").setValue(newStatus)
+                onSuccess()
+                }
+            .addOnFailureListener { e -> onFailure(e) }
     }
 }

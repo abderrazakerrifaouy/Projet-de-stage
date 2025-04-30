@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,11 +13,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.adapter.adabterBarber.HistoryRequestsAdapter
 import com.example.projet_de_stage.data.Appointment
+import com.example.projet_de_stage.data.Barber
+import com.example.projet_de_stage.viewModel.BarberViewModel
 import java.time.LocalDate
 
 class HistoryRequestsFragment : Fragment() {
     private lateinit var recyclerViewBaber: RecyclerView
     private val adapter = HistoryRequestsAdapter()
+    private var barber: Barber? = null  // <-- هنا التغيير
+    private val viewModels = BarberViewModel()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +36,11 @@ class HistoryRequestsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        barber = arguments?.getParcelable("barber")
+        Toast.makeText(requireContext(), "Barber ID: ${barber?.uid}", Toast.LENGTH_SHORT).show()
+
+
         recyclerViewBaber = view.findViewById(R.id.list_item_history)
         recyclerViewBaber.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewBaber.adapter = adapter
@@ -39,19 +50,20 @@ class HistoryRequestsFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun loadHistoryData() {
-        val historyData = listOf(
-            Appointment(
-                "1",
-                "أحمد محمد",
-                "10:00 ص",
-                "حلاقة + لحية",
-                "completed",
-                LocalDate.of(2025, 4, 13).toString(),
-                "shop1",
-                "barber1"
-            ),
-        )
+        viewModels.getAllAppointmentsByBarberId(barber?.uid.toString())
 
-        adapter.submitList(historyData)
+        viewModels.appointments.observe(viewLifecycleOwner) { appointments ->
+            adapter.submitList(appointments)
+        }
+    }
+
+    companion object {
+        fun newInstance(barber: Barber?): HistoryRequestsFragment {
+            val fragment = HistoryRequestsFragment()
+            val args = Bundle()
+            args.putParcelable("barber", barber)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

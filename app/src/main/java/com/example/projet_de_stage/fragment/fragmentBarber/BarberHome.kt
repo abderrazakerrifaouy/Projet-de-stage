@@ -127,22 +127,20 @@ class BarberHome : Fragment() {
             ivShopImage.setImageResource(R.drawable.my_profile)
         }
 
-        val appointments = listOf(
-            Appointment(
-                id = "1",
-                clientId = "أ. محمد",
-                time = "10:00 ص",
-                service = "حلاقة + لحية",
-                status = "accepted",
-                date = LocalDate.now().toString(),
-                shopId = "${shop!!.id}",
-                barberId = "${barber.uid}"
-            ),
-            // ممكن تزيد مواعيد أخرى هنا
-        )
+//        val appointments = listOf<Appointment>()
+//        homeRequestsAdapter.updateData(appointments)
+//        recyclerView.adapter = homeRequestsAdapter
 
-        homeRequestsAdapter.updateData(appointments)
-        recyclerView.adapter = homeRequestsAdapter
+        barberViewModel.getAppointmentByBarberIdandStatus("accepted",barber.uid)
+
+        barberViewModel.appointments.observe(viewLifecycleOwner) { appointments ->
+            Toast.makeText(requireContext(), "تم تحميل المواعيد بنجاح"+appointments.size.toString(), Toast.LENGTH_SHORT).show()
+            homeRequestsAdapter.updateData(appointments)
+            recyclerView.adapter = homeRequestsAdapter
+
+        }
+
+
     }
 
 

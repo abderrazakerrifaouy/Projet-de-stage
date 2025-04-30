@@ -22,7 +22,7 @@
                 android:id="@+id/tvTime"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="10:00 ص"
+                android:text=""
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -30,7 +30,7 @@
                 android:id="@+id/tvDateTime"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:text="20/09/2025"
+                android:text=""
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -51,14 +51,14 @@
                 android:id="@+id/tvCustomerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="أحمد محمد"
+                android:text=""
                 android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/tvServices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="حلاقة + لحية"
+                android:text=""
                 android:textColor="@color/secondary_text"/>
         </LinearLayout>
         <LinearLayout

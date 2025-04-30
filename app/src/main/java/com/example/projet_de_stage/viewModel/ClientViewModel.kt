@@ -23,9 +23,7 @@ class ClientViewModel : ViewModel() {
     private val _shops = MutableLiveData<List<Shop>>()
     val shops: LiveData<List<Shop>> = _shops
 
-    // LiveData بيانات العميل
-    private val _customer = MutableLiveData<Customer?>()
-    val customer: LiveData<Customer?> = _customer
+
 
     private val _barber = MutableLiveData<Barber?>() // barberId -> barberName
     val barber: LiveData<Barber?> = _barber
@@ -68,27 +66,7 @@ class ClientViewModel : ViewModel() {
         )
     }
 
-    /**
-     * يجلب بيانات العميل حسب المعرف ويحدث LiveData
-     */
-    fun loadCustomerById(
-        id: String,
-        onSuccess: (Customer?) -> Unit,
-        onFailure: (Exception) -> Unit
-    ) {
-        clientRepository.getCustomerById(
-            id = id,
-            onSuccess = { c ->
-                _customer.postValue(c)
-                onSuccess(c)
-                _error.postValue(null)
-            },
-            onFailure = { e ->
-                _error.postValue(e.message)
-                onFailure(e)
-            }
-        )
-    }
+
 
     /**
      * تحدّث بيانات العميل في المخزن
@@ -133,7 +111,8 @@ class ClientViewModel : ViewModel() {
     fun getAppointmentsByIdBarebr(
         uid : String ,
     ){
-        appointmentRepository.getAllAppointmentsByBarberId(
+        appointmentRepository.getAllAppointmentsByBarberIdandStatus(
+            status = "accepted",
             barberId = uid ,
             onSuccess = { list ->
                 _appointmentsDate.postValue(list)

@@ -16,6 +16,7 @@ import com.example.projet_de_stage.data.Barber
 import com.example.projet_de_stage.view.LoginActivity
 import com.example.projet_de_stage.viewModel.ClientViewModel
 import androidx.core.content.edit
+import com.example.projet_de_stage.view.barberUser.ModifyBarberActivity
 
 class ProfileFragment : Fragment() {
     private lateinit var barber: Barber
@@ -70,21 +71,13 @@ class ProfileFragment : Fragment() {
             requireActivity().finish()
         }
         // For testing, create a dummy barber
-        barber = Barber(
-            uid = "1",
-            name = "أحمد محمد",
-            experience = "0",
-            email = "john.c.breckinridge@altostrat ",
-            phone = "+966501234567",
-            password = "password123",
-            shopId = "shop123",
-            imageRes = R.drawable.my_profile,
-            rating = 2.5f
-        )
+        barber = arguments?.getParcelable<Barber>("barber")!!
         bindBarberData()
 
         btnEditProfile.setOnClickListener {
-            // Handle edit profile button click
+            val intent = Intent(requireContext(), ModifyBarberActivity::class.java)
+            intent.putExtra("barber", barber)
+            startActivity(intent)
         }
     }
 
@@ -97,13 +90,5 @@ class ProfileFragment : Fragment() {
         tvPhone.text = barber.phone
     }
 
-    companion object {
-        fun newInstance(barber: Barber): ProfileFragment {
-            return ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable("barber", barber)
-                }
-            }
-        }
-    }
+
 }

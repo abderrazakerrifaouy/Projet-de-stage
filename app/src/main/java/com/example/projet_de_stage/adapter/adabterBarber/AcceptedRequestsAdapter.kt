@@ -1,21 +1,25 @@
 package com.example.projet_de_stage.adapter.adabterBarber
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Appointment
+import com.example.projet_de_stage.viewModel.BarberViewModel
 
 class AcceptedRequestsAdapter(
-    private val onAcceptClick: (Appointment) -> Unit,
     private val onRejectClick: (Appointment) -> Unit
 ) : RecyclerView.Adapter<AcceptedRequestsAdapter.AcceptedRequestViewHolder>() {
 
     private val acceptedRequests = mutableListOf<Appointment>()
+    private val viewModels = BarberViewModel()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<Appointment>) {
         acceptedRequests.clear()
         acceptedRequests.addAll(newList.filter { it.status == "accepted" })
@@ -39,8 +43,14 @@ class AcceptedRequestsAdapter(
         fun bind(appointment: Appointment) {
             itemView.findViewById<TextView>(R.id.tvTime).text = appointment.time
             itemView.findViewById<TextView>(R.id.tvDateTime).text = "" // Add date if available
-            itemView.findViewById<TextView>(R.id.tvCustomerName).text = appointment.clientId
             itemView.findViewById<TextView>(R.id.tvServices).text = appointment.service
+
+            viewModels.loadCustomerById(appointment.clientId)
+
+            viewModels.customer.observe(itemView.context as LifecycleOwner) { customer ->
+                itemView.findViewById<TextView>(R.id.tvCustomerName).text = customer?.name
+            }
+
 
             // Since these are already accepted requests, we might want to change button behavior
             itemView.findViewById<Button>(R.id.btnAccept).apply {

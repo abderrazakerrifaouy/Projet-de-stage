@@ -1,25 +1,24 @@
 package com.example.projet_de_stage.fragment.fragmentBarber
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.adapter.adabterBarber.AcceptedRequestsAdapter
-import com.example.projet_de_stage.data.Appointment
-import java.time.LocalDate
+import com.example.projet_de_stage.data.Barber
+import com.example.projet_de_stage.viewModel.BarberViewModel
 
 class AcceptedRequestsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
+    private val barberViewModel = BarberViewModel()
+    private var barber: Barber? = null  // <-- هنا التغيير
     private val adapter = AcceptedRequestsAdapter(
-        onAcceptClick = { appointment ->
-            // Handle additional accept action if needed
-        },
+
         onRejectClick = { appointment ->
             // Handle reject action for already accepted appointment
         }
@@ -34,36 +33,41 @@ class AcceptedRequestsFragment : Fragment() {
         return view
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        barber = arguments?.getParcelable("barber")
+        Toast.makeText(requireContext(), "Barber ID: ${barber?.uid}", Toast.LENGTH_SHORT).show()
+
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
         // Load your data - example:
-        val appointments = listOf(
-            Appointment(
-                "1",
-                "أحمد محمد",
-                "10:00 ص",
-                "حلاقة + لحية",
-                "pending",
-                LocalDate.of(2025, 4, 13).toString(),
-                "shop1",
-                "barber1"
-            ),
-            Appointment(
-                "2",
-                "محمد علي",
-                "11:30 ص",
-                "حلاقة فقط",
-                "accepted",
-                LocalDate.of(2025, 4, 13).toString(),
-                "shop2",
-                "barber2"
-            )
+        barberViewModel.getAppointmentByBarberIdandStatus(
+            status = "accepted",
+            barberId = barber?.uid.toString()
         )
-        adapter.updateData(appointments)
+
+        barberViewModel.appointments.observe(viewLifecycleOwner) {
+            adapter.updateData(it)
+        }
+        barberViewModel.error.observe(viewLifecycleOwner) {
+            if (it != null) {
+                Toast.makeText(requireContext(), "Error: $it", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+    }
+
+    companion object {
+        fun newInstance(barber: Barber?): AcceptedRequestsFragment {
+            val fragment = AcceptedRequestsFragment()
+            val args = Bundle()
+            args.putParcelable("barber", barber)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

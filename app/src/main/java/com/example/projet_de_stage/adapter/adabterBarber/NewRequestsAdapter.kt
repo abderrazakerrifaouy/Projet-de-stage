@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Appointment
+import com.example.projet_de_stage.viewModel.BarberViewModel
 
 class NewRequestsAdapter(
     private val onAcceptClick: (Appointment) -> Unit,
@@ -17,11 +19,12 @@ class NewRequestsAdapter(
 {
 
     private val newRequests = mutableListOf<Appointment>()
+    private val viewModels = BarberViewModel()
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<Appointment>) {
         newRequests.clear()
-        newRequests.addAll(newList.filter { it.status == "pending" }) // Filter for new/pending requests
+        newRequests.addAll(newList) // Filter for new/pending requests
         notifyDataSetChanged()
     }
 
@@ -46,10 +49,16 @@ class NewRequestsAdapter(
         private val btnReject: Button = itemView.findViewById(R.id.btnReject)
 
         fun bind(appointment: Appointment) {
+            viewModels.loadCustomerById(appointment.clientId)
             tvTime.text = appointment.time
-            tvDateTime.text = "" // Add date if available in your Appointment class
-            tvCustomerName.text = appointment.clientId
+            tvDateTime.text = appointment.date // Add date if available in your Appointment class
             tvServices.text = appointment.service
+
+            viewModels.customer.observe(itemView.context as LifecycleOwner) { customer ->
+                if (customer != null) {
+                    tvCustomerName.text = customer.name
+                }
+            }
 
             // Set button texts and behaviors for NEW requests
             btnAccept.text = "قبول"

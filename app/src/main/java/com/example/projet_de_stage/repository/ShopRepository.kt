@@ -172,4 +172,15 @@ class ShopRepository {
                 }
     }
 
+    fun updateShop(
+        shop: Shop,
+        onSuccess: (Boolean) -> Unit,
+        onFailure: (Boolean) -> Unit
+    ) {
+        collection.document(shop.id)
+            .set(shop)
+            .addOnSuccessListener { onSuccess(true) }
+            .addOnFailureListener { onFailure(false) }
+    }
+
 }

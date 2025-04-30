@@ -1,5 +1,6 @@
 package com.example.projet_de_stage.adapter.adabterBarber
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
@@ -11,15 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Appointment
 import androidx.core.graphics.toColorInt
+import com.example.projet_de_stage.viewModel.BarberViewModel
 
 class HistoryRequestsAdapter : RecyclerView.Adapter<HistoryRequestsAdapter.HistoryViewHolder>() {
 
     private var historyList = listOf<Appointment>()
+    private val viewModels = BarberViewModel()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(newList: List<Appointment>) {
-        historyList = newList.filter {
-            it.status != "pending" && it.status != "accepted"
-        }
+        historyList = newList
         notifyDataSetChanged()
     }
 
@@ -45,12 +47,20 @@ class HistoryRequestsAdapter : RecyclerView.Adapter<HistoryRequestsAdapter.Histo
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(appointment: Appointment) {
+            viewModels.loadCustomerById(appointment.clientId)
             tvDate.text = appointment.date.toString()
             tvTime.text = appointment.time
-            tvCustomer.text = appointment.clientId
             tvService.text = appointment.service
 
+            viewModels.customer.observe(itemView.context as androidx.fragment.app.FragmentActivity) { customer ->
+                tvCustomer.text = customer?.name
+            }
+
             when (appointment.status) {
+                "pending" -> {
+                    tvStatus.text = "معلق"
+                    tvStatus.setTextColor("#FF9800".toColorInt()) // Orange
+                }
                 "completed" -> {
                     tvStatus.text = "مكتمل"
                     tvStatus.setTextColor("#4CAF50".toColorInt()) // Green

@@ -25,14 +25,14 @@ data class ShopOwner(
 data class Barber(
     var uid: String = "",
     var name: String = "",
-    val experience: String = "",
+    var experience: String = "",
     var email: String = "",
-    val phone: String = "",
+    var phone: String = "",
     var password: String = "",
     var birthDate: String = "",
     val shopId: String = "",
     val imageRes: Int = R.drawable.my_profile,
-    val rating: Float = 0f ,
+    val rating: Float = 0f,
     val nrating: Int = 0
 ): Parcelable
 
@@ -78,7 +78,7 @@ data class Shop(
     val nbarbers: Int = 3,
     val imageRes: Int = R.drawable.my_profile,
     val imageUrl: String = "", // ← هذا الجديد
-    val barbers: List<Barber> = emptyList()
+    val barbers: MutableList<Barber> = mutableListOf()
 ) : Parcelable
 
 
