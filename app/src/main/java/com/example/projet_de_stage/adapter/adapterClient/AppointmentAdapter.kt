@@ -66,8 +66,8 @@ class AppointmentAdapter(
 
             tvStatus.text = appointment.status
             val backgroundRes = when (appointment.status) {
-                "مكتمل" -> R.drawable.status_completed_background
-                "ملغي" -> R.drawable.status_cancelled_background
+                "completed" -> R.drawable.status_completed_background
+                "canceled" -> R.drawable.status_cancelled_background
                 else -> R.drawable.status_pending_background
             }
             tvStatus.setBackgroundResource(backgroundRes)

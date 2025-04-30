@@ -138,7 +138,7 @@ class ClientViewModel : ViewModel() {
             onSuccess = { list ->
                 _appointmentsDate.postValue(list)
                 Log.e("Firestore", "Failed to fetch appointments ${list.size} ")
-                _error.postValue(list.size.toString())
+                _error.postValue(null)
             } ,
             onFailure = { exceptoin ->
                 _error.postValue(exceptoin.message)

@@ -22,9 +22,7 @@ import com.example.projet_de_stage.viewModel.ClientViewModel
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import com.wdullaer.materialdatetimepicker.time.Timepoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
@@ -156,16 +154,17 @@ class RequestClient : AppCompatActivity() {
     }
 
     private  fun loadAppointments(barberId: String) {
-        Toast.makeText(this , "hhhh" , Toast.LENGTH_SHORT).show()
 
         try {
                 viewModel.getAppointmentsByIdBarebr(barberId)
                 viewModel.appointmentsDate.observe(this@RequestClient){ list ->
-                    Toast.makeText(this , list.size.toString() , Toast.LENGTH_SHORT).show()
                     blockedAppointments.clear()
                             blockedAppointments.addAll(list)
                 }
             viewModel.error.observe(this) { e ->
+                if (e != null) {
+                    Toast.makeText(this@RequestClient, "خطأ أثناء تحميل المواعيد: ${e}", Toast.LENGTH_SHORT).show()
+                }
             }
 
             } catch (e: Exception) {

@@ -13,6 +13,7 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Customer
+import com.example.projet_de_stage.view.LoginActivity
 import com.example.projet_de_stage.view.client.UpdateCustomerProfileActivity
 import kotlin.apply
 
@@ -65,6 +66,9 @@ class ProfileFragmentClient : Fragment() {
             prefs.edit {
                 putString("uid", "")
             }
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
 
     }

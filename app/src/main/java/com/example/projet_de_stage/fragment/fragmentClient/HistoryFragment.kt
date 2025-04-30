@@ -70,7 +70,6 @@ class HistoryFragmentClient : Fragment() {
         viewModel.appointments.observe(viewLifecycleOwner) { list ->
             progressBar.visibility = View.GONE
             adapter.updateData(list)
-            Toast.makeText(requireContext(), "تم تحميل المواعيد بنجاح", Toast.LENGTH_SHORT).show()
         }
 
         viewModel.error.observe(viewLifecycleOwner) { message ->

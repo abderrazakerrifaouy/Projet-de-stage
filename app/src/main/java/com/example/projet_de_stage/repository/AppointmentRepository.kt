@@ -74,6 +74,7 @@ class AppointmentRepository {
     ) {
         firestoreCollection
             .whereEqualTo("barberId", barberId)
+            .whereEqualTo("status", "accepted")
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val appointments = querySnapshot.documents
