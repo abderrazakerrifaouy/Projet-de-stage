@@ -55,15 +55,12 @@ class ClientViewModel : ViewModel() {
     fun addAppointment(
         appointment: Appointment,
         onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit,
-        onConflict: () -> Unit
+        onFailure: (Exception) -> Unit
     ) {
         appointmentRepository.addAppointment(
             appointment = appointment,
             onSuccess = { onSuccess() },
-            onFailure = { e -> onFailure(e) },
-            onConflict = { onConflict() }
-        )
+            onFailure = { e -> onFailure(e) })
     }
 
 

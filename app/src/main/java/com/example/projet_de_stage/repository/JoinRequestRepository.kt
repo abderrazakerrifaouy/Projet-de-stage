@@ -39,6 +39,7 @@ class JoinRequestRepository {
             .addOnFailureListener { e -> onFailure(e) }
     }
 
+
     fun deleteRequest(
         id: String,
         onSuccess: () -> Unit,
@@ -60,5 +61,16 @@ class JoinRequestRepository {
                 onSuccess(qs.documents.mapNotNull { it.toObject(JoinRequest::class.java) })
             }
             .addOnFailureListener { e -> onFailure(e) }
+    }
+
+
+    fun updateRequestStatus(
+        requestId: String,
+        newStatus: String,
+        onSuccess: (Boolean) -> Unit,
+    ) {
+        collection.document(requestId).update("status", newStatus)
+            .addOnSuccessListener { onSuccess(true) }
+            .addOnFailureListener { onSuccess(false) }
     }
 }

@@ -25,21 +25,52 @@ class JoinRequestsFragment : Fragment() {
         recyclerView = view.findViewById(R.id.joinRequestsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val adapter = JoinRequestsAdapter(emptyList(), { id, approved, barber , idShop ->
-            // الكود هنا لإظهار Toast مع نتيجة القبول أو الرفض
-            var message = ""
-            if (approved) {
-                message = "الطلب $id مقبول من قبل ${barber?.name ?: "غير معروف"}"
-                viewModel.addBarberToShop(idShop ?: "", barber!!)
-            } else {
-                message = "الطلب $id مرفوض من قبل ${barber?.name ?: "غير معروف"}"
-            }
-            Toast.makeText(
-                requireContext(),
-                message,
-                Toast.LENGTH_SHORT
-            ).show()
-        }, viewModel)
+
+
+        val adapter = JoinRequestsAdapter(
+            emptyList(),
+            { id, approved, barber, idShop ->
+                if (approved) {
+                    viewModel.updateJoinRequestStatus(
+                        id,
+                        "accepted",
+                        onSuccess = { check ->
+                            if (check) {
+                                viewModel.addBarberToShop(idShop ?: "", barber!!)
+                                refleshUi()
+                            }
+                            else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "حدث خطأ أثناء تحديث حالة الطلب",
+                                    Toast.LENGTH_SHORT
+                                    ).show()
+                            }
+                        }
+                    )
+                } else {
+                    viewModel.updateJoinRequestStatus(
+                        id,
+                        "rejected",
+                        onSuccess = { check ->
+                            if (check) {
+                                refleshUi()
+                            }
+                            else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "حدث خطأ أثناء تحديث حالة الطلب",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            })
+                }
+            } ,
+            viewModel
+        )
+
+
+
         recyclerView.adapter = adapter
 
 
@@ -61,4 +92,11 @@ class JoinRequestsFragment : Fragment() {
 
         return view
     }
+    private fun refleshUi() {
+        val shopOwnerId = arguments?.getString("shopOwner")
+        if (!shopOwnerId.isNullOrEmpty()) {
+            viewModel.getJoinRequestsByShopOwnerId(shopOwnerId)
+        }
+    }
+
 }

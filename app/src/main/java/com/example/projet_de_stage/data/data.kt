@@ -66,7 +66,7 @@ data class JoinRequest(
     val idBarber: String = "",
     val idShop: String = "",
     var date: String = "" ,
-    val status: String = "" ,
+    val status: String = "" , // pending // accepted //
     val idShopOwner: String = ""
 )
 @Parcelize

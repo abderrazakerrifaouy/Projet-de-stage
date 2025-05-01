@@ -6,11 +6,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projet_de_stage.data.Appointment
 import com.example.projet_de_stage.data.Barber
+import com.example.projet_de_stage.data.Customer
 import com.example.projet_de_stage.data.JoinRequest
 import com.example.projet_de_stage.data.Shop
 import com.example.projet_de_stage.data.ShopOwner
+import com.example.projet_de_stage.repository.AppointmentRepository
 import com.example.projet_de_stage.repository.BarberRepository
+import com.example.projet_de_stage.repository.CustomerRepository
 import com.example.projet_de_stage.repository.JoinRequestRepository
 import com.example.projet_de_stage.repository.ShopOwnerRepository
 import com.example.projet_de_stage.repository.ShopRepository
@@ -23,9 +27,14 @@ class AdmineViewModel : ViewModel() {
     private val shopRepository = ShopRepository()
     private val shopOwnerRepository = ShopOwnerRepository()
     private val barberRepository = BarberRepository()
+    private val appointmentRepository = AppointmentRepository()
+    private val clientRepository = CustomerRepository()
 
     private val _shops = MutableLiveData<List<Shop>>()
     val shops: LiveData<List<Shop>> get() = _shops
+
+    private val _customer = MutableLiveData<Customer?>()
+    val customer: LiveData<Customer?> = _customer
 
     private val _shopCreationStatus = MutableLiveData<Boolean>()
     val shopCreationStatus: LiveData<Boolean> = _shopCreationStatus
@@ -39,9 +48,14 @@ class AdmineViewModel : ViewModel() {
     private val _joinRequests = MutableLiveData<List<JoinRequest>>()
     val joinRequests: LiveData<List<JoinRequest>> get() = _joinRequests
 
-
     private val _barber = MutableLiveData<Barber?>()
     val barber: LiveData<Barber?> get() = _barber
+
+    private val _appointments = MutableLiveData<List<Appointment>>()
+    val appointments: LiveData<List<Appointment>> get() = _appointments
+
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?> = _error
 
 
     fun getShopOwnerById(id: String, callback: (ShopOwner?) -> Unit) {
@@ -122,6 +136,76 @@ class AdmineViewModel : ViewModel() {
                 _errorMessage.postValue("خطأ: ${e.message}")
             }
         }
+    }
+
+    fun getAppointmentsByShopOwnrId(
+        shopOwnerId: String
+    ) {
+        viewModelScope.launch {
+            try {
+                val list = shopRepository.getAllShops()
+                val listShopId = list.filter { it.idOwner == shopOwnerId }.map { it.id }
+
+                val allAppointments = mutableListOf<Appointment>()
+
+                listShopId.forEach { shopId ->
+                    appointmentRepository.getAppointmentsByShopId(
+                        shopId,
+                        onSuccess = { appointments ->
+                            allAppointments.addAll(appointments.filter { it.status == "pending" || it.status == "accepted" })
+                            _appointments.postValue(allAppointments.toList()) // تحديث الـ LiveData
+                        },
+                        onFailure = { exception ->
+                            _errorMessage.postValue("فشل في جلب المواعيد: ${exception.message}")
+                        }
+                    )
+                }
+            } catch (e: Exception) {
+                _errorMessage.postValue("خطأ غير متوقع: ${e.message}")
+            }
+        }
+    }
+
+
+     fun loadCustomerById(
+        id: String,
+    ) {
+        clientRepository.getCustomerById(
+            id = id,
+            onSuccess = { c ->
+                _customer.postValue(c)
+                _error.postValue(null)
+            },
+            onFailure = { e ->
+                _error.postValue(e.message)
+            }
+        )
+    }
+
+
+    fun updateAppointmentStatus(
+        appointmentId: String,
+        newStatus: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        appointmentRepository.updateAppointmentStatus(
+            appointmentId = appointmentId,
+            newStatus = newStatus,
+            onSuccess = { onSuccess() },
+            onFailure = { e -> onFailure(e) })
+    }
+
+    fun updateJoinRequestStatus(
+        requestId: String,
+        newStatus: String,
+        onSuccess: (Boolean) -> Unit,
+    ) {
+        repositoryJoinRequests.updateRequestStatus(
+            requestId = requestId,
+            newStatus = newStatus,
+            onSuccess = { onSuccess(it) }
+        )
     }
 
 

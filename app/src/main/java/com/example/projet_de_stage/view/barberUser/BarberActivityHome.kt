@@ -124,59 +124,47 @@ class BarberActivityHome : AppCompatActivity() {
         val NameCustomer = view.findViewById<TextView>(R.id.NameCustomer)
         val dateService = view.findViewById<TextView>(R.id.dateService)
 
-
         barberViewModel.loadCustomerById(appointment.clientId)
         barberViewModel.customer.observe(this) { customer ->
             NameCustomer.text = "العميل: ${customer?.name}"
         }
+
         dateService.text = "تاريخ الخدمة: ${appointment.date}"
         serviceText.text = "الخدمة: ${appointment.service}"
         timeText.text = "الوقت: ${appointment.time}"
 
         acceptButton.setOnClickListener {
-            // نفذ منطق القبول هنا
             Toast.makeText(this, "تم قبول الموعد", Toast.LENGTH_SHORT).show()
             barberViewModel.updateAppointmentStatus(
-                appointment.id,
-                "accepted" ,
-                onSuccess = {
-                    Toast.makeText(this, "تم تحديث الحالة", Toast.LENGTH_SHORT).show()
-                },
-                onFailure = {
-                    Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
-                }
-                )
+                appointment.id, "accepted",
+                onSuccess = { Toast.makeText(this, "تم تحديث الحالة", Toast.LENGTH_SHORT).show() },
+                onFailure = { Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show() }
+            )
             deleteAppointmentInRealTimeDatabase(appointment)
-            bottomSheetDialog.show()
+            bottomSheetDialog.dismiss()
         }
 
         rejectButton.setOnClickListener {
-            // نفذ منطق الرفض هنا
             Toast.makeText(this, "تم رفض الموعد", Toast.LENGTH_SHORT).show()
             barberViewModel.updateAppointmentStatus(
-                appointment.id,
-                "rejected" ,
-                onSuccess = {
-                    Toast.makeText(this, "تم تحديث الحالة", Toast.LENGTH_SHORT).show()
-                },
-                onFailure = {
-                    Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
-                }
+                appointment.id, "rejected",
+                onSuccess = { Toast.makeText(this, "تم تحديث الحالة", Toast.LENGTH_SHORT).show() },
+                onFailure = { Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show() }
             )
             deleteAppointmentInRealTimeDatabase(appointment)
-            bottomSheetDialog.show()
+            bottomSheetDialog.dismiss()
         }
 
         pendingButton.setOnClickListener {
-            // نفذ منطق الانتظار هنا
             Toast.makeText(this, "تم وضع الموعد في الانتظار", Toast.LENGTH_SHORT).show()
             deleteAppointmentInRealTimeDatabase(appointment)
-            bottomSheetDialog.show()
+            bottomSheetDialog.dismiss()
         }
 
         bottomSheetDialog.setContentView(view)
         bottomSheetDialog.show()
     }
+
     private fun deleteAppointmentInRealTimeDatabase(appointment: Appointment) {
 
         barberViewModel.deleteAppointmentInRealtimeDatabase(

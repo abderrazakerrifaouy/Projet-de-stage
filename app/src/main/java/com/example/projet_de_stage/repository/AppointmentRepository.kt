@@ -20,8 +20,7 @@ class AppointmentRepository {
     fun addAppointment(
         appointment: Appointment,
         onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit,
-        onConflict: () -> Unit // حالة وجود تعارض
+        onFailure: (Exception) -> Unit
     ) {
         // أولا نبحث إذا كان كاين موعد بنفس اليوم والساعة والحلاق
         firestoreCollection
@@ -29,18 +28,14 @@ class AppointmentRepository {
             .whereEqualTo("date", appointment.date.toString()) // LocalDate نخليه كـ String
             .whereEqualTo("time", appointment.time)
             .get()
-            .addOnSuccessListener { querySnapshot ->
-                if (querySnapshot.isEmpty) {
+            .addOnSuccessListener {
                     // ما كاين حتى تعارض ➔ نضيفه
                     firestoreCollection.document(appointment.id)
                         .set(appointment)
                         .addOnSuccessListener { onSuccess() }
                         .addOnFailureListener { e -> onFailure(e) }
                     realtimeAppointments.child(appointment.id).setValue(appointment)
-                } else {
-                    // كاين رونديڤو فـ نفس الوقت
-                    onConflict()
-                }
+
             }
             .addOnFailureListener { e -> onFailure(e) }
     }
@@ -163,6 +158,25 @@ class AppointmentRepository {
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onFailure() }
 
+    }
+
+
+    fun getAppointmentsByShopId(
+        shopId: String,
+        onSuccess: (List<Appointment>) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        firestoreCollection
+            .whereEqualTo("shopId", shopId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val appointments = querySnapshot.documents
+                    .mapNotNull { it.toObject(Appointment::class.java) }
+                onSuccess(appointments)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
     }
 
 

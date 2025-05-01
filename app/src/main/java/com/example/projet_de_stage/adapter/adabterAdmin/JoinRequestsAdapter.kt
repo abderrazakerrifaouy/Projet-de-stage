@@ -57,7 +57,7 @@ class JoinRequestsAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateList(newList: List<JoinRequest>) {
-        requests = newList
+        requests = newList.filter { it.status == "pending" }
         notifyDataSetChanged()
     }
 

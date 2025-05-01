@@ -92,7 +92,7 @@ class RequestClient : AppCompatActivity() {
 
 
         btnSelectDate.setOnClickListener {
-            showHourRangePicker(this, blockedAppointments) { selectedDate, selectedTime ->
+            showHourRangePicker(this, blockedAppointments.filter { it.status == "pending" || it.status == "accepted" }) { selectedDate, selectedTime ->
                 date = selectedDate
                 time = selectedTime
             }
@@ -142,10 +142,6 @@ class RequestClient : AppCompatActivity() {
                 } ,
                 onFailure = { e ->
                     Toast.makeText(this@RequestClient, "خطأ أثناء الحجز: ${e.message}", Toast.LENGTH_SHORT).show()
-
-                } ,
-                onConflict = {
-                    Toast.makeText(this@RequestClient, "خطأ أثناء الحجز: ", Toast.LENGTH_SHORT).show()
 
                 }
                 )
