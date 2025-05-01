@@ -19,8 +19,7 @@ class AppointmentsAdapter(
         val tvTime = view.findViewById<TextView>(R.id.tvTime)
         val tvService = view.findViewById<TextView>(R.id.tvServices)
         val tvStatus = view.findViewById<TextView>(R.id.tvStatus)
-        val btnAccept = view.findViewById<Button>(R.id.btnAccept)
-        val btnReject = view.findViewById<Button>(R.id.btnReject)
+        val btnAccept = view.findViewById<Button>(R.id.btnInAccept)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppointmentViewHolder {
@@ -36,7 +35,6 @@ class AppointmentsAdapter(
         holder.tvStatus.text = item.status
 
         holder.btnAccept.setOnClickListener { onAction(item.id, true) }
-        holder.btnReject.setOnClickListener { onAction(item.id, false) }
     }
 
     override fun getItemCount(): Int = appointments.size

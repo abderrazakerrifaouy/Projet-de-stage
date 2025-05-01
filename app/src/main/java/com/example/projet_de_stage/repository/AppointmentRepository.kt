@@ -2,7 +2,11 @@ package com.example.projet_de_stage.repository
 
 import android.util.Log
 import com.example.projet_de_stage.data.Appointment
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AppointmentRepository {
@@ -122,4 +126,44 @@ class AppointmentRepository {
                 }
             .addOnFailureListener { e -> onFailure(e) }
     }
+
+
+    fun listenToNewAppointmentsForBarber(
+        barberId: String,
+        onNewAppointment: (Appointment) -> Unit,
+        onError: (DatabaseError) -> Unit
+    ) {
+        val seenAppointments = mutableSetOf<String>()
+
+        realtimeAppointments.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val appointment = snapshot.getValue(Appointment::class.java)
+                if (appointment != null && appointment.barberId == barberId && appointment.status == "pending") {
+                    if (!seenAppointments.contains(appointment.id)) {
+                        seenAppointments.add(appointment.id)
+                        onNewAppointment(appointment)
+                    }
+                }
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {
+                onError(error)
+            }
+        })
+    }
+
+    fun deleteAppointmentInRealtimeDatabase(
+        appointmentId: String ,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit) {
+        realtimeAppointments.child(appointmentId).removeValue()
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onFailure() }
+
+    }
+
+
 }

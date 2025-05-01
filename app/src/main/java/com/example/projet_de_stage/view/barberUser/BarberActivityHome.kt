@@ -1,12 +1,17 @@
 package com.example.projet_de_stage.view.barberUser
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.projet_de_stage.R
+import com.example.projet_de_stage.data.Appointment
 import com.example.projet_de_stage.data.Barber
 import com.example.projet_de_stage.fragment.fragmentBarber.AppointmentsFragmentBareber
 import com.example.projet_de_stage.fragment.fragmentBarber.BarberHome
@@ -14,6 +19,7 @@ import com.example.projet_de_stage.fragment.fragmentBarber.ProfileFragment
 import com.example.projet_de_stage.viewModel.BarberViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationBarView
 import kotlinx.coroutines.launch
 
@@ -37,6 +43,20 @@ class BarberActivityHome : AppCompatActivity() {
 
 
 
+        barberViewModel.listenToNewRealtimeAppointments(
+            barberId = barber.uid,
+            onNewAppointment = { appointment ->
+                runOnUiThread {
+                    showAppointmentBottomSheet(appointment)
+                }
+            },
+            onError = { errorMessage ->
+                Toast.makeText(this, "خطأ في الاتصال: $errorMessage", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+
+
 
         // Initialize bottom navigation
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -51,6 +71,7 @@ class BarberActivityHome : AppCompatActivity() {
             loadFragment(BarberHome())
         }
     }
+
 
     private fun setupBottomNavigation(bottomNav: BottomNavigationView) {
         bottomNav.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
@@ -88,6 +109,86 @@ class BarberActivityHome : AppCompatActivity() {
             }
             commit()
         }
+    }
+
+    @SuppressLint("SetTextI18n", "MissingInflatedId")
+    private fun showAppointmentBottomSheet(appointment: Appointment) {
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_appointment, null)
+
+        val serviceText = view.findViewById<TextView>(R.id.serviceTextView)
+        val timeText = view.findViewById<TextView>(R.id.timeTextView)
+        val acceptButton = view.findViewById<Button>(R.id.acceptButton)
+        val rejectButton = view.findViewById<Button>(R.id.rejectButton)
+        val pendingButton = view.findViewById<Button>(R.id.pendingButton)
+        val NameCustomer = view.findViewById<TextView>(R.id.NameCustomer)
+        val dateService = view.findViewById<TextView>(R.id.dateService)
+
+
+        barberViewModel.loadCustomerById(appointment.clientId)
+        barberViewModel.customer.observe(this) { customer ->
+            NameCustomer.text = "العميل: ${customer?.name}"
+        }
+        dateService.text = "تاريخ الخدمة: ${appointment.date}"
+        serviceText.text = "الخدمة: ${appointment.service}"
+        timeText.text = "الوقت: ${appointment.time}"
+
+        acceptButton.setOnClickListener {
+            // نفذ منطق القبول هنا
+            Toast.makeText(this, "تم قبول الموعد", Toast.LENGTH_SHORT).show()
+            barberViewModel.updateAppointmentStatus(
+                appointment.id,
+                "accepted" ,
+                onSuccess = {
+                    Toast.makeText(this, "تم تحديث الحالة", Toast.LENGTH_SHORT).show()
+                },
+                onFailure = {
+                    Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+                )
+            deleteAppointmentInRealTimeDatabase(appointment)
+            bottomSheetDialog.show()
+        }
+
+        rejectButton.setOnClickListener {
+            // نفذ منطق الرفض هنا
+            Toast.makeText(this, "تم رفض الموعد", Toast.LENGTH_SHORT).show()
+            barberViewModel.updateAppointmentStatus(
+                appointment.id,
+                "rejected" ,
+                onSuccess = {
+                    Toast.makeText(this, "تم تحديث الحالة", Toast.LENGTH_SHORT).show()
+                },
+                onFailure = {
+                    Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+            )
+            deleteAppointmentInRealTimeDatabase(appointment)
+            bottomSheetDialog.show()
+        }
+
+        pendingButton.setOnClickListener {
+            // نفذ منطق الانتظار هنا
+            Toast.makeText(this, "تم وضع الموعد في الانتظار", Toast.LENGTH_SHORT).show()
+            deleteAppointmentInRealTimeDatabase(appointment)
+            bottomSheetDialog.show()
+        }
+
+        bottomSheetDialog.setContentView(view)
+        bottomSheetDialog.show()
+    }
+    private fun deleteAppointmentInRealTimeDatabase(appointment: Appointment) {
+
+        barberViewModel.deleteAppointmentInRealtimeDatabase(
+            appointment.id,
+            onSuccess = { check ->
+                if (check) {
+                    Toast.makeText(this, "تم حذف موعد بنجاح", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    Toast.makeText(this, "خطأ في حذف موعد", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
 

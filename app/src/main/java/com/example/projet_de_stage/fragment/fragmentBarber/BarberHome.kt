@@ -39,19 +39,30 @@ class BarberHome : Fragment() {
     private lateinit var tvShopLocation : TextView
     private lateinit var ivShopImage : ImageView
 
+    private val barberViewModel = BarberViewModel()
+    private lateinit var barber: Barber
+    private var shop: Shop? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val homeRequestsAdapter = HomeRequestsAdapter{ appointment ->
-        Toast.makeText(requireContext(), "تم قبول الطلب بنجاح", Toast.LENGTH_SHORT).show()
-
+        barberViewModel.updateAppointmentStatus(
+            appointmentId = appointment.id,
+            newStatus = "canceled",
+            onSuccess = {
+                Toast.makeText(requireContext(), "تم إلغاء المواعيد بنجاح", Toast.LENGTH_SHORT).show()
+                refreshUI()
+            },
+            onFailure = {
+                Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+        )
     }
     @RequiresApi(Build.VERSION_CODES.O)
     private val shopAdapterBarber = ShopAdapterBarber { shop ->
         onRequestJoinShop(shop)
     }
 
-    private val barberViewModel = BarberViewModel()
-    private lateinit var barber: Barber
-    private var shop: Shop? = null
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -81,7 +92,7 @@ class BarberHome : Fragment() {
 
     }
     @RequiresApi(Build.VERSION_CODES.O)
-    fun refreshUI() {
+     private fun refreshUI() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         lifecycleScope.launch {
@@ -134,7 +145,6 @@ class BarberHome : Fragment() {
         barberViewModel.getAppointmentByBarberIdandStatus("accepted",barber.uid)
 
         barberViewModel.appointments.observe(viewLifecycleOwner) { appointments ->
-            Toast.makeText(requireContext(), "تم تحميل المواعيد بنجاح"+appointments.size.toString(), Toast.LENGTH_SHORT).show()
             homeRequestsAdapter.updateData(appointments)
             recyclerView.adapter = homeRequestsAdapter
 

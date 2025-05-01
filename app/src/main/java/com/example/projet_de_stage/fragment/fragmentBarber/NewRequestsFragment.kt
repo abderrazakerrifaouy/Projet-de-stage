@@ -18,15 +18,36 @@ import com.example.projet_de_stage.viewModel.BarberViewModel
 
 class NewRequestsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
-    private val brberviewModel = BarberViewModel()
+    private val barberviewModel = BarberViewModel()
     private var barber: Barber? = null  // <-- هنا التغيير
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val adapter = NewRequestsAdapter(
         onAcceptClick = { appointment ->
-            // Handle additional accept action if needed
+            barberviewModel.updateAppointmentStatus(
+                appointmentId = appointment.id,
+                newStatus = "accepted",
+                onSuccess = {
+                    Toast.makeText(requireContext(), "تم accepted المواعيد بنجاح", Toast.LENGTH_SHORT).show()
+                    refreshUI()
+                },
+                onFailure = {
+                    Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+            )
         },
         onRejectClick = { appointment ->
-            // Handle reject action for already accepted appointment
+            barberviewModel.updateAppointmentStatus(
+                appointmentId = appointment.id,
+                newStatus = "canceled",
+                onSuccess = {
+                    Toast.makeText(requireContext(), "تم إلغاء المواعيد بنجاح", Toast.LENGTH_SHORT).show()
+                    refreshUI()
+                },
+                onFailure = {
+                    Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+            )
         }
     )
 
@@ -52,17 +73,17 @@ class NewRequestsFragment : Fragment() {
 
 
         // استدعاء ViewModel
-        brberviewModel.getAppointmentByBarberIdandStatus(
+        barberviewModel.getAppointmentByBarberIdandStatus(
             status = "pending",
             barberId = barber?.uid.toString()
         )
 
         // بيانات تجريبية
 
-        brberviewModel.appointments.observe(viewLifecycleOwner) { appointments ->
+        barberviewModel.appointments.observe(viewLifecycleOwner) { appointments ->
             adapter.updateData(appointments)
         }
-        brberviewModel.error.observe(viewLifecycleOwner) { error ->
+        barberviewModel.error.observe(viewLifecycleOwner) { error ->
             if (error != null) {
                 Toast.makeText(requireContext(), "Error: $error", Toast.LENGTH_SHORT).show()
             }
@@ -78,4 +99,15 @@ class NewRequestsFragment : Fragment() {
             return fragment
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun refreshUI() {
+        barber?.uid?.let { barberId ->
+            barberviewModel.getAppointmentByBarberIdandStatus(
+                status = "pending",
+                barberId = barberId
+            )
+        } ?: Toast.makeText(requireContext(), "لا يمكن تحديث الواجهة: الحلاق غير متوفر", Toast.LENGTH_SHORT).show()
+    }
+
 }

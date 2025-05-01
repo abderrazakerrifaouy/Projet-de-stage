@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/NameCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="الخدمة: ..."
+        android:textSize="20sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/serviceTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="الخدمة: ..."
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/dateService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="الخدمة: ..."
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="الوقت: ..."
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="قبول"
+        android:backgroundTint="@color/blue_200"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/rejectButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="رفض"
+        android:backgroundTint="@color/blue_500"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/pendingButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="انتظار"
+        android:backgroundTint="@color/blue_800"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>

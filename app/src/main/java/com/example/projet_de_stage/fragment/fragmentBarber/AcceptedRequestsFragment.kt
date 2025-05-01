@@ -18,11 +18,22 @@ class AcceptedRequestsFragment : Fragment() {
     private val barberViewModel = BarberViewModel()
     private var barber: Barber? = null  // <-- هنا التغيير
     private val adapter = AcceptedRequestsAdapter(
-
         onRejectClick = { appointment ->
-            // Handle reject action for already accepted appointment
+            barberViewModel.updateAppointmentStatus(
+                appointmentId = appointment.id,
+                newStatus = "canceled",
+                onSuccess = {
+                    Toast.makeText(requireContext(), "تم إلغاء المواعيد بنجاح", Toast.LENGTH_SHORT).show()
+                    refreshUI()
+                },
+                onFailure = {
+                    Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                })
         }
     )
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +50,7 @@ class AcceptedRequestsFragment : Fragment() {
 
         barber = arguments?.getParcelable("barber")
         Toast.makeText(requireContext(), "Barber ID: ${barber?.uid}", Toast.LENGTH_SHORT).show()
-
+        refreshUI()
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -70,4 +81,14 @@ class AcceptedRequestsFragment : Fragment() {
             return fragment
         }
     }
+
+    private fun refreshUI() {
+        barber?.uid?.let { barberId ->
+            barberViewModel.getAppointmentByBarberIdandStatus(
+                status = "accepted",
+                barberId = barberId
+            )
+        } ?: Toast.makeText(requireContext(), "لا يمكن تحديث الواجهة: الحلاق غير متوفر", Toast.LENGTH_SHORT).show()
+    }
+
 }

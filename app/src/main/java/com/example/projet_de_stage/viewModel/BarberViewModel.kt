@@ -24,6 +24,10 @@ class BarberViewModel : ViewModel() {
     private val _appointments = MutableLiveData<List<Appointment>>()
     val appointments: LiveData<List<Appointment>> = _appointments
 
+
+    private val _realTimeAppointments = MutableLiveData<List<Appointment>>()
+    val realTimeAppointments: LiveData<List<Appointment>> = _realTimeAppointments
+
     // LiveData بيانات العميل
     private val _customer = MutableLiveData<Customer?>()
     val customer: LiveData<Customer?> = _customer
@@ -149,6 +153,31 @@ class BarberViewModel : ViewModel() {
             onSuccess = { onSuccess() },
             onFailure = { e -> onFailure(e) })
     }
+
+
+    fun listenToNewRealtimeAppointments(
+        barberId: String,
+        onNewAppointment: (Appointment) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        appointmentsRepository.listenToNewAppointmentsForBarber(
+            barberId = barberId,
+            onNewAppointment = onNewAppointment,
+            onError = { dbError -> onError(dbError.message) }
+        )
+    }
+
+    fun deleteAppointmentInRealtimeDatabase(
+        appointmentId: String ,
+        onSuccess: (Boolean) -> Unit){
+        appointmentsRepository.deleteAppointmentInRealtimeDatabase(
+            appointmentId = appointmentId,
+            onSuccess = { onSuccess(true) },
+            onFailure = { onSuccess(false) }
+        )
+    }
+
+
 
 
 }

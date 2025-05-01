@@ -40,7 +40,6 @@ class BarbershopDetails : AppCompatActivity() {
     }
 
     private fun setupUI(shop: Shop, client: Customer?) {
-//        ivShopBanner.setImageResource(shop.imageRes)
         if (shop.imageUrl.isNotEmpty()) {
             Glide.with(this)
                 .load(shop.imageUrl)

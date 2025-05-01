@@ -68,6 +68,7 @@ class AppointmentAdapter(
             val backgroundRes = when (appointment.status) {
                 "completed" -> R.drawable.status_completed_background
                 "canceled" -> R.drawable.status_cancelled_background
+                "rejected" -> R.drawable.status_cancelled_background
                 else -> R.drawable.status_pending_background
             }
             tvStatus.setBackgroundResource(backgroundRes)

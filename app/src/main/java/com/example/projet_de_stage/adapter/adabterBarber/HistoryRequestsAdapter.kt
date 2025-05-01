@@ -74,7 +74,7 @@ class HistoryRequestsAdapter : RecyclerView.Adapter<HistoryRequestsAdapter.Histo
                     tvStatus.setTextColor("#FF9800".toColorInt()) // Orange
                 }
                 else -> {
-                    tvStatus.text = appointment.status
+                    tvStatus.text = "مقبول"
                     tvStatus.setTextColor("#9E9E9E".toColorInt()) // Gray
                 }
             }
