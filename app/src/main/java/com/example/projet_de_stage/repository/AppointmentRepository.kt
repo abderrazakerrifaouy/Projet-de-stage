@@ -2,13 +2,13 @@ package com.example.projet_de_stage.repository
 
 import android.util.Log
 import com.example.projet_de_stage.data.Appointment
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * Repository that manages all appointment-related operations
+ * using both Firestore and Firebase Realtime Database.
+ */
 class AppointmentRepository {
 
     private val firestore = FirebaseFirestore.getInstance()
@@ -17,34 +17,32 @@ class AppointmentRepository {
     private val realtimeDb = FirebaseDatabase.getInstance().reference
     private val realtimeAppointments = realtimeDb.child("appointments")
 
+    /**
+     * Adds a new appointment if no conflict exists (same barber, date, and time).
+     */
     fun addAppointment(
         appointment: Appointment,
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
-        // أولا نبحث إذا كان كاين موعد بنفس اليوم والساعة والحلاق
         firestoreCollection
             .whereEqualTo("barberId", appointment.barberId)
-            .whereEqualTo("date", appointment.date.toString()) // LocalDate نخليه كـ String
+            .whereEqualTo("date", appointment.date)
             .whereEqualTo("time", appointment.time)
             .get()
             .addOnSuccessListener {
-                    // ما كاين حتى تعارض ➔ نضيفه
-                    firestoreCollection.document(appointment.id)
-                        .set(appointment)
-                        .addOnSuccessListener { onSuccess() }
-                        .addOnFailureListener { e -> onFailure(e) }
-                    realtimeAppointments.child(appointment.id).setValue(appointment)
+                firestoreCollection.document(appointment.id)
+                    .set(appointment)
+                    .addOnSuccessListener { onSuccess() }
+                    .addOnFailureListener { e -> onFailure(e) }
 
+                realtimeAppointments.child(appointment.id).setValue(appointment)
             }
             .addOnFailureListener { e -> onFailure(e) }
     }
+
     /**
-     * تجلب قائمة المواعيد (Appointment) الخاصة بالعميل من Firestore
-     *
-     * @param customerId معرف العميل
-     * @param onSuccess يعاد استدعاؤه مع اللائحة عند النجاح
-     * @param onFailure يعاد استدعاؤه مع الاستثناء عند الفشل
+     * Retrieves all appointments made by a specific customer.
      */
     fun getAppointmentsByCustomerId(
         customerId: String,
@@ -55,19 +53,18 @@ class AppointmentRepository {
             .whereEqualTo("clientId", customerId)
             .get()
             .addOnSuccessListener { querySnapshot ->
-                // نحول كل مستند لكائن Appointment إذا أمكن
                 val appointments = querySnapshot.documents
                     .mapNotNull { it.toObject(Appointment::class.java) }
                 onSuccess(appointments)
             }
-            .addOnFailureListener { exception ->
-                onFailure(exception)
-            }
+            .addOnFailureListener { exception -> onFailure(exception) }
     }
 
-
+    /**
+     * Retrieves appointments by barber ID and status (e.g., pending, accepted).
+     */
     fun getAllAppointmentsByBarberIdandStatus(
-        status : String,
+        status: String,
         barberId: String,
         onSuccess: (List<Appointment>) -> Unit,
         onFailure: (Exception) -> Unit
@@ -87,7 +84,9 @@ class AppointmentRepository {
             }
     }
 
-
+    /**
+     * Retrieves all appointments related to a specific barber regardless of status.
+     */
     fun getAllAppointmentsByBarberId(
         barberId: String,
         onSuccess: (List<Appointment>) -> Unit,
@@ -107,6 +106,9 @@ class AppointmentRepository {
             }
     }
 
+    /**
+     * Updates the status field of an appointment in both Firestore and Realtime Database.
+     */
     fun updateAppointmentStatus(
         appointmentId: String,
         newStatus: String,
@@ -118,11 +120,13 @@ class AppointmentRepository {
             .addOnSuccessListener {
                 realtimeAppointments.child(appointmentId).child("status").setValue(newStatus)
                 onSuccess()
-                }
+            }
             .addOnFailureListener { e -> onFailure(e) }
     }
 
-
+    /**
+     * Listens for new "pending" appointments for a specific barber in Realtime Database.
+     */
     fun listenToNewAppointmentsForBarber(
         barberId: String,
         onNewAppointment: (Appointment) -> Unit,
@@ -133,11 +137,13 @@ class AppointmentRepository {
         realtimeAppointments.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val appointment = snapshot.getValue(Appointment::class.java)
-                if (appointment != null && appointment.barberId == barberId && appointment.status == "pending") {
-                    if (!seenAppointments.contains(appointment.id)) {
-                        seenAppointments.add(appointment.id)
-                        onNewAppointment(appointment)
-                    }
+                if (appointment != null &&
+                    appointment.barberId == barberId &&
+                    appointment.status == "pending" &&
+                    !seenAppointments.contains(appointment.id)
+                ) {
+                    seenAppointments.add(appointment.id)
+                    onNewAppointment(appointment)
                 }
             }
 
@@ -150,17 +156,22 @@ class AppointmentRepository {
         })
     }
 
+    /**
+     * Deletes an appointment from the Realtime Database.
+     */
     fun deleteAppointmentInRealtimeDatabase(
-        appointmentId: String ,
+        appointmentId: String,
         onSuccess: () -> Unit,
-        onFailure: () -> Unit) {
+        onFailure: () -> Unit
+    ) {
         realtimeAppointments.child(appointmentId).removeValue()
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onFailure() }
-
     }
 
-
+    /**
+     * Retrieves all appointments for a specific shop.
+     */
     fun getAppointmentsByShopId(
         shopId: String,
         onSuccess: (List<Appointment>) -> Unit,
@@ -174,10 +185,6 @@ class AppointmentRepository {
                     .mapNotNull { it.toObject(Appointment::class.java) }
                 onSuccess(appointments)
             }
-            .addOnFailureListener { exception ->
-                onFailure(exception)
-            }
+            .addOnFailureListener { exception -> onFailure(exception) }
     }
-
-
 }

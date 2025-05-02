@@ -7,14 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.adapter.adabterBarber.AppointmentsManagerAdapter
+import com.example.projet_de_stage.adapter.adapterBarber.AppointmentsManagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class AppointmentsFragmentBareber : Fragment() {
+/**
+ * Fragment to manage and display barber appointment requests in a tab layout.
+ */
+class AppointmentsFragmentBarber : Fragment() {
+
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
 
+    /**
+     * Called when the fragment's view is being created. Initializes TabLayout and ViewPager2.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,20 +32,27 @@ class AppointmentsFragmentBareber : Fragment() {
         return view
     }
 
+    /**
+     * Called when the view has been created. Sets up the adapter for ViewPager2
+     * and attaches it to the TabLayout.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adaptere = AppointmentsManagerAdapter(
-            requireActivity() ,
-            arguments?.getParcelable("barber")
-        )
-        viewPager.adapter = adaptere
+        super.onViewCreated(view, savedInstanceState)
 
+        // Setting up the ViewPager2 adapter with the barber object passed via arguments
+        val adapter = AppointmentsManagerAdapter(
+            requireActivity(),
+            arguments?.getParcelable("barber") // Pass barber object to the adapter
+        )
+        viewPager.adapter = adapter
+
+        // Attach the TabLayout with ViewPager2 and set tab titles for each position
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "طلبات جديدة"
-                1 -> tab.text = "طلبات المقبولة"
-                2 -> tab.text = "سجل طلبات"
+                0 -> tab.text = "New Requests"
+                1 -> tab.text = "Accepted Requests"
+                2 -> tab.text = "Request History"
             }
-
         }.attach()
     }
 }

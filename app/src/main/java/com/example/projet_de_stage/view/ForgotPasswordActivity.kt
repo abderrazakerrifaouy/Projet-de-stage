@@ -8,60 +8,73 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projet_de_stage.R
-import kotlin.text.isEmpty
-import kotlin.text.trim
 
+/**
+ * Activity for handling the password recovery process.
+ */
 class ForgotPasswordActivity : AppCompatActivity() {
 
-    private lateinit var etRecoveryInput: EditText
-    private lateinit var btnSendResetLink: Button
-    private lateinit var tvBackToLogin: TextView
+    private lateinit var recoveryInputEditText: EditText
+    private lateinit var sendResetLinkButton: Button
+    private lateinit var backToLoginTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)
 
+        // Initialize UI elements
+        recoveryInputEditText = findViewById(R.id.etRecoveryInput)
+        sendResetLinkButton = findViewById(R.id.btnSendResetLink)
+        backToLoginTextView = findViewById(R.id.tvBackToLogin)
 
-        etRecoveryInput = findViewById(R.id.etRecoveryInput)
-        btnSendResetLink = findViewById(R.id.btnSendResetLink)
-        tvBackToLogin = findViewById(R.id.tvBackToLogin)
-
-        // تعيين مستمعين للنقر
-        btnSendResetLink.setOnClickListener {
+        // Set on click listeners
+        sendResetLinkButton.setOnClickListener {
             handlePasswordReset()
         }
 
-        tvBackToLogin.setOnClickListener {
-            finish() // إغلاق هذه النشاط والعودة لتسجيل الدخول
+        backToLoginTextView.setOnClickListener {
+            finish() // Close this activity and go back to login screen
         }
     }
 
+    /**
+     * Handles the password reset logic: validate input and send reset link.
+     */
     private fun handlePasswordReset() {
-        val recoveryInput = etRecoveryInput.text.toString().trim()
+        val recoveryInput = recoveryInputEditText.text.toString().trim()
 
         if (recoveryInput.isEmpty()) {
-            showToast("الرجاء إدخال البريد الإلكتروني أو رقم الهاتف")
+            showToast("Please enter your email or phone number")
             return
         }
 
         if (isValidEmail(recoveryInput) || isValidPhone(recoveryInput)) {
-            // هنا عادةً تقوم باستدعاء API لإرسال تعليمات إعادة التعيين
-            showToast("تم إرسال تعليمات إعادة التعيين إلى $recoveryInput")
-            // بعد الإرسال، يمكنك إغلاق النشاط
+            // Here, you would call an API to send the reset instructions
+            showToast("Password reset instructions sent to $recoveryInput")
+            // After sending, close the activity
             finish()
         } else {
-            showToast("الرجاء إدخال بريد إلكتروني أو رقم هاتف صحيح")
+            showToast("Please enter a valid email or phone number")
         }
     }
 
+    /**
+     * Validates if the input is a valid email address.
+     */
     private fun isValidEmail(input: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(input).matches()
     }
 
+    /**
+     * Validates if the input is a valid phone number.
+     */
     private fun isValidPhone(input: String): Boolean {
         return Patterns.PHONE.matcher(input).matches()
     }
 
+    /**
+     * Displays a toast message.
+     */
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

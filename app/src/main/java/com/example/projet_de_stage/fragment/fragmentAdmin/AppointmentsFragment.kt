@@ -12,56 +12,75 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.adapter.adabterAdmin.AppointmentsAdapter
+import com.example.projet_de_stage.adapter.adapterAdmin.AppointmentsAdapter
 import com.example.projet_de_stage.data.Appointment
-import com.example.projet_de_stage.viewModel.AdmineViewModel
-import java.time.LocalDate
+import com.example.projet_de_stage.viewModel.AdminViewModel
 
+/**
+ * Fragment to display and manage appointments for the shop owner.
+ */
 class AppointmentsFragment : Fragment() {
-    private val admineViewModel = AdmineViewModel()
+    private val adminViewModel = AdminViewModel() // Changed from 'admineViewModel' for consistency.
 
+    /**
+     * This method is called when the fragment's view is created. It initializes the RecyclerView
+     * and observes the appointments list to update the UI.
+     */
     @SuppressLint("NotifyDataSetChanged")
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_appointments, container, false)
 
+        // Initialize RecyclerView
         val recyclerView = view.findViewById<RecyclerView>(R.id.appointmentsRecyclerView)
         val shopOwnerUid = arguments?.getString("shopOwner")
 
-        admineViewModel.getAppointmentsByShopOwnrId(shopOwnerUid ?: "")
+        // Fetch appointments for the specific shop owner
+        adminViewModel.getAppointmentsByShopOwnerId(shopOwnerUid ?: "")
         val appointments = mutableListOf<Appointment>()
-        admineViewModel.appointments.observe(viewLifecycleOwner) { newAppointments ->
+
+        // Observe the appointments LiveData from the ViewModel and update the RecyclerView
+        adminViewModel.appointments.observe(viewLifecycleOwner) { newAppointments ->
             appointments.clear()
             appointments.addAll(newAppointments)
-            recyclerView.adapter?.notifyDataSetChanged()
+            recyclerView.adapter?.notifyDataSetChanged() // Update the adapter when data changes
         }
 
-
+        // Set the RecyclerView adapter with a lambda for handling appointment status changes
         recyclerView.adapter = AppointmentsAdapter(appointments) { id, _ ->
-            admineViewModel.updateAppointmentStatus(
+            // Update appointment status to 'canceled'
+            adminViewModel.updateAppointmentStatus(
                 appointmentId = id,
-                newStatus = "canceled" ,
+                newStatus = "canceled",
                 onSuccess = {
-
-                    Toast.makeText(requireContext(), "تم إلغاء الحجز بنجاح", Toast.LENGTH_SHORT).show()
-                    reflecheUi()
+                    // Show a success message when the appointment is canceled
+                    Toast.makeText(requireContext(), "Appointment canceled successfully", Toast.LENGTH_SHORT).show()
+                    refreshUi() // Refresh the UI to reflect the changes
                 },
                 onFailure = {
-                    Toast.makeText(requireContext(), "حدث خطأ أثناء إلغاء الحجز", Toast.LENGTH_SHORT).show()
+                    // Show an error message if the update fails
+                    Toast.makeText(requireContext(), "Error occurred while canceling the appointment", Toast.LENGTH_SHORT).show()
                 }
             )
         }
+
+        // Set the layout manager for RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         return view
     }
 
-    private fun reflecheUi() {
+    /**
+     * Refreshes the UI by fetching the latest appointments for the shop owner.
+     */
+    private fun refreshUi() {
         val shopOwnerUid = arguments?.getString("shopOwner")
         if (!shopOwnerUid.isNullOrEmpty()) {
-            admineViewModel.getAppointmentsByShopOwnrId(shopOwnerUid)
+            adminViewModel.getAppointmentsByShopOwnerId(shopOwnerUid)
         }
     }
-
-
 }

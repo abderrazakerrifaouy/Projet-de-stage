@@ -12,24 +12,28 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.adapter.adabterBarber.NewRequestsAdapter
+import com.example.projet_de_stage.adapter.adapterBarber.NewRequestsAdapter
 import com.example.projet_de_stage.data.Barber
 import com.example.projet_de_stage.viewModel.BarberViewModel
 
+/**
+ * Fragment to display new appointment requests for a barber.
+ */
 class NewRequestsFragment : Fragment() {
+
     private lateinit var recyclerView: RecyclerView
-    private val barberviewModel = BarberViewModel()
-    private var barber: Barber? = null  // <-- هنا التغيير
+    private val barberViewModel = BarberViewModel()
+    private var barber: Barber? = null  // Barber object passed from the previous fragment
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val adapter = NewRequestsAdapter(
         onAcceptClick = { appointment ->
-            barberviewModel.updateAppointmentStatus(
+            barberViewModel.updateAppointmentStatus(
                 appointmentId = appointment.id,
                 newStatus = "accepted",
                 onSuccess = {
-                    Toast.makeText(requireContext(), "تم accepted المواعيد بنجاح", Toast.LENGTH_SHORT).show()
-                    refreshUI()
+                    Toast.makeText(requireContext(), "Appointment accepted successfully", Toast.LENGTH_SHORT).show()
+                    refreshUI() // Refresh the UI after accepting the appointment
                 },
                 onFailure = {
                     Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
@@ -37,12 +41,12 @@ class NewRequestsFragment : Fragment() {
             )
         },
         onRejectClick = { appointment ->
-            barberviewModel.updateAppointmentStatus(
+            barberViewModel.updateAppointmentStatus(
                 appointmentId = appointment.id,
                 newStatus = "canceled",
                 onSuccess = {
-                    Toast.makeText(requireContext(), "تم إلغاء المواعيد بنجاح", Toast.LENGTH_SHORT).show()
-                    refreshUI()
+                    Toast.makeText(requireContext(), "Appointment canceled successfully", Toast.LENGTH_SHORT).show()
+                    refreshUI() // Refresh the UI after rejecting the appointment
                 },
                 onFailure = {
                     Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
@@ -51,6 +55,9 @@ class NewRequestsFragment : Fragment() {
         }
     )
 
+    /**
+     * Called when the fragment view is created. Sets up RecyclerView and UI components.
+     */
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,35 +68,42 @@ class NewRequestsFragment : Fragment() {
         return view
     }
 
+    /**
+     * Called when the fragment's view has been created. Loads barber data and appointment requests.
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Retrieve the barber object passed via arguments
         barber = arguments?.getParcelable("barber")
         Toast.makeText(requireContext(), "Barber ID: ${barber?.uid}", Toast.LENGTH_SHORT).show()
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-
-        // استدعاء ViewModel
-        barberviewModel.getAppointmentByBarberIdandStatus(
+        // Load pending appointment requests for this barber
+        barberViewModel.getAppointmentByBarberIdAndStatus(
             status = "pending",
             barberId = barber?.uid.toString()
         )
 
-        // بيانات تجريبية
-
-        barberviewModel.appointments.observe(viewLifecycleOwner) { appointments ->
+        // Observe the appointments live data and update the adapter when data changes
+        barberViewModel.appointments.observe(viewLifecycleOwner) { appointments ->
             adapter.updateData(appointments)
         }
-        barberviewModel.error.observe(viewLifecycleOwner) { error ->
+
+        // Observe errors and show a toast message in case of failure
+        barberViewModel.error.observe(viewLifecycleOwner) { error ->
             if (error != null) {
                 Toast.makeText(requireContext(), "Error: $error", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+    /**
+     * Creates a new instance of this fragment with a barber object passed as an argument.
+     */
     companion object {
         fun newInstance(barber: Barber?): NewRequestsFragment {
             val fragment = NewRequestsFragment()
@@ -100,14 +114,16 @@ class NewRequestsFragment : Fragment() {
         }
     }
 
+    /**
+     * Refreshes the UI by loading the latest pending appointments for the barber.
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun refreshUI() {
         barber?.uid?.let { barberId ->
-            barberviewModel.getAppointmentByBarberIdandStatus(
+            barberViewModel.getAppointmentByBarberIdAndStatus(
                 status = "pending",
                 barberId = barberId
             )
-        } ?: Toast.makeText(requireContext(), "لا يمكن تحديث الواجهة: الحلاق غير متوفر", Toast.LENGTH_SHORT).show()
+        } ?: Toast.makeText(requireContext(), "Unable to refresh UI: Barber not available", Toast.LENGTH_SHORT).show()
     }
-
 }

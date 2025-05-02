@@ -18,6 +18,9 @@ import com.example.projet_de_stage.viewModel.ClientViewModel
 import androidx.core.content.edit
 import com.example.projet_de_stage.view.barberUser.ModifyBarberActivity
 
+/**
+ * ProfileFragment displays the barber's profile information and allows them to edit the profile or log out.
+ */
 class ProfileFragment : Fragment() {
     private lateinit var barber: Barber
     private lateinit var profileImage: ImageView
@@ -27,8 +30,11 @@ class ProfileFragment : Fragment() {
     private lateinit var tvPhone: TextView
     private lateinit var tvAddress: TextView
     private lateinit var btnEditProfile: Button
-    private lateinit var btnLogAut: Button
+    private lateinit var btnLogOut: Button  // Button to log out the user
 
+    /**
+     * Called to create the fragment's view. Initializes UI components.
+     */
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +43,7 @@ class ProfileFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        // Initialize views
+        // Initialize the views
         profileImage = view.findViewById(R.id.profileImage)
         tvName = view.findViewById(R.id.tvName)
         tvExperience = view.findViewById(R.id.tvExperience)
@@ -45,35 +51,36 @@ class ProfileFragment : Fragment() {
         tvPhone = view.findViewById(R.id.tvPhone)
         tvAddress = view.findViewById(R.id.tvAddress)
         btnEditProfile = view.findViewById(R.id.btnEditProfile)
-        btnLogAut = view.findViewById(R.id.btnLogAut)
+        btnLogOut = view.findViewById(R.id.btnLogAut) // Renaming to 'btnLogOut'
 
         return view
     }
 
+    /**
+     * Called after the fragment's view is created. Binds the barber's data to the UI and handles button actions.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Get barber data from arguments
-//        arguments?.getParcelable<Barber>("barber")?.let {
-//            barber = it
-//            bindBarberData()
-//        }
-        btnLogAut.setOnClickListener {
-            // مسح الـ UID من SharedPreferences ثم الانتقال لشاشة تسجيل الدخول
+        // Get barber data from the arguments
+        barber = arguments?.getParcelable<Barber>("barber") ?: return
+        bindBarberData()
+
+        // Set up the log out button
+        btnLogOut.setOnClickListener {
+            // Clear UID from SharedPreferences and navigate to the login screen
             val prefs = requireContext().getSharedPreferences("prefs", MODE_PRIVATE)
-            prefs.edit() {
+            prefs.edit {
                 putString("uid", "")
             }
 
-            // التنقل إلى LoginActivity وإنهاء الـ Activity الحالي
+            // Navigate to LoginActivity and finish the current activity
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
         }
-        // For testing, create a dummy barber
-        barber = arguments?.getParcelable<Barber>("barber")!!
-        bindBarberData()
 
+        // Set up the edit profile button
         btnEditProfile.setOnClickListener {
             val intent = Intent(requireContext(), ModifyBarberActivity::class.java)
             intent.putExtra("barber", barber)
@@ -81,14 +88,17 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    /**
+     * Binds the barber's data to the corresponding UI components.
+     */
     @SuppressLint("SetTextI18n")
     private fun bindBarberData() {
         profileImage.setImageResource(barber.imageRes)
         tvName.text = barber.name
-        tvExperience.text = "خبرة: ${barber.experience} سنوات"
+        tvExperience.text = "Experience: ${barber.experience} years"
         tvEmail.text = barber.email
         tvPhone.text = barber.phone
+        // Optional: If you want to show address, uncomment the following line
+        // tvAddress.text = barber.address
     }
-
-
 }

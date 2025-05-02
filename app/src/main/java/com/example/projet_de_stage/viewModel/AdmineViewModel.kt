@@ -18,11 +18,14 @@ import com.example.projet_de_stage.repository.CustomerRepository
 import com.example.projet_de_stage.repository.JoinRequestRepository
 import com.example.projet_de_stage.repository.ShopOwnerRepository
 import com.example.projet_de_stage.repository.ShopRepository
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
-class AdmineViewModel : ViewModel() {
+/**
+ * ViewModel for admin functionalities, handling shop, barber, appointment, and join request operations.
+ */
+class AdminViewModel : ViewModel() {
+
+    // Repositories to interact with the data layer
     private val repositoryJoinRequests = JoinRequestRepository()
     private val shopRepository = ShopRepository()
     private val shopOwnerRepository = ShopOwnerRepository()
@@ -30,6 +33,7 @@ class AdmineViewModel : ViewModel() {
     private val appointmentRepository = AppointmentRepository()
     private val clientRepository = CustomerRepository()
 
+    // LiveData to hold data
     private val _shops = MutableLiveData<List<Shop>>()
     val shops: LiveData<List<Shop>> get() = _shops
 
@@ -58,11 +62,25 @@ class AdmineViewModel : ViewModel() {
     val error: LiveData<String?> = _error
 
 
+    /**
+     * Fetch the shop owner by ID.
+     */
     fun getShopOwnerById(id: String, callback: (ShopOwner?) -> Unit) {
-        shopOwnerRepository.getShopOwnerById(id, callback)
+        shopOwnerRepository.getShopOwnerById(
+            id = id,
+            onSuccess = { shopOwner ->
+                callback(shopOwner)
+            },
+            onFailure = { exception ->
+                callback(null)
+            }
+        )
     }
 
-    // دالة لإنشاء المحل
+
+    /**
+     * Create a new shop and upload its image.
+     */
     fun createShop(shop: Shop, imageUri: Uri?, context: Context) {
         viewModelScope.launch {
             try {
@@ -72,41 +90,49 @@ class AdmineViewModel : ViewModel() {
                         _shopCreationStatus.value = true
                     },
                     onFailure = { exception ->
-                        _errorMessage.value = "خطأ في إنشاء المحل: ${exception.message}"
+                        _errorMessage.value = "Error creating shop: ${exception.message}"
                         _shopCreationStatus.value = false
                     }
                 )
             } catch (e: Exception) {
-                _errorMessage.value = "خطأ: ${e.message}"
+                _errorMessage.value = "Error: ${e.message}"
                 _shopCreationStatus.value = false
             }
         }
     }
 
+    /**
+     * Suspend function to get shops by owner's ID.
+     */
     suspend fun getShopsByOwnerIdSuspend(ownerId: String): List<Shop> {
         return try {
             val allShops = shopRepository.getAllShops()
-            allShops.filter { it.idOwner == ownerId }
+            allShops.filter { it.ownerId == ownerId }
         } catch (e: Exception) {
             emptyList()
         }
     }
 
-
+    /**
+     * Fetch join requests for a shop owner by ID.
+     */
     fun getJoinRequestsByShopOwnerId(shopOwnerId: String) {
         viewModelScope.launch {
-            repositoryJoinRequests.getRequestsByShopOwnerIdId(
+            repositoryJoinRequests.getRequestsByShopOwnerId(
                 shopOwnerId,
                 onSuccess = { requests ->
                     _joinRequests.postValue(requests)
                 },
                 onFailure = { exception ->
-                    _errorMessage.postValue("فشل في جلب الطلبات: ${exception.message}")
+                    _errorMessage.postValue("Failed to fetch requests: ${exception.message}")
                 }
             )
         }
     }
 
+    /**
+     * Fetch barber by ID.
+     */
     fun getBarberById(id: String) {
         barberRepository.getBarberById(
             id,
@@ -114,62 +140,64 @@ class AdmineViewModel : ViewModel() {
                 _barber.postValue(barber)
             },
             onFailure = { exception ->
-                _errorMessage.postValue("فشل في جلب الببر: ${exception.message}")
+                _errorMessage.postValue("Failed to fetch barber: ${exception.message}")
             }
         )
     }
 
-
+    /**
+     * Add a barber to a shop.
+     */
     fun addBarberToShop(shopId: String, barber: Barber) {
         viewModelScope.launch {
             try {
                 shopRepository.addBarberToShop(shopId, barber,
                     onSuccess = {
-                        // تحديث حالة النجاح
                         _barber.postValue(barber)
                     },
                     onFailure = { exception ->
-                        _errorMessage.postValue("فشل في إضافة الحلاق: ${exception.message}")
+                        _errorMessage.postValue("Failed to add barber: ${exception.message}")
                     }
                 )
             } catch (e: Exception) {
-                _errorMessage.postValue("خطأ: ${e.message}")
+                _errorMessage.postValue("Error: ${e.message}")
             }
         }
     }
 
-    fun getAppointmentsByShopOwnrId(
-        shopOwnerId: String
-    ) {
+    /**
+     * Fetch appointments for a shop owner by ID.
+     */
+    fun getAppointmentsByShopOwnerId(shopOwnerId: String) {
         viewModelScope.launch {
             try {
-                val list = shopRepository.getAllShops()
-                val listShopId = list.filter { it.idOwner == shopOwnerId }.map { it.id }
+                val shopsList = shopRepository.getAllShops()
+                val shopIds = shopsList.filter { it.ownerId == shopOwnerId }.map { it.id }
 
                 val allAppointments = mutableListOf<Appointment>()
 
-                listShopId.forEach { shopId ->
+                shopIds.forEach { shopId ->
                     appointmentRepository.getAppointmentsByShopId(
                         shopId,
                         onSuccess = { appointments ->
                             allAppointments.addAll(appointments.filter { it.status == "pending" || it.status == "accepted" })
-                            _appointments.postValue(allAppointments.toList()) // تحديث الـ LiveData
+                            _appointments.postValue(allAppointments.toList()) // Update LiveData
                         },
                         onFailure = { exception ->
-                            _errorMessage.postValue("فشل في جلب المواعيد: ${exception.message}")
+                            _errorMessage.postValue("Failed to fetch appointments: ${exception.message}")
                         }
                     )
                 }
             } catch (e: Exception) {
-                _errorMessage.postValue("خطأ غير متوقع: ${e.message}")
+                _errorMessage.postValue("Unexpected error: ${e.message}")
             }
         }
     }
 
-
-     fun loadCustomerById(
-        id: String,
-    ) {
+    /**
+     * Load customer details by ID.
+     */
+    fun loadCustomerById(id: String) {
         clientRepository.getCustomerById(
             id = id,
             onSuccess = { c ->
@@ -182,7 +210,9 @@ class AdmineViewModel : ViewModel() {
         )
     }
 
-
+    /**
+     * Update the status of an appointment.
+     */
     fun updateAppointmentStatus(
         appointmentId: String,
         newStatus: String,
@@ -196,17 +226,19 @@ class AdmineViewModel : ViewModel() {
             onFailure = { e -> onFailure(e) })
     }
 
+    /**
+     * Update the status of a join request.
+     */
     fun updateJoinRequestStatus(
         requestId: String,
         newStatus: String,
-        onSuccess: (Boolean) -> Unit,
+        onSuccess: (Boolean) -> Unit
     ) {
         repositoryJoinRequests.updateRequestStatus(
             requestId = requestId,
             newStatus = newStatus,
-            onSuccess = { onSuccess(it) }
+            onSuccess = { onSuccess(it) } ,
+            onFailure = { _error.postValue(it.message) }
         )
     }
-
-
 }

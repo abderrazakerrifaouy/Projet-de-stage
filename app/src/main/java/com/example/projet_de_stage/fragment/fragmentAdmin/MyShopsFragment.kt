@@ -15,14 +15,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.adapter.adabterAdmin.ShopsAdapter
+import com.example.projet_de_stage.adapter.adapterAdmin.ShopsAdapter
 import com.example.projet_de_stage.view.admin.CreateShopActivity
-import com.example.projet_de_stage.viewModel.AdmineViewModel
+import com.example.projet_de_stage.viewModel.AdminViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Fragment displaying the list of shops owned by a shop owner.
+ */
 class MyShopsFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
@@ -32,10 +35,12 @@ class MyShopsFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
-
-    private val viewModel = AdmineViewModel()
+    private val viewModel = AdminViewModel()
     private var shopOwnerUid: String = ""
 
+    /**
+     * Inflates the fragment layout and initializes views.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,16 +56,22 @@ class MyShopsFragment : Fragment() {
         return view
     }
 
+    /**
+     * Sets up swipe refresh and updates the shop list.
+     */
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        refleche()
+        refreshShopList()
         swipeRefreshLayout.setOnRefreshListener {
-            refleche()
+            refreshShopList()
         }
-
     }
-    fun refleche() {
+
+    /**
+     * Refreshes the list of shops.
+     */
+    fun refreshShopList() {
         swipeRefreshLayout.isRefreshing = true
         handleFabClick()
 
@@ -68,13 +79,14 @@ class MyShopsFragment : Fragment() {
         getShopsList()
     }
 
-
-
+    /**
+     * Handles the click event of the FloatingActionButton to add a new shop.
+     */
     private fun handleFabClick() {
         fabAddShop.setOnClickListener {
             Toast.makeText(
                 requireContext(),
-                "فتح إضافة المحل",
+                "Opening the Add Shop screen",
                 Toast.LENGTH_SHORT
             ).show()
             Intent(requireContext(), CreateShopActivity::class.java).also { intent ->
@@ -84,6 +96,10 @@ class MyShopsFragment : Fragment() {
         }
     }
 
+    /**
+     * Fetches the list of shops for the specified shop owner and updates the UI.
+     */
+    @SuppressLint("SetTextI18n")
     fun getShopsList() {
         progressBar.visibility = View.VISIBLE
         lifecycleScope.launch {
@@ -92,26 +108,19 @@ class MyShopsFragment : Fragment() {
             }
 
             if (shops.isEmpty()) {
-                headerTitle.text = "لا يوجد محلات"
+                headerTitle.text = "No shops found"
                 recyclerView.adapter = null
             } else {
-                headerTitle.text = "قائمة المحلات"
+                headerTitle.text = "Shop List"
                 recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
                 shopsAdapter = ShopsAdapter(shops) { shop ->
-                    Toast.makeText(requireContext(), "تم النقر على ${shop}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "You clicked on ${shop}", Toast.LENGTH_SHORT).show()
                 }
                 recyclerView.adapter = shopsAdapter
             }
 
-
             progressBar.visibility = View.GONE
-
             swipeRefreshLayout.isRefreshing = false
         }
     }
-
-
-
-
-
 }

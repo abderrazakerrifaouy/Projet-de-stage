@@ -1,4 +1,4 @@
-package com.example.projet_de_stage.adapter.adabterBarber
+package com.example.projet_de_stage.adapter.adapterBarber
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -15,18 +15,32 @@ import com.example.projet_de_stage.data.Appointment
 import com.example.projet_de_stage.viewModel.BarberViewModel
 import java.time.LocalDate
 
+/**
+ * Adapter for displaying today's accepted appointments on the barber's home screen.
+ *
+ * @param onAcceptRequestClick Callback invoked when the "Accept" button is clicked.
+ */
 class HomeRequestsAdapter(
     private val onAcceptRequestClick: (Appointment) -> Unit
 ) : RecyclerView.Adapter<HomeRequestsAdapter.NewRequestViewHolder>() {
 
     private val newRequests = mutableListOf<Appointment>()
-    private val viewModels = BarberViewModel()
+    private val viewModel = BarberViewModel()
 
+    /**
+     * Updates the adapter's data by filtering today's accepted appointments.
+     *
+     * @param newList Full list of appointments.
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<Appointment>) {
         newRequests.clear()
-        newRequests.addAll(newList.filter { it.status == "accepted" && it.date == LocalDate.now().toString() })
+        newRequests.addAll(
+            newList.filter {
+                it.status == "accepted" && it.date == LocalDate.now().toString()
+            }
+        )
         notifyDataSetChanged()
     }
 
@@ -40,28 +54,35 @@ class HomeRequestsAdapter(
         holder.bind(newRequests[position])
     }
 
-    override fun getItemCount() = newRequests.size
+    override fun getItemCount(): Int = newRequests.size
 
+    /**
+     * ViewHolder for appointment items.
+     */
     inner class NewRequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvTime: TextView = itemView.findViewById(R.id.tvTime)
         private val tvDateTime: TextView = itemView.findViewById(R.id.tvDateTime)
         private val tvCustomerName: TextView = itemView.findViewById(R.id.tvCustomerName)
         private val tvServices: TextView = itemView.findViewById(R.id.tvServices)
-        private val buttonAcceptRequest: Button = itemView.findViewById(R.id.btnInAccept)
+        private val btnAcceptRequest: Button = itemView.findViewById(R.id.btnInAccept)
 
+        /**
+         * Binds the appointment data to UI elements.
+         *
+         * @param appointment The appointment to display.
+         */
         @SuppressLint("SetTextI18n")
         fun bind(appointment: Appointment) {
             tvTime.text = appointment.time
-            tvDateTime.text = appointment.date.toString() // Display the date
+            tvDateTime.text = appointment.date
             tvServices.text = appointment.service
-            viewModels.loadCustomerById(appointment.clientId)
-            viewModels.customer.observe(itemView.context as LifecycleOwner) { customer ->
+
+            viewModel.loadCustomerById(appointment.clientId)
+            viewModel.customer.observe(itemView.context as LifecycleOwner) { customer ->
                 tvCustomerName.text = customer?.name
             }
 
-
-            // Handle button click for accepting the request
-            buttonAcceptRequest.setOnClickListener {
+            btnAcceptRequest.setOnClickListener {
                 onAcceptRequestClick(appointment)
             }
         }

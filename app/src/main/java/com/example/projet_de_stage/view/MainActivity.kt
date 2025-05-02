@@ -23,16 +23,26 @@ import com.example.projet_de_stage.viewModel.AuthViewModel
 import com.google.firebase.FirebaseApp
 import kotlinx.coroutines.launch
 
+/**
+ * Main activity that handles user authentication and navigation to the corresponding home screen
+ * based on the user's role (Barber, Customer, ShopOwner).
+ */
 class MainActivity : AppCompatActivity() {
 
     private val viewModelAuth = AuthViewModel(AuthRepository())
 
+    /**
+     * Called when the activity is created. Initializes Firebase and checks for internet connectivity.
+     * If internet is available, it checks for a saved UID and navigates to the correct home screen.
+     * If no UID is found, it navigates to the login screen.
+     */
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         FirebaseApp.initializeApp(this)
 
+        // Delay of 2 seconds to simulate splash screen
         Handler(Looper.getMainLooper()).postDelayed({
             if (isInternetAvailable(this)) {
                 val savedUid = getSharedPreferences("prefs", MODE_PRIVATE).getString("uid", "")
@@ -57,12 +67,12 @@ class MainActivity : AppCompatActivity() {
                                     startActivity(intent)
                                 }
                                 else -> {
-                                    showErrorDialog("لم يتم التعرف على نوع المستخدم.")
+                                    showErrorDialog("User type not recognized.")
                                 }
                             }
                             finish()
                         } catch (e: Exception) {
-                            showErrorDialog("فشل في تحميل البيانات. تأكد من الاتصال بالإنترنت.\n${e.message}")
+                            showErrorDialog("Failed to load data. Please check your internet connection.\n${e.message}")
                         }
                     }
                 } else {
@@ -70,11 +80,16 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
             } else {
-                showErrorDialog("لا يوجد اتصال بالإنترنت. يرجى التحقق من الشبكة والمحاولة مرة أخرى.")
+                showErrorDialog("No internet connection. Please check your network and try again.")
             }
-        }, 2000)
+        }, 2000) // 2 second delay
     }
 
+    /**
+     * Checks if the device is connected to the internet.
+     * @param context The application context
+     * @return Boolean indicating if the internet is available
+     */
     private fun isInternetAvailable(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val network = connectivityManager.activeNetwork ?: return false
@@ -82,16 +97,20 @@ class MainActivity : AppCompatActivity() {
         return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
+    /**
+     * Shows an error dialog with a message and options to retry or exit the app.
+     * @param message The error message to display
+     */
     private fun showErrorDialog(message: String) {
         AlertDialog.Builder(this)
-            .setTitle("خطأ في الاتصال")
+            .setTitle("Connection Error")
             .setMessage(message)
             .setCancelable(false)
-            .setPositiveButton("إعادة المحاولة") { _, _ ->
-                recreate() // يعيد تشغيل الـ Activity
+            .setPositiveButton("Retry") { _, _ ->
+                recreate() // Restart the activity
             }
-            .setNegativeButton("خروج") { _, _ ->
-                finish()
+            .setNegativeButton("Exit") { _, _ ->
+                finish() // Close the activity
             }
             .show()
     }

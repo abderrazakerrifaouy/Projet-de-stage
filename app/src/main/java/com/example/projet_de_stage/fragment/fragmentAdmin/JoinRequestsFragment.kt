@@ -10,93 +10,122 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
-import com.example.projet_de_stage.adapter.adabterAdmin.JoinRequestsAdapter
-import com.example.projet_de_stage.viewModel.AdmineViewModel
+import com.example.projet_de_stage.adapter.adapterAdmin.JoinRequestsAdapter
+import com.example.projet_de_stage.data.Barber
+import com.example.projet_de_stage.viewModel.AdminViewModel
 
+/**
+ * Fragment for displaying join requests to a shop.
+ * Allows the shop owner to accept or reject requests.
+ */
 class JoinRequestsFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: AdmineViewModel
+    private lateinit var viewModel: AdminViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     * Here we set up the RecyclerView with an adapter and observe data from the ViewModel.
+     */
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_join_requests, container, false)
-        viewModel = ViewModelProvider(this).get(AdmineViewModel::class.java)
 
+        // Initialize the ViewModel
+        viewModel = ViewModelProvider(this).get(AdminViewModel::class.java)
+
+        // Set up RecyclerView with LinearLayoutManager
         recyclerView = view.findViewById(R.id.joinRequestsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-
-
+        // Set up the adapter and pass the logic for handling the accept/reject actions
         val adapter = JoinRequestsAdapter(
             emptyList(),
             { id, approved, barber, idShop ->
-                if (approved) {
-                    viewModel.updateJoinRequestStatus(
-                        id,
-                        "accepted",
-                        onSuccess = { check ->
-                            if (check) {
-                                viewModel.addBarberToShop(idShop ?: "", barber!!)
-                                refleshUi()
-                            }
-                            else {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "حدث خطأ أثناء تحديث حالة الطلب",
-                                    Toast.LENGTH_SHORT
-                                    ).show()
-                            }
-                        }
-                    )
-                } else {
-                    viewModel.updateJoinRequestStatus(
-                        id,
-                        "rejected",
-                        onSuccess = { check ->
-                            if (check) {
-                                refleshUi()
-                            }
-                            else {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "حدث خطأ أثناء تحديث حالة الطلب",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            })
-                }
-            } ,
+                handleJoinRequestApproval(id, approved, barber, idShop)
+            },
             viewModel
         )
 
-
-
         recyclerView.adapter = adapter
 
-
+        // Get shop owner ID from arguments
         val shopOwnerId = arguments?.getString("shopOwner")
         if (shopOwnerId.isNullOrEmpty()) {
-            Toast.makeText(requireContext(), "خطأ: لا يوجد معرف صاحب المحل", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Error: Shop owner ID is missing", Toast.LENGTH_SHORT).show()
             return view
         }
 
+        // Fetch join requests by shop owner ID
         viewModel.getJoinRequestsByShopOwnerId(shopOwnerId)
 
+        // Observe changes in join requests data and update the UI
         viewModel.joinRequests.observe(viewLifecycleOwner) { requests ->
-            adapter.updateList(requests) // خاصنا نضيف updateList فال Adapter
+            adapter.updateList(requests) // Update the adapter's data list
         }
 
+        // Observe error messages and display them as toast messages
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
             Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
         }
 
         return view
     }
-    private fun refleshUi() {
+
+    /**
+     * Handles the acceptance or rejection of a join request.
+     * @param id The request ID.
+     * @param approved Boolean indicating if the request is approved.
+     * @param barber The barber data.
+     * @param idShop The shop ID.
+     */
+    private fun handleJoinRequestApproval(
+        id: String, approved: Boolean, barber: Barber?, idShop: String?
+    ) {
+        if (approved) {
+            viewModel.updateJoinRequestStatus(
+                id,
+                "accepted",
+                onSuccess = { isSuccess ->
+                    if (isSuccess) {
+                        viewModel.addBarberToShop(idShop ?: "", barber!!)
+                        refreshUi()
+                    } else {
+                        showToast("An error occurred while updating the request status")
+                    }
+                }
+            )
+        } else {
+            viewModel.updateJoinRequestStatus(
+                id,
+                "rejected",
+                onSuccess = { isSuccess ->
+                    if (isSuccess) {
+                        refreshUi()
+                    } else {
+                        showToast("An error occurred while updating the request status")
+                    }
+                }
+            )
+        }
+    }
+
+    /**
+     * Refreshes the UI by fetching the latest join requests for the shop owner.
+     */
+    private fun refreshUi() {
         val shopOwnerId = arguments?.getString("shopOwner")
         if (!shopOwnerId.isNullOrEmpty()) {
             viewModel.getJoinRequestsByShopOwnerId(shopOwnerId)
         }
     }
 
+    /**
+     * Helper method to show a toast message.
+     * @param message The message to display in the toast.
+     */
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
 }

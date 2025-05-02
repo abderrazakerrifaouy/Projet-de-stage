@@ -11,6 +11,9 @@ import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Customer
 import com.example.projet_de_stage.viewModel.ClientViewModel
 
+/**
+ * Activity for updating the profile information of the customer.
+ */
 class UpdateCustomerProfileActivity : AppCompatActivity() {
 
     private val viewModel: ClientViewModel by viewModels()
@@ -31,7 +34,7 @@ class UpdateCustomerProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_customer_profile)
 
-        // ربط الـ Views
+        // Binding the Views to their respective UI components
         ivProfileImage = findViewById(R.id.ivProfileImage)
         etName         = findViewById(R.id.etName)
         etEmail        = findViewById(R.id.etEmail)
@@ -42,10 +45,10 @@ class UpdateCustomerProfileActivity : AppCompatActivity() {
         btnSave        = findViewById(R.id.btnSave)
         progressBar    = findViewById(R.id.progressBarClient)
 
-        // استلام بيانات العميل من Intent
+        // Receiving customer data from the Intent
         customer = intent.getParcelableExtra("CUSTOMER_DATA")!!
 
-        // عرض البيانات الحالية
+        // Displaying the current data
         ivProfileImage.setImageResource(customer.imageRes)
         etName.setText(customer.name)
         etEmail.setText(customer.email)
@@ -53,20 +56,19 @@ class UpdateCustomerProfileActivity : AppCompatActivity() {
         etBirthDate.setText(customer.birthDate)
         etAddress.setText(customer.address)
         etPassword.setText(customer.password)
-        etPhone.setText(customer.phone)
 
-        // ضبط حدث الضغط على زر الحفظ
+        // Setting up the Save button click listener
         btnSave.setOnClickListener {
             updateCustomer()
         }
     }
 
     /**
-     * يجمع القيم من الحقول، ويستدعي ViewModel.updateCustomer
-     * مع عرض ProgressBar وتعطيل الزر أثناء المعالجة.
+     * Collects the updated data from the input fields and calls ViewModel.updateCustomer.
+     * Displays the ProgressBar and disables the button during processing.
      */
     private fun updateCustomer() {
-        // جمع البيانات الجديدة
+        // Collecting new data from the input fields
         customer.apply {
             name      = etName.text.toString().trim()
             email     = etEmail.text.toString().trim()
@@ -74,33 +76,31 @@ class UpdateCustomerProfileActivity : AppCompatActivity() {
             address   = etAddress.text.toString().trim()
             password  = etPassword.text.toString()
             phone     = etPhone.text.toString()
-            // رقم الهاتف ثابت هنا
         }
 
-        // تعطيل الزر وإظهار التحميل
+        // Disabling the Save button and showing the progress bar
         btnSave.isEnabled = false
         progressBar.visibility = View.VISIBLE
 
-        // مناداة ViewModel
+        // Calling ViewModel to update the customer data
         viewModel.updateCustomer(
             customer = customer,
             onSuccess = {
-                // عند النجاح
+                // Success callback
                 progressBar.visibility = View.GONE
-                Toast.makeText(this, "تم تحديث الملف الشخصي بنجاح", Toast.LENGTH_SHORT).show()
-                // عودة النتيجة
+                Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                // Returning the updated customer data to the previous screen
                 val intent = Intent(this, HomeActivityClient::class.java)
                 intent.putExtra("customer", customer)
                 startActivity(intent)
                 finish()
             },
             onFailure = { exception ->
-                // عند الفشل
+                // Failure callback
                 progressBar.visibility = View.GONE
                 btnSave.isEnabled = true
-                Toast.makeText(this, "خطأ: ${exception.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Error: ${exception.message}", Toast.LENGTH_LONG).show()
             }
         )
     }
 }
-

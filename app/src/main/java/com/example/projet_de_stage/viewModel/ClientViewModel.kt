@@ -13,44 +13,52 @@ import com.example.projet_de_stage.repository.BarberRepository
 import com.example.projet_de_stage.repository.CustomerRepository
 import com.example.projet_de_stage.repository.ShopRepository
 
+/**
+ * ViewModel for managing client-related data and actions.
+ */
 class ClientViewModel : ViewModel() {
+
     private val clientRepository = CustomerRepository()
     private val shopRepository = ShopRepository()
     private val appointmentRepository = AppointmentRepository()
     private val barberRepository = BarberRepository()
 
-    // LiveData للمحلات
+    // LiveData for shops
     private val _shops = MutableLiveData<List<Shop>>()
     val shops: LiveData<List<Shop>> = _shops
 
-
-
-    private val _barber = MutableLiveData<Barber?>() // barberId -> barberName
+    // LiveData for selected barber
+    private val _barber = MutableLiveData<Barber?>()
     val barber: LiveData<Barber?> = _barber
 
+    // LiveData for selected shop
     private val _shop = MutableLiveData<Shop?>()
     val shop: LiveData<Shop?> = _shop
 
-    // LiveData للمواعيد
+    // LiveData for appointments
     private val _appointments = MutableLiveData<List<Appointment>>()
     val appointments: LiveData<List<Appointment>> = _appointments
 
     private val _appointmentsDate = MutableLiveData<List<Appointment>>()
     val appointmentsDate: LiveData<List<Appointment>> = _appointmentsDate
 
-    // LiveData للأخطاء
+    // LiveData for errors
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
     /**
-     * يجلب جميع المحلات من المخزن ويحدث LiveData
+     * Retrieves all shops and updates LiveData.
+     * @return List of all shops.
      */
     suspend fun getShops(): List<Shop> {
         return shopRepository.getAllShops()
     }
 
     /**
-     * يضيف موعد جديد ويستجيب لحالات النجاح أو الفشل
+     * Adds a new appointment and responds to success or failure.
+     * @param appointment The appointment data to add.
+     * @param onSuccess Callback for success.
+     * @param onFailure Callback for failure.
      */
     fun addAppointment(
         appointment: Appointment,
@@ -63,10 +71,11 @@ class ClientViewModel : ViewModel() {
             onFailure = { e -> onFailure(e) })
     }
 
-
-
     /**
-     * تحدّث بيانات العميل في المخزن
+     * Updates customer data in the repository.
+     * @param customer The customer data to update.
+     * @param onSuccess Callback for success.
+     * @param onFailure Callback for failure.
      */
     fun updateCustomer(
         customer: Customer,
@@ -81,16 +90,14 @@ class ClientViewModel : ViewModel() {
             },
             onFailure = { exception ->
                 _error.postValue(exception.message)
-
                 onFailure(exception)
             }
         )
     }
 
     /**
-     * يجلب المواعيد الخاصة بالعميل ويحدّث LiveData
-     *
-     * @param customerId معرف العميل
+     * Retrieves appointments for a customer and updates LiveData.
+     * @param customerId The ID of the customer.
      */
     fun fetchAppointmentsByCustomerId(customerId: String) {
         appointmentRepository.getAppointmentsByCustomerId(
@@ -105,28 +112,35 @@ class ClientViewModel : ViewModel() {
         )
     }
 
-    fun getAppointmentsByIdBarebr(
-        uid : String ,
-    ){
+    /**
+     * Retrieves appointments for a barber by barber ID and status, then updates LiveData.
+     * @param barberId The ID of the barber.
+     */
+    fun getAppointmentsByBarberId(
+        barberId: String,
+    ) {
         appointmentRepository.getAllAppointmentsByBarberIdandStatus(
             status = "accepted",
-            barberId = uid ,
+            barberId = barberId,
             onSuccess = { list ->
                 _appointmentsDate.postValue(list)
-                Log.e("Firestore", "Failed to fetch appointments ${list.size} ")
+                Log.e("Firestore", "Failed to fetch appointments ${list.size}")
                 _error.postValue(null)
-            } ,
-            onFailure = { exceptoin ->
-                _error.postValue(exceptoin.message)
-                Log.e("FirestoreError", "Failed to fetch appointments", exceptoin)
-
+            },
+            onFailure = { exception ->
+                _error.postValue(exception.message)
+                Log.e("FirestoreError", "Failed to fetch appointments", exception)
             }
         )
     }
 
+    /**
+     * Retrieves barber data by barber ID.
+     * @param id The ID of the barber.
+     */
     fun getBarberById(
-         id : String,
-    ){
+        id: String,
+    ) {
         barberRepository.getBarberById(
             id = id,
             onSuccess = { barber ->
@@ -137,9 +151,13 @@ class ClientViewModel : ViewModel() {
             })
     }
 
+    /**
+     * Retrieves shop data by shop ID.
+     * @param id The ID of the shop.
+     */
     fun getShopById(
-        id : String,
-    ){
+        id: String,
+    ) {
         shopRepository.getShopById(
             id = id,
             onSuccess = { shop ->
@@ -149,5 +167,4 @@ class ClientViewModel : ViewModel() {
                 _error.postValue(e.message)
             })
     }
-
 }

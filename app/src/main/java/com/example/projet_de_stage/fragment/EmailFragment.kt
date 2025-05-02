@@ -13,72 +13,86 @@ import com.example.projet_de_stage.data.ShopOwner
 import com.example.projet_de_stage.data.UserType
 import com.google.android.material.textfield.TextInputEditText
 
-class PhoneNumberFragment : Fragment() {
-    private lateinit var nextBtn : Button
-    private lateinit var Email : TextInputEditText
+/**
+ * Fragment for inputting the phone number (or email) during user registration.
+ */
+class EmailFragment : Fragment() {
+    private lateinit var nextButton: Button
+    private lateinit var emailInput: TextInputEditText
     private lateinit var userTypeString: String
     private lateinit var userType: UserType
 
-
-
+    /**
+     * Called when the fragment's view is created.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.phone_number, container, false)
-        nextBtn = view.findViewById(R.id.nextButton)
-        Email = view.findViewById(R.id.phoneInput)
+
+        // Initialize the UI elements
+        nextButton = view.findViewById(R.id.nextButton)
+        emailInput = view.findViewById(R.id.phoneInput)
+
+        // Get the user type passed from the previous fragment
         userTypeString = arguments?.getString("userType").toString()
         userType = UserType.valueOf(userTypeString)
 
         return view
     }
 
+    /**
+     * Called after the fragment's view is created and initialized.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        nextBtn.setOnClickListener {
+        // Set up the "Next" button click listener
+        nextButton.setOnClickListener {
             val bundle = Bundle()
-            val emailText = Email.text.toString()
-            bundle.putString("userType",userType.name)
 
+            // Get the email (or phone number) entered by the user
+            val emailText = emailInput.text.toString()
+
+            // Add user type to the bundle
+            bundle.putString("userType", userType.name)
+
+            // Handle the user type and store the email
             when (userType) {
                 UserType.Barber -> {
-                    val barber = arguments?.getParcelable("user")?: Barber()
+                    val barber = arguments?.getParcelable("user") ?: Barber()
                     barber.email = emailText
                     bundle.putParcelable("user", barber)
                 }
                 UserType.Customer -> {
-                    val customer = arguments?.getParcelable("user")?: Customer()
+                    val customer = arguments?.getParcelable("user") ?: Customer()
                     customer.email = emailText
-                    bundle.putParcelable("user",customer)
+                    bundle.putParcelable("user", customer)
                 }
-
                 UserType.ShopOwner -> {
-                    val shopOwner = arguments?.getParcelable("user")?: ShopOwner()
+                    val shopOwner = arguments?.getParcelable("user") ?: ShopOwner()
                     shopOwner.email = emailText
-                    bundle.putParcelable("user",shopOwner)
+                    bundle.putParcelable("user", shopOwner)
                 }
             }
 
-
+            // Navigate to the PasswordCreationFragment
             val passwordFragment = PasswordCreationFragment()
             passwordFragment.arguments = bundle
 
             parentFragmentManager.beginTransaction()
                 .setCustomAnimations(
-                    R.anim.slide_in,  // حركة الدخول
-                    R.anim.fade_out,  // حركة الخروج
-                    R.anim.fade_in,   // حركة الدخول عند الرجوع
-                    R.anim.slide_out  // حركة الخروج عند الرجوع
+                    R.anim.slide_in,  // Animation when entering
+                    R.anim.fade_out,  // Animation when exiting
+                    R.anim.fade_in,   // Animation when entering from back
+                    R.anim.slide_out  // Animation when exiting to back
                 )
                 .replace(R.id.fragment_container, passwordFragment)
-                .addToBackStack("PhoneNumberFragment")
+                .addToBackStack("PhoneNumberFragment") // Allow going back to this fragment
                 .commit()
         }
-
-
     }
 }

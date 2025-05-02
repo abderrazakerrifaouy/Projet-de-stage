@@ -18,10 +18,23 @@ import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
 
+/**
+ * Repository class for handling shop-related operations.
+ */
 class ShopRepository {
     private val db = FirebaseFirestore.getInstance()
     private val collection = db.collection("shops")
 
+    /**
+     * Creates a shop with an optional image.
+     * Uploads image to Cloudinary if provided.
+     *
+     * @param shop The shop object to be created.
+     * @param imageUri The URI of the image to be uploaded (if any).
+     * @param context The context used for accessing application resources.
+     * @param onSuccess Callback invoked upon success.
+     * @param onFailure Callback invoked upon failure.
+     */
     fun createShopWithImage(
         shop: Shop,
         imageUri: Uri?,
@@ -32,20 +45,20 @@ class ShopRepository {
         val shopRef = collection.document(shop.id)
 
         if (imageUri == null) {
-            // ما كيناش صورة
+            // If no image is provided
             shopRef.set(shop)
                 .addOnSuccessListener { onSuccess() }
                 .addOnFailureListener { onFailure(it) }
             return
         }
 
-        // دابا نحمل الصورة إلى Cloudinary
+        // Upload image to Cloudinary
         val context = context.applicationContext
         val inputStream = context.contentResolver.openInputStream(imageUri)
         val bytes = inputStream?.readBytes()
 
         if (bytes == null) {
-            onFailure(Exception("فشل في قراءة الصورة"))
+            onFailure(Exception("Failed to read the image"))
             return
         }
 
@@ -53,11 +66,11 @@ class ShopRepository {
             .setType(MultipartBody.FORM)
             .addFormDataPart("file", "shop_image.jpg",
                 RequestBody.create("image/*".toMediaTypeOrNull(), bytes))
-            .addFormDataPart("upload_preset", "abderrazake") // دير هنا upload preset ديالك
+            .addFormDataPart("upload_preset", "abderrazake") // Set your Cloudinary upload preset here
             .build()
 
         val request = Request.Builder()
-            .url("https://api.cloudinary.com/v1_1/dmldc4hal/image/upload") // دير هنا Cloud Name ديالك
+            .url("https://api.cloudinary.com/v1_1/dmldc4hal/image/upload") // Set your Cloudinary Cloud Name here
             .post(requestBody)
             .build()
 
@@ -74,7 +87,7 @@ class ShopRepository {
                     val jsonObject = JSONObject(responseBody ?: "")
                     val imageUrl = jsonObject.getString("secure_url")
 
-                    // دابا نحط رابط الصورة في ال Shop ونسجلو في Firestore
+                    // Add the image URL to the shop and store it in Firestore
                     val shopWithImage = shop.copy(imageUrl = imageUrl)
 
                     shopRef.set(shopWithImage)
@@ -82,23 +95,31 @@ class ShopRepository {
                         .addOnFailureListener { onFailure(it) }
 
                 } else {
-                    onFailure(Exception("فشل رفع الصورة: ${response.message}"))
+                    onFailure(Exception("Image upload failed: ${response.message}"))
                 }
             }
         })
     }
 
-
+    /**
+     * Retrieves all shops from Firestore.
+     *
+     * @return A list of all shops.
+     */
     suspend fun getAllShops(): List<Shop> {
         val snapshot = collection
             .orderBy("name", Query.Direction.ASCENDING)
             .get()
-            .await()                    // ينتظر انتهاء الـ Task
+            .await() // Wait for the task to finish
         return snapshot.toObjects(Shop::class.java)
     }
 
-
-
+    /**
+     * Retrieves shops by the owner's ID.
+     *
+     * @param ownerId The ID of the shop owner.
+     * @return A list of shops owned by the specified owner.
+     */
     suspend fun getShopsByOwnerId(ownerId: String): List<Shop> {
         return try {
             val snapshot = collection
@@ -108,10 +129,18 @@ class ShopRepository {
 
             snapshot.toObjects(Shop::class.java)
         } catch (_: Exception) {
-            emptyList() // أو تقدر ترجع null ولا دير logging حسب الحاجة
+            emptyList() // Return empty list in case of failure
         }
     }
 
+    /**
+     * Adds a barber to a specific shop.
+     *
+     * @param shopId The ID of the shop.
+     * @param barber The barber object to be added.
+     * @param onSuccess Callback invoked upon success.
+     * @param onFailure Callback invoked upon failure.
+     */
     fun addBarberToShop(
         shopId: String,
         barber: Barber,
@@ -123,19 +152,18 @@ class ShopRepository {
         shopRef.get()
             .addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()) {
-                    // الحصول على الـ Shop من الـ Firestore
+                    // Retrieve the shop from Firestore
                     val shop = documentSnapshot.toObject(Shop::class.java)
 
-                    // التأكد أن shop ليس فارغًا
                     if (shop != null) {
-                        // إضافة الـ Barber إلى قائمة barbers
+                        // Add the barber to the list of barbers
                         val updatedBarbersList = shop.barbers.toMutableList()
                         updatedBarbersList.add(barber)
 
-                        // إنشاء Shop جديد مع قائمة barbers المحدثة
+                        // Create a new shop with the updated barbers list
                         val updatedShop = shop.copy(barbers = updatedBarbersList)
 
-                        // تحديث الـ Firestore بالـ Shop الجديد
+                        // Update Firestore with the new shop data
                         shopRef.set(updatedShop)
                             .addOnSuccessListener { onSuccess() }
                             .addOnFailureListener { onFailure(it) }
@@ -148,11 +176,19 @@ class ShopRepository {
             }
             .addOnFailureListener { onFailure(it) }
     }
+
+    /**
+     * Retrieves a shop by its ID.
+     *
+     * @param id The ID of the shop.
+     * @param onSuccess Callback invoked upon success with the shop data.
+     * @param onFailure Callback invoked upon failure.
+     */
     fun getShopById(
         id: String,
         onSuccess: (Shop) -> Unit,
         onFailure: (Exception) -> Unit
-    ){
+    ) {
         collection.document(id)
             .get()
             .addOnSuccessListener { documentSnapshot ->
@@ -163,15 +199,22 @@ class ShopRepository {
                     } else {
                         onFailure(Exception("Shop not found"))
                     }
-                    } else {
-                        onFailure(Exception("Shop does not exist"))
-                    }
+                } else {
+                    onFailure(Exception("Shop does not exist"))
                 }
-                .addOnFailureListener { exception ->
-                    onFailure(exception)
-                }
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
     }
 
+    /**
+     * Updates a shop's information in Firestore.
+     *
+     * @param shop The updated shop object.
+     * @param onSuccess Callback invoked upon success.
+     * @param onFailure Callback invoked upon failure.
+     */
     fun updateShop(
         shop: Shop,
         onSuccess: (Boolean) -> Unit,
@@ -182,5 +225,4 @@ class ShopRepository {
             .addOnSuccessListener { onSuccess(true) }
             .addOnFailureListener { onFailure(false) }
     }
-
 }

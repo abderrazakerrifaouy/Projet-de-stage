@@ -13,76 +13,88 @@ import com.example.projet_de_stage.data.ShopOwner
 import com.example.projet_de_stage.data.UserType
 import com.google.android.material.textfield.TextInputEditText
 
-class NameInputFragment  : Fragment() {
-    private lateinit var nextBtn : Button
-    private lateinit var firstName : TextInputEditText
-    private lateinit var lastName : TextInputEditText
-    private lateinit var userTypeStringe : String
-    private lateinit var userType : UserType
-    private lateinit var fullName : String
+/**
+ * Fragment for inputting the user's full name (first name and last name).
+ */
+class NameInputFragment : Fragment() {
+    private lateinit var nextButton: Button
+    private lateinit var firstNameInput: TextInputEditText
+    private lateinit var lastNameInput: TextInputEditText
+    private lateinit var userTypeString: String
+    private lateinit var userType: UserType
+    private lateinit var fullName: String
 
-
+    /**
+     * Called when the fragment's view is created.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.full_name, container, false)
-        nextBtn = view.findViewById(R.id.nextButton)
-        firstName = view.findViewById(R.id.firstNameInput)
-        lastName = view.findViewById(R.id.lastNameInput)
 
-        userTypeStringe = arguments?.getString("userType").toString()
-        userType = UserType.valueOf(userTypeStringe)
+        // Initialize UI elements
+        nextButton = view.findViewById(R.id.nextButton)
+        firstNameInput = view.findViewById(R.id.firstNameInput)
+        lastNameInput = view.findViewById(R.id.lastNameInput)
+
+        // Retrieve user type from the arguments
+        userTypeString = arguments?.getString("userType").toString()
+        userType = UserType.valueOf(userTypeString)
+
         return view
     }
 
+    /**
+     * Called after the fragment's view is created and initialized.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val bundle = Bundle()
 
+        // Set up click listener for the "Next" button
+        nextButton.setOnClickListener {
+            // Combine first and last name to form the full name
+            fullName = "${firstNameInput.text} ${lastNameInput.text}"
 
-
-
-        nextBtn.setOnClickListener {
-            fullName = firstName.text.toString() + " " + lastName.text.toString()
+            // Update the user object based on user type
             when (userType) {
                 UserType.Barber -> {
-                    val barber = arguments?.getParcelable("user")?: Barber()
+                    val barber = arguments?.getParcelable("user") ?: Barber()
                     barber.name = fullName
                     bundle.putParcelable("user", barber)
                 }
                 UserType.Customer -> {
-                    val customer = arguments?.getParcelable("user")?: Customer()
+                    val customer = arguments?.getParcelable("user") ?: Customer()
                     customer.name = fullName
-                    bundle.putParcelable("user",customer)
+                    bundle.putParcelable("user", customer)
                 }
                 UserType.ShopOwner -> {
-                    val shopOwner = arguments?.getParcelable("user")?: ShopOwner()
+                    val shopOwner = arguments?.getParcelable("user") ?: ShopOwner()
                     shopOwner.name = fullName
-                    bundle.putParcelable("user",shopOwner)
+                    bundle.putParcelable("user", shopOwner)
                 }
             }
-            bundle.putString("userType",userTypeStringe)
 
+            // Pass the user type to the next fragment
+            bundle.putString("userType", userTypeString)
 
-
+            // Navigate to the next fragment (BirthDateFragment)
             val birthDateFragment = BirthDateFragment()
             birthDateFragment.arguments = bundle
             parentFragmentManager.beginTransaction()
                 .setCustomAnimations(
-                    R.anim.slide_in,  // حركة الدخول
-                    R.anim.fade_out,  // حركة الخروج
-                    R.anim.fade_in,   // حركة الدخول عند الرجوع
-                    R.anim.slide_out  // حركة الخروج عند الرجوع
+                    R.anim.slide_in,  // Slide in animation
+                    R.anim.fade_out,  // Fade out animation
+                    R.anim.fade_in,   // Fade in animation when returning
+                    R.anim.slide_out  // Slide out animation when returning
                 )
                 .replace(R.id.fragment_container, birthDateFragment)
-                .addToBackStack("NameInputFragment") // لإمكانية العودة بالزر الخلفي
+                .addToBackStack("NameInputFragment") // Allow going back with the back button
                 .commit()
         }
-
-
-
     }
 }

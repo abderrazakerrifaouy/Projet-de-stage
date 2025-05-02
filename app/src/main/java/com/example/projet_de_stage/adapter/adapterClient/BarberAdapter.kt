@@ -10,41 +10,60 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.data.Barber
-import kotlin.let
 
+/**
+ * Adapter for displaying a list of barbers.
+ * It binds the barber data to the RecyclerView.
+ */
 class BarberAdapter(
-    private val barbers: List<Barber>,
-    private val onBarberSelected: (Barber) -> Unit
+    private val barbers: List<Barber>, // List of barbers to display
+    private val onBarberSelected: (Barber) -> Unit // Callback when a barber is selected
 ) : RecyclerView.Adapter<BarberAdapter.BarberViewHolder>() {
 
+    /**
+     * Creates a new view holder for each item in the list.
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BarberViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_barber, parent, false)
+            .inflate(R.layout.item_barber, parent, false) // Inflating the item layout
         return BarberViewHolder(view, onBarberSelected)
     }
 
+    /**
+     * Binds the barber data to the view holder.
+     */
     override fun onBindViewHolder(holder: BarberViewHolder, position: Int) {
-        holder.bind(barbers[position])
+        holder.bind(barbers[position]) // Binding the data for the current position
     }
 
+    /**
+     * Returns the total count of barbers in the list.
+     */
     override fun getItemCount() = barbers.size
 
+    /**
+     * ViewHolder class for holding references to the views in each barber item.
+     */
     class BarberViewHolder(
-        itemView: View,
-        private val onBarberSelected: (Barber) -> Unit
+        itemView: View, // The view for each item
+        private val onBarberSelected: (Barber) -> Unit // Callback for barber selection
     ) : RecyclerView.ViewHolder(itemView) {
-        private val tvBarberName: TextView = itemView.findViewById(R.id.tvBarberName)
+        private val barberNameTextView: TextView = itemView.findViewById(R.id.tvBarberName)
         private val ratingBar: RatingBar = itemView.findViewById(R.id.ratingBar)
-        private val ivBarber: ImageView = itemView.findViewById(R.id.ivBarber)
-        private val btnSelect: Button = itemView.findViewById(R.id.btnSelect)
+        private val barberImageView: ImageView = itemView.findViewById(R.id.ivBarber)
+        private val selectButton: Button = itemView.findViewById(R.id.btnSelect)
 
+        /**
+         * Binds the barber data to the views in the item.
+         */
         fun bind(barber: Barber) {
-            tvBarberName.text = barber.name
-            ratingBar.rating = barber.rating
-            ivBarber.setImageResource(R.drawable.my_profile)
+            barberNameTextView.text = barber.name // Set barber name
+            ratingBar.rating = barber.rating // Set barber rating
+            barberImageView.setImageResource(R.drawable.my_profile) // Set default image for barber
 
-            btnSelect.setOnClickListener {
-                onBarberSelected(barber)
+            // Set the click listener to notify when the barber is selected
+            selectButton.setOnClickListener {
+                onBarberSelected(barber) // Trigger the callback when selected
             }
         }
     }

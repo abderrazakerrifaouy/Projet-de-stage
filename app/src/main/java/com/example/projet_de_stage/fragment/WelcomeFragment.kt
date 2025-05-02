@@ -15,76 +15,87 @@ import com.example.projet_de_stage.data.Customer
 import com.example.projet_de_stage.data.ShopOwner
 import com.example.projet_de_stage.data.UserType
 
-
+/**
+ * Fragment that allows the user to select the type of account they want to create (Barber, Customer, or ShopOwner).
+ */
 class WelcomeFragment : Fragment() {
 
     private lateinit var radioGroup: RadioGroup
-    private lateinit var btnConfirm: Button
+    private lateinit var confirmButton: Button
 
+    /**
+     * Called when the fragment's view is created.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // تحميل واجهة Fragment
+        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_user_type, container, false)
 
-        // تهيئة العناصر
+        // Initialize UI elements
         radioGroup = view.findViewById(R.id.radioGroup)
-        btnConfirm = view.findViewById(R.id.nextButton)
+        confirmButton = view.findViewById(R.id.nextButton)
 
         return view
     }
 
+    /**
+     * Called after the fragment's view is created and initialized.
+     * Handles the logic for the "Confirm" button click.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btnConfirm.setOnClickListener {
+        confirmButton.setOnClickListener {
             val selectedId = radioGroup.checkedRadioButtonId
 
+            // Check if a selection has been made
             if (selectedId == -1) {
                 Toast.makeText(context, "الرجاء اختيار نوع حسابك للمتابعة", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-
+            // Get the selected radio button
             val radioButton = view.findViewById<RadioButton>(selectedId)
 
-            // الانتقال إلى Fragment جديد
+            // Prepare a bundle to pass the data to the next fragment
             val bundle = Bundle()
-            val nameFragment = NameInputFragment() // يجب أن يكون Fragment وليس Activity
-            when(selectedId){
-                R.id.radioBarber -> {
-                    bundle.putParcelable("user", Barber())
-                    bundle.putString("userType", UserType.Barber.name)
+            val nameFragment = NameInputFragment() // Proceed to NameInputFragment
 
+            when(selectedId) {
+                // Barber selected
+                R.id.radioBarber -> {
+                    bundle.putParcelable("user", Barber()) // Create Barber object
+                    bundle.putString("userType", UserType.Barber.name)
                 }
-                R.id.radioAdmin ->{
-                    bundle.putParcelable("user", ShopOwner())
+                // ShopOwner selected
+                R.id.radioAdmin -> {
+                    bundle.putParcelable("user", ShopOwner()) // Create ShopOwner object
                     bundle.putString("userType", UserType.ShopOwner.name)
                 }
-
-
+                // Customer selected
                 R.id.radioCustomer -> {
-                    bundle.putParcelable("user", Customer())
+                    bundle.putParcelable("user", Customer()) // Create Customer object
                     bundle.putString("userType", UserType.Customer.name)
                 }
-
             }
+
+            // Pass the data to the NameInputFragment
             nameFragment.arguments = bundle
 
+            // Navigate to the NameInputFragment
             parentFragmentManager.beginTransaction()
                 .setCustomAnimations(
-                    R.anim.slide_in,  // حركة الدخول
-                    R.anim.fade_out,  // حركة الخروج
-                    R.anim.fade_in,   // حركة الدخول عند الرجوع
-                    R.anim.slide_out  // حركة الخروج عند الرجوع
+                    R.anim.slide_in,  // Animation for entering
+                    R.anim.fade_out,  // Animation for exiting
+                    R.anim.fade_in,   // Animation when coming back
+                    R.anim.slide_out  // Animation when going back
                 )
                 .replace(R.id.fragment_container, nameFragment)
-                .addToBackStack("welcome_fragment") // لإمكانية العودة بالزر الخلفي
+                .addToBackStack("welcome_fragment") // Allow going back using the back button
                 .commit()
         }
     }
 }
-
-
