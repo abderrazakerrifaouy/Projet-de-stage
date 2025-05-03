@@ -89,7 +89,7 @@ class ModifyBarberActivity : AppCompatActivity() {
 
         viewModel.modifyBarber(modifiedBarber) { success ->
             if (success) {
-                Toast.makeText(this, "Barber updated successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.barber_updated_successfully), Toast.LENGTH_SHORT).show()
 
                 lifecycleScope.launch {
                     val shop = viewModel.getShopByBarberId(modifiedBarber.uid)
@@ -99,9 +99,9 @@ class ModifyBarberActivity : AppCompatActivity() {
 
                         viewModel.updateShop(shop) { shopUpdateSuccess ->
                             if (shopUpdateSuccess) {
-                                Toast.makeText(this@ModifyBarberActivity, "Shop updated successfully", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@ModifyBarberActivity, getString(R.string.shop_updated_successfully), Toast.LENGTH_SHORT).show()
                             } else {
-                                Toast.makeText(this@ModifyBarberActivity, "Failed to update shop", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@ModifyBarberActivity, getString(R.string.failed_to_update_shop), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -113,7 +113,7 @@ class ModifyBarberActivity : AppCompatActivity() {
                 finish()
 
             } else {
-                Toast.makeText(this, "Failed to update barber", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.failed_to_update_barber), Toast.LENGTH_SHORT).show()
             }
         }
     }

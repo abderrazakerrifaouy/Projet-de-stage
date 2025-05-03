@@ -21,10 +21,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationBarView
 import kotlinx.coroutines.launch
 
-/**
- * Main activity for barbers after login.
- * Handles navigation and incoming appointments.
- */
 class BarberActivityHome : AppCompatActivity() {
 
     private lateinit var barber: Barber
@@ -34,31 +30,23 @@ class BarberActivityHome : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_barber_home)
 
-        // Retrieve barber data passed from previous activity
-        barber = intent.getParcelableExtra("barber")!!
+        barber = intent.getParcelableExtra<Barber>("barber")!!
 
         setupToolbar()
         observeNewAppointments()
         setupBottomNavigation(findViewById(R.id.bottom_navigation))
 
-        // Load default home fragment
         if (savedInstanceState == null) {
             loadFragment(BarberHome())
         }
     }
 
-    /**
-     * Sets up the top app bar with greeting.
-     */
     private fun setupToolbar() {
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        toolbar.title = "Welcome, ${barber.name}!"
+        toolbar.title = getString(R.string.welcome_message, barber.name)
     }
 
-    /**
-     * Listens to new real-time appointments and shows them in a bottom sheet.
-     */
     private fun observeNewAppointments() {
         barberViewModel.listenToNewRealtimeAppointments(
             barberId = barber.uid,
@@ -68,14 +56,11 @@ class BarberActivityHome : AppCompatActivity() {
                 }
             },
             onError = { errorMessage ->
-                Toast.makeText(this, "Connection error: $errorMessage", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.connection_error, errorMessage), Toast.LENGTH_SHORT).show()
             }
         )
     }
 
-    /**
-     * Sets up the bottom navigation menu with fragment switching.
-     */
     private fun setupBottomNavigation(bottomNav: BottomNavigationView) {
         lifecycleScope.launch {
             val shop = barberViewModel.getShopByBarber(barber)
@@ -102,10 +87,6 @@ class BarberActivityHome : AppCompatActivity() {
         }
     }
 
-    /**
-     * Loads the selected fragment into the main container.
-     * Passes the barber as argument to fragment.
-     */
     private fun loadFragment(fragment: Fragment, addToBackStack: Boolean = false) {
         val bundle = Bundle().apply {
             putParcelable("barber", barber)
@@ -119,10 +100,7 @@ class BarberActivityHome : AppCompatActivity() {
         }
     }
 
-    /**
-     * Displays the appointment in a bottom sheet with action buttons.
-     */
-    @SuppressLint("SetTextI18n", "MissingInflatedId")
+    @SuppressLint("SetTextI18n", "MissingInflatedId", "InflateParams")
     private fun showAppointmentBottomSheet(appointment: Appointment) {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_appointment, null)
@@ -137,25 +115,25 @@ class BarberActivityHome : AppCompatActivity() {
 
         barberViewModel.loadCustomerById(appointment.clientId)
         barberViewModel.customer.observe(this) { customer ->
-            customerNameTextView.text = "Customer: ${customer?.name}"
+            customerNameTextView.text = getString(R.string.customer_name, customer?.name)
         }
 
-        serviceDateTextView.text = "Service Date: ${appointment.date}"
-        serviceText.text = "Service: ${appointment.service}"
-        timeText.text = "Time: ${appointment.time}"
+        serviceDateTextView.text = getString(R.string.service_date, appointment.date)
+        serviceText.text = getString(R.string.service, appointment.service)
+        timeText.text = getString(R.string.time, appointment.time)
 
         acceptButton.setOnClickListener {
-            updateAppointmentStatus(appointment, "accepted", "Appointment accepted")
+            updateAppointmentStatus(appointment, "accepted", getString(R.string.appointment_accepted))
             bottomSheetDialog.dismiss()
         }
 
         rejectButton.setOnClickListener {
-            updateAppointmentStatus(appointment, "rejected", "Appointment rejected")
+            updateAppointmentStatus(appointment, "rejected", getString(R.string.appointment_rejected))
             bottomSheetDialog.dismiss()
         }
 
         pendingButton.setOnClickListener {
-            Toast.makeText(this, "Appointment put on hold", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.appointment_on_hold), Toast.LENGTH_SHORT).show()
             deleteAppointmentInRealTimeDatabase(appointment)
             bottomSheetDialog.dismiss()
         }
@@ -164,34 +142,28 @@ class BarberActivityHome : AppCompatActivity() {
         bottomSheetDialog.show()
     }
 
-    /**
-     * Updates the appointment status and removes it from real-time DB.
-     */
     private fun updateAppointmentStatus(appointment: Appointment, status: String, toastMessage: String) {
         Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
         barberViewModel.updateAppointmentStatus(
             appointment.id, status,
             onSuccess = {
-                Toast.makeText(this, "Status updated", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.status_updated), Toast.LENGTH_SHORT).show()
             },
             onFailure = {
-                Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_message, it.message), Toast.LENGTH_SHORT).show()
             }
         )
         deleteAppointmentInRealTimeDatabase(appointment)
     }
 
-    /**
-     * Deletes the appointment from Firebase Realtime Database.
-     */
     private fun deleteAppointmentInRealTimeDatabase(appointment: Appointment) {
         barberViewModel.deleteAppointmentInRealtimeDatabase(
             appointment.id,
             onSuccess = { check ->
                 if (check) {
-                    Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.appointment_deleted), Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "Error deleting appointment", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.appointment_delete_error), Toast.LENGTH_SHORT).show()
                 }
             })
     }

@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">Projet_de_stage</string>
+    <string name="app_name">Projet\_de\_stage</string>
     <string name="create_password_title">إنشاء كلمة سر</string>
     <string name="password_requirements">يرجى إنشاء كلمة سر مكونة من 6 أخرف أبجدية أو أرقام على الأقل.\nويجب أن تكون كلمة السر شيئاً يتعذر على الآخرين تخمينه.</string>
     <string name="password_hint">كلمة السر</string>
     <string name="next">التالي</string>
     <string name="search_for_account">بحث عن حسابي</string>
 
+    ```
     <!-- Name Screen -->
     <string name="what_is_your_name">ما اسمك؟</string>
     <string name="name_instructions">أدخل الاسم الذي تستخدمه في الواقع.</string>
@@ -32,4 +33,38 @@
     <string name="search">البحث عن طلب ….</string>
     <string name="shop_image">صورة المحل</string>
     <string name="accepted">accepted</string>
+    <string name="barber_requests">طلبات الحلاقة</string>
+    <string name="join_requests">طلبات الانضمام</string>
+    <string name="my_shops">محلاتي</string>
+
+    <string name="no_shop_owner_id">لم يتم توفير معرف مالك المتجر</string>
+    <string name="shop_owner_not_found">لم يتم العثور على مالك المتجر %1$s</string>
+    <string name="loaded_owner_data">تم تحميل بيانات المالك: %1$s</string>
+    <string name="please_wait_for_shop_owner_data">يرجى الانتظار حتى يتم تحميل بيانات مالك المتجر</string>
+    <string name="please_fill_required_fields">يرجى ملء جميع الحقول المطلوبة</string>
+    <string name="shop_created_successfully">تم إنشاء المتجر بنجاح</string>
+    <string name="error_message">خطأ: %1$s</string>
+
+
+    <string name="welcome_message">مرحبًا، %1$s!</string>
+    <string name="connection_error">خطأ في الاتصال: %1$s</string>
+    <string name="customer_name">العميل: %1$s</string>
+    <string name="service_date">تاريخ الخدمة: %1$s</string>
+    <string name="service">الخدمة: %1$s</string>
+    <string name="time">الوقت: %1$s</string>
+    <string name="appointment_accepted">تم قبول الموعد</string>
+    <string name="appointment_rejected">تم رفض الموعد</string>
+    <string name="appointment_on_hold">تم وضع الموعد في الانتظار</string>
+    <string name="status_updated">تم تحديث الحالة</string>
+    <string name="appointment_deleted">تم حذف الموعد بنجاح</string>
+    <string name="appointment_delete_error">حدث خطأ أثناء حذف الموعد</string>
+
+
+        <!-- النصوص الخاصة بالواجهة -->
+        <string name="barber_updated_successfully">تم تحديث بيانات الحلاق بنجاح</string>
+        <string name="shop_updated_successfully">تم تحديث المحل بنجاح</string>
+        <string name="failed_to_update_shop">فشل في تحديث المحل</string>
+        <string name="failed_to_update_barber">فشل في تحديث بيانات الحلاق</string>
+    ```
+
 </resources>

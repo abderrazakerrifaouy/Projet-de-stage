@@ -35,7 +35,6 @@ class CreateShopActivity : AppCompatActivity() {
     private lateinit var ivShopImage: ImageView
 
     private val PICK_IMAGE_REQUEST = 1
-    private val authViewModel = AuthViewModel(AuthRepository())
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,18 +67,18 @@ class CreateShopActivity : AppCompatActivity() {
     private fun loadShopOwnerData() {
         val ownerUid = intent.getStringExtra("shopOwner")
         if (ownerUid.isNullOrEmpty()) {
-            Toast.makeText(this, "No Shop Owner ID provided", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_shop_owner_id), Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
         viewModel.getShopOwnerById(ownerUid) { owner ->
             if (owner == null) {
-                Toast.makeText(this, "ShopOwner $ownerUid not found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.shop_owner_not_found, ownerUid), Toast.LENGTH_SHORT).show()
                 finish()
             } else {
                 shopOwner = owner
-                Toast.makeText(this, "Loaded owner data: ${owner.uid}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.loaded_owner_data, owner.uid), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -95,7 +94,7 @@ class CreateShopActivity : AppCompatActivity() {
 
         btnSubmit.setOnClickListener {
             if (shopOwner == null) {
-                Toast.makeText(this, "Please wait for shop owner data to load", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_wait_for_shop_owner_data), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -119,7 +118,7 @@ class CreateShopActivity : AppCompatActivity() {
      */
     private fun validateInput(): Boolean {
         if (etName.text.isEmpty() || etAddress.text.isEmpty() || etBarberCount.text.isEmpty()) {
-            Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_fill_required_fields), Toast.LENGTH_SHORT).show()
             return false
         }
         return true
@@ -131,13 +130,13 @@ class CreateShopActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.shopCreationStatus.observe(this) { success ->
             if (success) {
-                Toast.makeText(this, "Shop successfully created", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.shop_created_successfully), Toast.LENGTH_SHORT).show()
                 finish()
             }
         }
 
         viewModel.errorMessage.observe(this) { message ->
-            Toast.makeText(this, "Error: $message", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.error_message, message), Toast.LENGTH_LONG).show()
         }
     }
 

@@ -21,30 +21,25 @@ import com.google.android.material.tabs.TabLayoutMediator
  */
 class AdminActivityHome : AppCompatActivity() {
 
-    // Logged-in shop owner passed from the previous activity
     private lateinit var shopOwner: ShopOwner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admine)
 
-        // Retrieve the ShopOwner object from the intent
         shopOwner = intent.getParcelableExtra<ShopOwner>("shopOwner")!!
 
-        // Initialize UI components
         val viewPager: ViewPager2 = findViewById(R.id.viewPager)
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
 
-        // Set up ViewPager adapter
         val adapter = ShopManagementPagerAdapter(this, shopOwner)
         viewPager.adapter = adapter
 
-        // Link TabLayout with ViewPager using TabLayoutMediator
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
-                0 -> "Barber Requests"      // Previously: طلبات الحلاقة
-                1 -> "Join Requests"        // Previously: طلبات الانضمام
-                2 -> "My Shops"             // Previously: محلاتي
+                0 -> getString(R.string.barber_requests)
+                1 -> getString(R.string.join_requests)
+                2 -> getString(R.string.my_shops)
                 else -> null
             }
         }.attach()
