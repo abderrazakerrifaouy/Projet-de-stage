@@ -6,12 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
-
-    <ImageView
-        android:layout_width="100dp"
+    <Toolbar
+        android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/app_name" />
+        android:background="@drawable/app_name"
+        />
+
+<!--    <ImageView-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:contentDescription="@string/todo"-->
+<!--        android:src="@drawable/app_name" />-->
 
     <!-- عنوان الصفحة -->
     <TextView

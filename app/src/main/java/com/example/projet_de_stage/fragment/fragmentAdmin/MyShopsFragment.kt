@@ -16,12 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.projet_de_stage.R
 import com.example.projet_de_stage.adapter.adapterAdmin.ShopsAdapter
+import com.example.projet_de_stage.view.admin.BarberListActivity
 import com.example.projet_de_stage.view.admin.CreateShopActivity
 import com.example.projet_de_stage.viewModel.AdminViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.jvm.java
 
 /**
  * Fragment displaying the list of shops owned by a shop owner.
@@ -114,7 +116,10 @@ class MyShopsFragment : Fragment() {
                 headerTitle.text = "Shop List"
                 recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
                 shopsAdapter = ShopsAdapter(shops) { shop ->
-                    Toast.makeText(requireContext(), "You clicked on ${shop}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "You clicked on ${shop.id}", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(requireContext(), BarberListActivity::class.java)
+                    intent.putExtra("shopId", shop)
+                    startActivity(intent)
                 }
                 recyclerView.adapter = shopsAdapter
             }

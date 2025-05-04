@@ -21,7 +21,7 @@ import com.example.projet_de_stage.data.Shop
  */
 class ShopsAdapter(
     private var shops: List<Shop>,
-    private val onManageClick: (String) -> Unit
+    private val onManageClick: (Shop) -> Unit
 ) : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
 
     /**
@@ -30,8 +30,6 @@ class ShopsAdapter(
     inner class ShopViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val ivShopImage: ImageView = view.findViewById(R.id.ivShopImage)
         val tvShopName: TextView = view.findViewById(R.id.tvShopName)
-        val tvRating: TextView = view.findViewById(R.id.tvRating)
-        val tvReviewsCount: TextView = view.findViewById(R.id.tvReviewsCount)
         val btnManageShop: Button = view.findViewById(R.id.btnManageShop)
     }
 
@@ -62,7 +60,7 @@ class ShopsAdapter(
 
         // Handle "Manage Shop" button click
         holder.btnManageShop.setOnClickListener {
-            onManageClick(shop.id)
+            onManageClick(shop)
         }
 
         // Optional: you could populate tvRating and tvReviewsCount when data is available
