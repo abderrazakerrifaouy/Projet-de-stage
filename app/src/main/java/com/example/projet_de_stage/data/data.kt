@@ -38,7 +38,8 @@ data class Barber(
     val shopId: String = "",
     val imageRes: Int = R.drawable.my_profile,
     val rating: Float = 0f,
-    val numberOfRatings: Int = 0 // Renamed from 'nrating' for clarity
+    val numberOfRatings: Int = 0,
+    var imageUrl: String = ""
 ) : Parcelable
 
 /**
@@ -53,7 +54,8 @@ data class Customer(
     var birthDate: String = "",
     var address: String = "",
     var password: String = "",
-    val imageRes: Int = R.drawable.my_profile
+    val imageRes: Int = R.drawable.my_profile ,
+    val imageUrl: String = ""
 ) : Parcelable
 
 /**

@@ -16,6 +16,7 @@ import com.example.projet_de_stage.data.Barber
 import com.example.projet_de_stage.view.LoginActivity
 import com.example.projet_de_stage.viewModel.ClientViewModel
 import androidx.core.content.edit
+import com.bumptech.glide.Glide
 import com.example.projet_de_stage.view.barberUser.ModifyBarberActivity
 
 /**
@@ -93,7 +94,16 @@ class ProfileFragment : Fragment() {
      */
     @SuppressLint("SetTextI18n")
     private fun bindBarberData() {
-        profileImage.setImageResource(barber.imageRes)
+
+        if (barber.imageUrl.isNotEmpty()) {
+            Glide.with(this)
+                .load(barber.imageUrl)
+                .into(profileImage)
+        } else {
+            profileImage.setImageResource(R.drawable.my_profile)
+        }
+
+
         tvName.text = barber.name
         tvExperience.text = "Experience: ${barber.experience} years"
         tvEmail.text = barber.email
