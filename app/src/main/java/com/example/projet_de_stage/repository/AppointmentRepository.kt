@@ -108,6 +108,8 @@ class AppointmentRepository {
 
     /**
      * Updates the status field of an appointment in both Firestore and Realtime Database.
+     * @param appointmentId The ID of the appointment to update.
+     * @param newStatus The new status to set.
      */
     fun updateAppointmentStatus(
         appointmentId: String,
@@ -126,6 +128,12 @@ class AppointmentRepository {
 
     /**
      * Listens for new "pending" appointments for a specific barber in Realtime Database.
+     * @param barberId The ID of the barber to listen for appointments.
+     * @param onNewAppointment Callback to invoke when a new appointment is found.
+     * @param onError Callback to handle errors during the listen operation.
+     * @see Appointment
+     * @see DataSnapshot
+     * @see DatabaseError
      */
     fun listenToNewAppointmentsForBarber(
         barberId: String,
@@ -158,6 +166,9 @@ class AppointmentRepository {
 
     /**
      * Deletes an appointment from the Realtime Database.
+     * @param appointmentId The ID of the appointment to delete.
+     * @param onSuccess Callback to invoke on successful deletion.
+     * @param onFailure Callback to handle errors during the deletion operation.
      */
     fun deleteAppointmentInRealtimeDatabase(
         appointmentId: String,
@@ -171,6 +182,9 @@ class AppointmentRepository {
 
     /**
      * Retrieves all appointments for a specific shop.
+     * @param shopId The ID of the shop.
+     * @param onSuccess Callback to invoke with the list of appointments.
+     * @param onFailure Callback to handle errors during the operation.
      */
     fun getAppointmentsByShopId(
         shopId: String,
@@ -186,5 +200,32 @@ class AppointmentRepository {
                 onSuccess(appointments)
             }
             .addOnFailureListener { exception -> onFailure(exception) }
+    }
+
+
+    /**
+     * Deletes a request from Firestore based on shop ID and barber ID.
+     * @param shopId The ID of the shop.
+     * @param barberId The ID of the barber.
+     * @param onSuccess Callback to invoke on successful deletion.
+     */
+    fun deleteRequestByShopIdAndBarberId(
+        shopId: String,
+        barberId: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        firestoreCollection.whereEqualTo("shopId", shopId)
+            .whereEqualTo("barberId", barberId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot.documents) {
+                    document.reference.delete()
+                        .addOnSuccessListener { onSuccess() }
+                        .addOnFailureListener { e -> onFailure(e) }
+                }
+            }
+            .addOnFailureListener { e -> onFailure(e) }
+
     }
 }

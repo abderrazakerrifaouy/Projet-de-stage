@@ -241,4 +241,29 @@ class AdminViewModel : ViewModel() {
             onFailure = { _error.postValue(it.message) }
         )
     }
+
+
+    /**
+     * Delete a barber from a shop.
+     */
+
+    fun deleteBarberFromShop(
+        shopId: String,
+        barberId: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+        ) {
+        shopRepository.deleteBarberFromShop(
+            shopId = shopId,
+            barberId = barberId,
+            onSuccess = { onSuccess() },
+            onFailure = { e -> onFailure(e) }
+        )
+        appointmentRepository.deleteRequestByShopIdAndBarberId(
+            shopId = shopId,
+            barberId = barberId,
+            onSuccess = { onSuccess() },
+            onFailure = { e -> onFailure(e) }
+        )
+    }
 }

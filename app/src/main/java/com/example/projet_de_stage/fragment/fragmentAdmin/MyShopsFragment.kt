@@ -118,7 +118,7 @@ class MyShopsFragment : Fragment() {
                 shopsAdapter = ShopsAdapter(shops) { shop ->
                     Toast.makeText(requireContext(), "You clicked on ${shop.id}", Toast.LENGTH_SHORT).show()
                     val intent = Intent(requireContext(), BarberListActivity::class.java)
-                    intent.putExtra("shopId", shop)
+                    intent.putExtra("shop", shop)
                     startActivity(intent)
                 }
                 recyclerView.adapter = shopsAdapter

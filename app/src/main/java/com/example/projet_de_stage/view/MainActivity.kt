@@ -23,95 +23,81 @@ import com.example.projet_de_stage.viewModel.AuthViewModel
 import com.google.firebase.FirebaseApp
 import kotlinx.coroutines.launch
 
-/**
- * Main activity that handles user authentication and navigation to the corresponding home screen
- * based on the user's role (Barber, Customer, ShopOwner).
- */
 class MainActivity : AppCompatActivity() {
 
     private val viewModelAuth = AuthViewModel(AuthRepository())
 
-    /**
-     * Called when the activity is created. Initializes Firebase and checks for internet connectivity.
-     * If internet is available, it checks for a saved UID and navigates to the correct home screen.
-     * If no UID is found, it navigates to the login screen.
-     */
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // تحقق من اتصال الإنترنت أولاً
+        if (!isInternetAvailable(this)) {
+            showErrorDialog()
+            return
+        }
+
+        // ثم نبدأ باقي العملية بعد 2 ثواني
         FirebaseApp.initializeApp(this)
 
-        // Delay of 2 seconds to simulate splash screen
         Handler(Looper.getMainLooper()).postDelayed({
-            if (isInternetAvailable(this)) {
-                val savedUid = getSharedPreferences("prefs", MODE_PRIVATE).getString("uid", "")
-                if (!savedUid.isNullOrEmpty()) {
-                    lifecycleScope.launch {
-                        try {
-                            val user = viewModelAuth.getUserByUid(savedUid)
-                            when (user) {
-                                is Barber -> {
-                                    val intent = Intent(this@MainActivity, BarberActivityHome::class.java)
-                                    intent.putExtra("barber", user)
-                                    startActivity(intent)
-                                }
-                                is Customer -> {
-                                    val intent = Intent(this@MainActivity, HomeActivityClient::class.java)
-                                    intent.putExtra("customer", user)
-                                    startActivity(intent)
-                                }
-                                is ShopOwner -> {
-                                    val intent = Intent(this@MainActivity, AdminActivityHome::class.java)
-                                    intent.putExtra("shopOwner", user)
-                                    startActivity(intent)
-                                }
-                                else -> {
-                                    showErrorDialog("User type not recognized.")
-                                }
+            val savedUid = getSharedPreferences("prefs", MODE_PRIVATE).getString("uid", "")
+            if (!savedUid.isNullOrEmpty()) {
+                lifecycleScope.launch {
+                    try {
+                        val user = viewModelAuth.getUserByUid(savedUid)
+                        when (user) {
+                            is Barber -> {
+                                startActivity(Intent(this@MainActivity, BarberActivityHome::class.java).apply {
+                                    putExtra("barber", user)
+                                })
                             }
-                            finish()
-                        } catch (e: Exception) {
-                            showErrorDialog("Failed to load data. Please check your internet connection.\n${e.message}")
+                            is Customer -> {
+                                startActivity(Intent(this@MainActivity, HomeActivityClient::class.java).apply {
+                                    putExtra("customer", user)
+                                })
+                            }
+                            is ShopOwner -> {
+                                startActivity(Intent(this@MainActivity, AdminActivityHome::class.java).apply {
+                                    putExtra("shopOwner", user)
+                                })
+                            }
+                            else -> {
+                                showErrorDialog()
+                            }
                         }
+                        finish()
+                    } catch (e: Exception) {
+                        showErrorDialog()
                     }
-                } else {
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
                 }
             } else {
-                showErrorDialog("No internet connection. Please check your network and try again.")
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             }
-        }, 2000) // 2 second delay
+        }, 2000)
     }
 
-    /**
-     * Checks if the device is connected to the internet.
-     * @param context The application context
-     * @return Boolean indicating if the internet is available
-     */
     private fun isInternetAvailable(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         val network = connectivityManager.activeNetwork ?: return false
         val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
         return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
-    /**
-     * Shows an error dialog with a message and options to retry or exit the app.
-     * @param message The error message to display
-     */
-    private fun showErrorDialog(message: String) {
+    private fun showErrorDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Connection Error")
-            .setMessage(message)
+            .setTitle(getString(R.string.connection_error_title))
+            .setMessage(getString(R.string.connection_error_message))
             .setCancelable(false)
-            .setPositiveButton("Retry") { _, _ ->
-                recreate() // Restart the activity
+            .setPositiveButton(getString(R.string.retry)) { _, _ ->
+                recreate()
             }
-            .setNegativeButton("Exit") { _, _ ->
-                finish() // Close the activity
+            .setNegativeButton(getString(R.string.exit)) { _, _ ->
+                finish()
             }
             .show()
     }
+
 }

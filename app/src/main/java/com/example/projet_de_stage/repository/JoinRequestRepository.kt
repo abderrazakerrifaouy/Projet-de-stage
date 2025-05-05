@@ -5,6 +5,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 /**
  * Repository class for managing JoinRequest data in Firestore.
+ * Provides methods to add, update, delete, and retrieve join requests.
+ * @author Electro Anas
+ * @version 1.0
+ * @since 2023-07-01
+ * @see JoinRequest
+ * @see FirebaseFirestore
+ * @constructor Creates an instance of JoinRequestRepository.
+ * @property db The Firebase Firestore instance.
  */
 class JoinRequestRepository {
 
@@ -21,21 +29,6 @@ class JoinRequestRepository {
     ) {
         collection.document(request.id).set(request)
             .addOnSuccessListener { onSuccess() }
-            .addOnFailureListener { e -> onFailure(e) }
-    }
-
-    /**
-     * Retrieves a join request by its ID.
-     */
-    fun getRequestById(
-        id: String,
-        onSuccess: (JoinRequest?) -> Unit,
-        onFailure: (Exception) -> Unit
-    ) {
-        collection.document(id).get()
-            .addOnSuccessListener { doc ->
-                onSuccess(doc.toObject(JoinRequest::class.java))
-            }
             .addOnFailureListener { e -> onFailure(e) }
     }
 
@@ -67,13 +60,16 @@ class JoinRequestRepository {
 
     /**
      * Retrieves all join requests for a given shop owner.
+     * @param shopOwnerId The ID of the shop owner.
+     * @param onSuccess Callback invoked on successful retrieval.
+     * @param onFailure Callback invoked on failure.
      */
     fun getRequestsByShopOwnerId(
         shopOwnerId: String,
         onSuccess: (List<JoinRequest>) -> Unit,
         onFailure: (Exception) -> Unit
     ) {
-        collection.whereEqualTo("idShopOwner", shopOwnerId)
+        collection.whereEqualTo("shopOwnerId", shopOwnerId)
             .get()
             .addOnSuccessListener { qs ->
                 onSuccess(qs.documents.mapNotNull { it.toObject(JoinRequest::class.java) })
@@ -83,6 +79,10 @@ class JoinRequestRepository {
 
     /**
      * Updates the status of a specific join request.
+     * @param requestId The ID of the join request to update.
+     * @param newStatus The new status to set.
+     * @param onSuccess Callback invoked on successful update.
+     * @param onFailure Callback invoked on failure.
      */
     fun updateRequestStatus(
         requestId: String,
@@ -94,4 +94,6 @@ class JoinRequestRepository {
             .addOnSuccessListener { onSuccess(true) }
             .addOnFailureListener { e -> onFailure(e) }
     }
+
+
 }

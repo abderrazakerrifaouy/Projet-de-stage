@@ -32,14 +32,12 @@ class JoinRequestsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_join_requests, container, false)
 
-        // Initialize the ViewModel
-        viewModel = ViewModelProvider(this).get(AdminViewModel::class.java)
 
-        // Set up RecyclerView with LinearLayoutManager
+        viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
+
         recyclerView = view.findViewById(R.id.joinRequestsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Set up the adapter and pass the logic for handling the accept/reject actions
         val adapter = JoinRequestsAdapter(
             emptyList(),
             { id, approved, barber, idShop ->

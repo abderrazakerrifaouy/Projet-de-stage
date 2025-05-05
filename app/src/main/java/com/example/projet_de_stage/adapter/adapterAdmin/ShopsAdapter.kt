@@ -22,10 +22,17 @@ import com.example.projet_de_stage.data.Shop
 class ShopsAdapter(
     private var shops: List<Shop>,
     private val onManageClick: (Shop) -> Unit
-) : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
+) : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>()
+{
 
     /**
      * ViewHolder class that holds references to the UI components of a shop item.
+     * @param view The root view of the item layout.
+     * @see RecyclerView.ViewHolder
+     * @see Shop
+     * @see ImageView
+     * @see TextView
+     * @see Button
      */
     inner class ShopViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val ivShopImage: ImageView = view.findViewById(R.id.ivShopImage)
@@ -35,6 +42,9 @@ class ShopsAdapter(
 
     /**
      * Inflates the layout for a single shop item.
+     * @param parent The parent ViewGroup.
+     * @param viewType The view type of the new view.
+     * @return A new ViewHolder that holds the inflated view.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_shop, parent, false)
@@ -43,40 +53,38 @@ class ShopsAdapter(
 
     /**
      * Binds the shop data to the corresponding views.
+     * If the shop has an image URL, it is loaded using Glide.
+     * Otherwise, the default image is set.
+     * @param holder ViewHolder for the current item.
+     * @param position Position of the current item in the list.
+     * @see ShopViewHolder
+     * @see Glide
      */
     override fun onBindViewHolder(holder: ShopViewHolder, position: Int) {
         val shop = shops[position]
+            if (shop.imageUrl.isNotEmpty()) {
+                Glide.with(holder.itemView.context)
+                    .load(shop.imageUrl)
+                    .into(holder.ivShopImage)
+            } else {
+                holder.ivShopImage.setImageResource(shop.imageRes)
+            }
 
-        // Load image from URL if available, otherwise use default resource.
-        if (shop.imageUrl.isNotEmpty()) {
-            Glide.with(holder.itemView.context)
-                .load(shop.imageUrl)
-                .into(holder.ivShopImage)
-        } else {
-            holder.ivShopImage.setImageResource(shop.imageRes)
-        }
 
         holder.tvShopName.text = shop.name
 
-        // Handle "Manage Shop" button click
         holder.btnManageShop.setOnClickListener {
             onManageClick(shop)
         }
 
-        // Optional: you could populate tvRating and tvReviewsCount when data is available
     }
 
     /**
      * Returns the number of items in the list.
+     * @return The number of items in the list.
      */
     override fun getItemCount(): Int = shops.size
 
-    /**
-     * Updates the shop list with new data and refreshes the RecyclerView.
-     */
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateList(newShops: List<Shop>) {
-        this.shops = newShops
-        notifyDataSetChanged()
-    }
+
+
 }

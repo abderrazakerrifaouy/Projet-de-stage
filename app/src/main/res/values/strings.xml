@@ -65,6 +65,12 @@
         <string name="shop_updated_successfully">تم تحديث المحل بنجاح</string>
         <string name="failed_to_update_shop">فشل في تحديث المحل</string>
         <string name="failed_to_update_barber">فشل في تحديث بيانات الحلاق</string>
+
+
+    <string name="connection_error_title">خطأ في الاتصال</string>
+    <string name="connection_error_message">لا يوجد اتصال بالإنترنت أو لا يمكن الوصول إلى الخادم. الرجاء التحقق من الشبكة وحاول مرة أخرى.</string>
+    <string name="retry">إعادة المحاولة</string>
+    <string name="exit">الخروج</string>
     ```
 
 </resources>

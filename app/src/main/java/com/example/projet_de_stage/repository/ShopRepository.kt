@@ -225,4 +225,35 @@ class ShopRepository {
             .addOnSuccessListener { onSuccess(true) }
             .addOnFailureListener { onFailure(false) }
     }
+
+
+    fun deleteBarberFromShop(
+        shopId: String,
+        barberId: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val shopRef = collection.document(shopId)
+        shopRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val shop = documentSnapshot.toObject(Shop::class.java)
+                    if (shop != null) {
+                        val updatedBarbersList = shop.barbers.filter { it.uid != barberId }
+                        val updatedShop = shop.copy(barbers = updatedBarbersList.toMutableList())
+                        shopRef.set(updatedShop)
+                            .addOnSuccessListener { onSuccess() }
+                            .addOnFailureListener { onFailure(it) }
+                    } else {
+                        onFailure(Exception("Failed to parse shop data."))
+                    }
+                } else {
+                    onFailure(Exception("Shop with ID $shopId does not exist."))
+                }
+            }
+            .addOnFailureListener {
+                onFailure(it)
+            }
+    }
+
 }
