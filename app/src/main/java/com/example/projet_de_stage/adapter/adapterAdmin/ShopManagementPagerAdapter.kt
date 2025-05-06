@@ -34,12 +34,11 @@ class ShopManagementPagerAdapter(
      * @return The fragment corresponding to the tab.
      */
     override fun createFragment(position: Int): Fragment {
-        val fragment: Fragment
         val bundle = Bundle().apply {
             putString("shopOwner", shopOwner.uid)
         }
 
-        fragment = when (position) {
+        val fragment: Fragment = when (position) {
             0 -> AppointmentsFragment()
             1 -> JoinRequestsFragment()
             2 -> MyShopsFragment()

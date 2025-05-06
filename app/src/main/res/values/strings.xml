@@ -71,6 +71,36 @@
     <string name="connection_error_message">لا يوجد اتصال بالإنترنت أو لا يمكن الوصول إلى الخادم. الرجاء التحقق من الشبكة وحاول مرة أخرى.</string>
     <string name="retry">إعادة المحاولة</string>
     <string name="exit">الخروج</string>
+
+    <string name="error_canceling_appointment">حدث خطأ أثناء إلغاء الموعد</string>
+
+    <string name="error_missing_shop_owner_id">خطأ: معرف صاحب المحل غير موجود</string>
+    <string name="error_updating_request_status">حدث خطأ أثناء تحديث حالة الطلب</string>
+
+        <string name="opening_add_shop_screen">فتح شاشة إضافة محل جديد</string>
+        <string name="no_shops_found">لم يتم العثور على أي محل</string>
+        <string name="shop_list_title">قائمة المحلات</string>
+        <string name="shop_clicked">نقرت على</string>
+
+    <string name="menu_change_language">تغيير اللغة</string>
+    <string name="menu_change_theme">تغيير النمط</string>
+    <string name="menu_logout">تسجيل الخروج</string>
+
+
+    <string name="menu_language">تغيير اللغة</string>
+    <string name="menu_theme">تغيير السمة</string>
+    <string name="choose_language">اختر اللغة</string>
+    <string name="arabic">العربية</string>
+    <string name="french">فرنسي</string>
+    <string name="english">إنجليزي</string>
+
+    <string name="appointment_canceled">تم إلغاء الموعد بنجاح</string>
+    <string name="barber_not_available">الحلاق غير متوفر</string>
+    <string name="unable_to_refresh_ui">تعذر تحديث واجهة المستخدم: الحلاق غير متوفر</string>
+
+    <string name="new_requests">طلبات جديدة</string>
+    <string name="accepted_requests">الطلبات المقبولة</string>
+    <string name="request_history">سجل الطلبات</string>
     ```
 
 </resources>

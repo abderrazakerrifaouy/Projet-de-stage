@@ -51,7 +51,7 @@ class JoinRequestsFragment : Fragment() {
         // Get shop owner ID from arguments
         val shopOwnerId = arguments?.getString("shopOwner")
         if (shopOwnerId.isNullOrEmpty()) {
-            Toast.makeText(requireContext(), "Error: Shop owner ID is missing", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.error_missing_shop_owner_id), Toast.LENGTH_SHORT).show()
             return view
         }
 
@@ -90,7 +90,7 @@ class JoinRequestsFragment : Fragment() {
                         viewModel.addBarberToShop(idShop ?: "", barber!!)
                         refreshUi()
                     } else {
-                        showToast("An error occurred while updating the request status")
+                        showToast(getString(R.string.error_updating_request_status))
                     }
                 }
             )
@@ -102,7 +102,7 @@ class JoinRequestsFragment : Fragment() {
                     if (isSuccess) {
                         refreshUi()
                     } else {
-                        showToast("An error occurred while updating the request status")
+                        showToast(getString(R.string.error_updating_request_status))
                     }
                 }
             )

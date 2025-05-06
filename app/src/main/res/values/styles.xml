@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomPopupMenu" parent="ThemeOverlay.AppCompat.Light">
+        <!-- خلفية القائمة -->
+        <item name="android:popupBackground">@drawable/menu_background</item>
+        <!-- لون النص -->
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+</resources>

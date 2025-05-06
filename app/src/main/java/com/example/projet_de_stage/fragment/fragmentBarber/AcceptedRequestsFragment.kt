@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projet_de_stage.R
@@ -19,7 +20,7 @@ import com.example.projet_de_stage.viewModel.BarberViewModel
 class AcceptedRequestsFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private val barberViewModel = BarberViewModel()
+    private val barberViewModel: BarberViewModel by activityViewModels() // Use activity-scoped ViewModel
     private var barber: Barber? = null  // Barber object passed from the previous fragment
     private val adapter = AcceptedRequestsAdapter(
         onRejectClick = { appointment ->
@@ -27,11 +28,11 @@ class AcceptedRequestsFragment : Fragment() {
                 appointmentId = appointment.id,
                 newStatus = "canceled",
                 onSuccess = {
-                    Toast.makeText(requireContext(), "Appointment successfully canceled", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.appointment_canceled), Toast.LENGTH_SHORT).show()
                     refreshUI() // Refresh the UI after cancellation
                 },
-                onFailure = {
-                    Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                onFailure = { error ->
+                    Toast.makeText(requireContext(), getString(R.string.error_message, error.message), Toast.LENGTH_SHORT).show()
                 })
         }
     )
@@ -56,8 +57,12 @@ class AcceptedRequestsFragment : Fragment() {
 
         // Retrieve the barber object passed via arguments
         barber = arguments?.getParcelable("barber")
-        Toast.makeText(requireContext(), "Barber ID: ${barber?.uid}", Toast.LENGTH_SHORT).show()
-        refreshUI() // Refresh the UI with the barber's data
+        barber?.let {
+            refreshUI() // Refresh the UI with the barber's data
+        } ?: run {
+            Toast.makeText(requireContext(), getString(R.string.barber_not_available), Toast.LENGTH_SHORT).show()
+            return
+        }
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -75,8 +80,8 @@ class AcceptedRequestsFragment : Fragment() {
 
         // Observe errors and show a toast message in case of failure
         barberViewModel.error.observe(viewLifecycleOwner) {
-            if (it != null) {
-                Toast.makeText(requireContext(), "Error: $it", Toast.LENGTH_SHORT).show()
+            it?.let {
+                Toast.makeText(requireContext(), getString(R.string.error_message, it), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -103,6 +108,6 @@ class AcceptedRequestsFragment : Fragment() {
                 status = "accepted",
                 barberId = barberId
             )
-        } ?: Toast.makeText(requireContext(), "Unable to refresh UI: Barber not available", Toast.LENGTH_SHORT).show()
+        } ?: Toast.makeText(requireContext(), getString(R.string.unable_to_refresh_ui), Toast.LENGTH_SHORT).show()
     }
 }

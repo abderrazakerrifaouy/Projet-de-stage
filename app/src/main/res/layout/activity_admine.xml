@@ -5,18 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
-    <Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/app_name"
-        />
+    android:fitsSystemWindows="true"
+    android:gravity="center"
+    android:padding="5dp">
 
-<!--    <ImageView-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:contentDescription="@string/todo"-->
-<!--        android:src="@drawable/app_name" />-->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarAdmine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/app_name"
+        android:background="@color/black_50"
+        android:backgroundTint="@color/black_50"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+
+
 
     <!-- عنوان الصفحة -->
     <TextView
@@ -32,7 +37,8 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable">
+        app:tabMode="scrollable"
+        android:layout_margin="20dp">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

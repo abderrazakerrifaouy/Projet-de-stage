@@ -34,7 +34,7 @@ class BarberAdapterShop(
         val barber = barbers[position]
         holder.name.text = barber.name.toString()
         holder.experience.text = barber.experience.toString()
-        holder.rating.text = "⭐ ${barber.rating} (${barber.numberOfRatings} ratings)"
+        holder.rating.text = "⭐ ${barber.rating} (${barber.numberOfRatings})"
         holder.image.setImageResource(barber.imageRes)
 
         holder.removeButton.setOnClickListener {

@@ -20,7 +20,7 @@ import com.example.projet_de_stage.viewModel.AdminViewModel
  * Fragment to display and manage appointments for the shop owner.
  */
 class AppointmentsFragment : Fragment() {
-    private val adminViewModel = AdminViewModel() // Changed from 'admineViewModel' for consistency.
+    private val adminViewModel = AdminViewModel()
 
     /**
      * This method is called when the fragment's view is created. It initializes the RecyclerView
@@ -32,38 +32,30 @@ class AppointmentsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_appointments, container, false)
 
-        // Initialize RecyclerView
         val recyclerView = view.findViewById<RecyclerView>(R.id.appointmentsRecyclerView)
         val shopOwnerUid = arguments?.getString("shopOwner")
 
-        // Fetch appointments for the specific shop owner
         adminViewModel.getAppointmentsByShopOwnerId(shopOwnerUid ?: "")
         val appointments = mutableListOf<Appointment>()
 
-        // Observe the appointments LiveData from the ViewModel and update the RecyclerView
         adminViewModel.appointments.observe(viewLifecycleOwner) { newAppointments ->
             appointments.clear()
             appointments.addAll(newAppointments)
-            recyclerView.adapter?.notifyDataSetChanged() // Update the adapter when data changes
+            recyclerView.adapter?.notifyDataSetChanged()
         }
 
-        // Set the RecyclerView adapter with a lambda for handling appointment status changes
         recyclerView.adapter = AppointmentsAdapter(appointments) { id, _ ->
-            // Update appointment status to 'canceled'
             adminViewModel.updateAppointmentStatus(
                 appointmentId = id,
                 newStatus = "canceled",
                 onSuccess = {
-                    // Show a success message when the appointment is canceled
-                    Toast.makeText(requireContext(), "Appointment canceled successfully", Toast.LENGTH_SHORT).show()
-                    refreshUi() // Refresh the UI to reflect the changes
+                    refreshUi()
                 },
                 onFailure = {
                     // Show an error message if the update fails
-                    Toast.makeText(requireContext(), "Error occurred while canceling the appointment", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.error_canceling_appointment), Toast.LENGTH_SHORT).show()
                 }
             )
         }

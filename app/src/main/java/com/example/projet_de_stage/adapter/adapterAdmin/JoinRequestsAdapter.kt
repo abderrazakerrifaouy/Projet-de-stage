@@ -59,7 +59,7 @@ class JoinRequestsAdapter(
         getBarberDetails(item.barberId) { barber ->
             holder.tvName.text = barber?.name ?: "Unknown"
             holder.tvRating.text = barber?.rating?.toString() ?: "N/A"
-            holder.tvReviewsCount.text = "(${barber?.numberOfRatings ?: 0} reviews)"
+            holder.tvReviewsCount.text = "(${barber?.numberOfRatings ?: 0} )"
 
             holder.btnAcceptRequest.setOnClickListener {
                 onAction(item.id, true, barber, item.shopId)

@@ -49,9 +49,9 @@ class AppointmentsFragmentBarber : Fragment() {
         // Attach the TabLayout with ViewPager2 and set tab titles for each position
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "New Requests"
-                1 -> tab.text = "Accepted Requests"
-                2 -> tab.text = "Request History"
+                0 -> tab.text = getString(R.string.new_requests)
+                1 -> tab.text = getString(R.string.accepted_requests)
+                2 -> tab.text = getString(R.string.request_history)
             }
         }.attach()
     }

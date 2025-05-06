@@ -88,7 +88,7 @@ class MyShopsFragment : Fragment() {
         fabAddShop.setOnClickListener {
             Toast.makeText(
                 requireContext(),
-                "Opening the Add Shop screen",
+                getString(R.string.opening_add_shop_screen),
                 Toast.LENGTH_SHORT
             ).show()
             Intent(requireContext(), CreateShopActivity::class.java).also { intent ->
@@ -110,13 +110,12 @@ class MyShopsFragment : Fragment() {
             }
 
             if (shops.isEmpty()) {
-                headerTitle.text = "No shops found"
+                headerTitle.text = getString(R.string.no_shops_found)
                 recyclerView.adapter = null
             } else {
-                headerTitle.text = "Shop List"
+                headerTitle.text = getString(R.string.shop_list_title)
                 recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
                 shopsAdapter = ShopsAdapter(shops) { shop ->
-                    Toast.makeText(requireContext(), "You clicked on ${shop.id}", Toast.LENGTH_SHORT).show()
                     val intent = Intent(requireContext(), BarberListActivity::class.java)
                     intent.putExtra("shop", shop)
                     startActivity(intent)

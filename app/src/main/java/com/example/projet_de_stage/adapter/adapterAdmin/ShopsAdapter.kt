@@ -60,6 +60,7 @@ class ShopsAdapter(
      * @see ShopViewHolder
      * @see Glide
      */
+    @SuppressLint("SuspiciousIndentation")
     override fun onBindViewHolder(holder: ShopViewHolder, position: Int) {
         val shop = shops[position]
             if (shop.imageUrl.isNotEmpty()) {
