@@ -15,10 +15,14 @@
         android:theme="@style/Theme.Projet_de_stage"
         tools:targetApi="31">
         <activity
+            android:name=".view.barberUser.MyShopActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.barberUser.ModifyBarberActivity"
             android:exported="false" />
-        <activity android:name=".view.admin.BarberListActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".view.admin.BarberListActivity"
+            android:exported="false" />
         <activity
             android:name=".view.client.HomeActivityClient"
             android:exported="false" />

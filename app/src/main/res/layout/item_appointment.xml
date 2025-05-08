@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="إلغاء"
+                android:text="@string/mdtp_cancel"
                 android:backgroundTint="@color/blue_900"
                 style="@style/Widget.Material3.Button"/>
         </LinearLayout>

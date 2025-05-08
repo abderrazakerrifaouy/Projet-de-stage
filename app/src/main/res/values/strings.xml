@@ -1,106 +1,101 @@
 <resources>
-    <string name="app_name">Projet\_de\_stage</string>
-    <string name="create_password_title">إنشاء كلمة سر</string>
-    <string name="password_requirements">يرجى إنشاء كلمة سر مكونة من 6 أخرف أبجدية أو أرقام على الأقل.\nويجب أن تكون كلمة السر شيئاً يتعذر على الآخرين تخمينه.</string>
-    <string name="password_hint">كلمة السر</string>
-    <string name="next">التالي</string>
-    <string name="search_for_account">بحث عن حسابي</string>
-
-    ```
-    <!-- Name Screen -->
-    <string name="what_is_your_name">ما اسمك؟</string>
-    <string name="name_instructions">أدخل الاسم الذي تستخدمه في الواقع.</string>
-    <string name="first_name">الاسم الأول</string>
-    <string name="last_name">اسم العائلة</string>
-
-    <!-- Phone Screen -->
-    <string name="what_is_your_phone">ما Email هاتفك الحمول؟</string>
-    <string name="phone_instructions">أدخل Email الذي يمكن التواصل معك من خلاله. لن يرى أي شخص ذلك في ملفك الشخصي.</string>
-    <string name="phone_hint">Email </string>
-    <string name="phone_notifications_note">قد تتلقى منا إشعارات عبر Email.</string>
-
-    <!-- Birth Date Screen -->
-    <string name="what_is_your_birthdate">ما تاريخ ميلادك؟</string>
-    <string name="birthdate_instructions">يرجى اختيار تاريخ ميلادك. يمكنك تعيين هذا الإعداد إلى \"خاص\" في أي وقت لاحقاً.</string>
-    <string name="why_birthdate">ما ضرورة إدخال تاريخ ميلادي؟</string>
-    <string name="ratings">تقييمات المحلات</string>
-    <string name="add_shop">إضافة محل جديد</string>
-    <string name="all">الكل</string>
-    <string name="with_comments">بالتعليقات</string>
-    <string name="no_ratings_found">لا توجد تقييمات متاحة</string>
+    <string name="app_name"> Blade Link</string>
+    <string name="create_password_title">Créer un mot de passe</string>
+    <string name="password_requirements">Veuillez créer un mot de passe composé dau moins 6 caractères alphabétiques ou numériques.\nLe mot de passe doit être quelque chose que les autres ne peuvent pas deviner.</string>
+    <string name="password_hint">Mot de passe</string>
+    <string name="next">Suivant</string>
+    <string name="search_for_account">Rechercher mon compte</string>
+    <string name="nav_home">Accueil</string>
+    <string name="nav_appointments">Rendez-vous</string>
+    <string name="nav_profile">Profil</string>
+    <string name="current_shop_title">Votre salon actuel</string>
+    <string name="shop_location">Riyad, Quartier du Roi Fahd</string>
+    <string name="view_shop">Voir le salon</string>
+    <string name="membership_status_title">État de l adhésion</string>
+    <string name="not_joined_shop">Vous n êtes pas encore membre d un salon</string>
+    <string name="can_join_shops">Vous pouvez rejoindre lun des salons suivants qui recherchent des employés</string>
+    <string name="today_appointments">Rendez-vous du jour</string>
+    <string name="what_is_your_name">Quel est votre nom ?</string>
+    <string name="name_instructions">Entrez le nom que vous utilisez dans la vie réelle.</string>
+    <string name="first_name">Prénom</string>
+    <string name="last_name">Nom de famille</string>
+    <string name="what_is_your_phone">Quel est votre e-mail ?</string>
+    <string name="phone_instructions">Entrez l e-mail avec lequel nous pouvons vous contacter. Personne ne verra cela dans votre profil.</string>
+    <string name="phone_hint">E-mail</string>
+    <string name="phone_notifications_note">Vous pourriez recevoir des notifications de notre part par e-mail.</string>
+    <string name="what_is_your_birthdate">Quelle est votre date de naissance ?</string>
+    <string name="birthdate_instructions">Veuillez choisir votre date de naissance. Vous pouvez définir ce paramètre comme "Privé" à tout moment.</string>
+    <string name="why_birthdate">Pourquoi entrer ma date de naissance ?</string>
+    <string name="ratings">Évaluations des magasins</string>
+    <string name="add_shop">Ajouter un nouveau magasin</string>
+    <string name="all">Tout</string>
+    <string name="with_comments">Avec commentaires</string>
+    <string name="no_ratings_found">Aucune évaluation disponible</string>
     <string name="todo">TODO</string>
-    <string name="empty_shops">Empty shops illustration</string>
-    <string name="search">البحث عن طلب ….</string>
-    <string name="shop_image">صورة المحل</string>
-    <string name="accepted">accepted</string>
-    <string name="barber_requests">طلبات الحلاقة</string>
-    <string name="join_requests">طلبات الانضمام</string>
-    <string name="my_shops">محلاتي</string>
-
-    <string name="no_shop_owner_id">لم يتم توفير معرف مالك المتجر</string>
-    <string name="shop_owner_not_found">لم يتم العثور على مالك المتجر %1$s</string>
-    <string name="loaded_owner_data">تم تحميل بيانات المالك: %1$s</string>
-    <string name="please_wait_for_shop_owner_data">يرجى الانتظار حتى يتم تحميل بيانات مالك المتجر</string>
-    <string name="please_fill_required_fields">يرجى ملء جميع الحقول المطلوبة</string>
-    <string name="shop_created_successfully">تم إنشاء المتجر بنجاح</string>
-    <string name="error_message">خطأ: %1$s</string>
-
-
-    <string name="welcome_message">مرحبًا، %1$s!</string>
-    <string name="connection_error">خطأ في الاتصال: %1$s</string>
-    <string name="customer_name">العميل: %1$s</string>
-    <string name="service_date">تاريخ الخدمة: %1$s</string>
-    <string name="service">الخدمة: %1$s</string>
-    <string name="time">الوقت: %1$s</string>
-    <string name="appointment_accepted">تم قبول الموعد</string>
-    <string name="appointment_rejected">تم رفض الموعد</string>
-    <string name="appointment_on_hold">تم وضع الموعد في الانتظار</string>
-    <string name="status_updated">تم تحديث الحالة</string>
-    <string name="appointment_deleted">تم حذف الموعد بنجاح</string>
-    <string name="appointment_delete_error">حدث خطأ أثناء حذف الموعد</string>
-
-
-        <!-- النصوص الخاصة بالواجهة -->
-        <string name="barber_updated_successfully">تم تحديث بيانات الحلاق بنجاح</string>
-        <string name="shop_updated_successfully">تم تحديث المحل بنجاح</string>
-        <string name="failed_to_update_shop">فشل في تحديث المحل</string>
-        <string name="failed_to_update_barber">فشل في تحديث بيانات الحلاق</string>
-
-
-    <string name="connection_error_title">خطأ في الاتصال</string>
-    <string name="connection_error_message">لا يوجد اتصال بالإنترنت أو لا يمكن الوصول إلى الخادم. الرجاء التحقق من الشبكة وحاول مرة أخرى.</string>
-    <string name="retry">إعادة المحاولة</string>
-    <string name="exit">الخروج</string>
-
-    <string name="error_canceling_appointment">حدث خطأ أثناء إلغاء الموعد</string>
-
-    <string name="error_missing_shop_owner_id">خطأ: معرف صاحب المحل غير موجود</string>
-    <string name="error_updating_request_status">حدث خطأ أثناء تحديث حالة الطلب</string>
-
-        <string name="opening_add_shop_screen">فتح شاشة إضافة محل جديد</string>
-        <string name="no_shops_found">لم يتم العثور على أي محل</string>
-        <string name="shop_list_title">قائمة المحلات</string>
-        <string name="shop_clicked">نقرت على</string>
-
-    <string name="menu_change_language">تغيير اللغة</string>
-    <string name="menu_change_theme">تغيير النمط</string>
-    <string name="menu_logout">تسجيل الخروج</string>
-
-
-    <string name="menu_language">تغيير اللغة</string>
-    <string name="menu_theme">تغيير السمة</string>
-    <string name="choose_language">اختر اللغة</string>
-    <string name="arabic">العربية</string>
-    <string name="french">فرنسي</string>
-    <string name="english">إنجليزي</string>
-
-    <string name="appointment_canceled">تم إلغاء الموعد بنجاح</string>
-    <string name="barber_not_available">الحلاق غير متوفر</string>
-    <string name="unable_to_refresh_ui">تعذر تحديث واجهة المستخدم: الحلاق غير متوفر</string>
-
-    <string name="new_requests">طلبات جديدة</string>
-    <string name="accepted_requests">الطلبات المقبولة</string>
-    <string name="request_history">سجل الطلبات</string>
-    ```
-
+    <string name="empty_shops">Illustration des magasins vides</string>
+    <string name="search">Rechercher une demande …</string>
+    <string name="shop_image">Image du magasin</string>
+    <string name="accepted">accepté</string>
+    <string name="barber_requests">Demandes de coiffure</string>
+    <string name="join_requests">Demandes d adhésion</string>
+    <string name="my_shops">Mes magasins</string>
+    <string name="no_shop_owner_id">ID du propriétaire du magasin non fourni</string>
+    <string name="shop_owner_not_found">Propriétaire du magasin %1$s non trouvé</string>
+    <string name="loaded_owner_data">Données du propriétaire chargées : %1$s</string>
+    <string name="please_wait_for_shop_owner_data">Veuillez attendre que les données du propriétaire du magasin soient chargées</string>
+    <string name="please_fill_required_fields">Veuillez remplir tous les champs obligatoires</string>
+    <string name="shop_created_successfully">Magasin créé avec succès</string>
+    <string name="error_message">Erreur : %1$s</string>
+    <string name="welcome_message">Bienvenue, %1$s!</string>
+    <string name="connection_error">Erreur de connexion : %1$s</string>
+    <string name="customer_name">Client : %1$s</string>
+    <string name="service_date">Date du service : %1$s</string>
+    <string name="service">Service : %1$s</string>
+    <string name="time">Heure : %1$s</string>
+    <string name="appointment_accepted">Rendez-vous accepté</string>
+    <string name="appointment_rejected">Rendez-vous rejeté</string>
+    <string name="appointment_on_hold">Rendez-vous en attente</string>
+    <string name="status_updated">Statut mis à jour</string>
+    <string name="appointment_deleted">Rendez-vous supprimé avec succès</string>
+    <string name="appointment_delete_error">Erreur lors de la suppression du rendez-vous</string>
+    <string name="barber_updated_successfully">Données du barbier mises à jour avec succès</string>
+    <string name="shop_updated_successfully">Magasin mis à jour avec succès</string>
+    <string name="failed_to_update_shop">Échec de la mise à jour du magasin</string>
+    <string name="failed_to_update_barber">Échec de la mise à jour des données du barbier</string>
+    <string name="connection_error_title">Erreur de connexion</string>
+    <string name="connection_error_message">Aucune connexion Internet ou impossible d atteindre le serveur. Vérifiez votre réseau et réessayez.</string>
+    <string name="retry">Réessayer</string>
+    <string name="exit">Quitter</string>
+    <string name="error_canceling_appointment">Erreur lors de l annulation du rendez-vous</string>
+    <string name="error_missing_shop_owner_id">Erreur : ID du propriétaire du magasin manquant</string>
+    <string name="error_updating_request_status">Erreur lors de la mise à jour du statut de la demande</string>
+    <string name="opening_add_shop_screen">Ouverture de l écran d ajout de magasin</string>
+    <string name="no_shops_found">Aucun magasin trouvé</string>
+    <string name="shop_list_title">Liste des magasins</string>
+    <string name="shop_clicked">Vous avez cliqué sur</string>
+    <string name="menu_change_language">Changer de langue</string>
+    <string name="menu_change_theme">Changer de thème</string>
+    <string name="menu_logout">Se déconnecter</string>
+    <string name="menu_language">Changer de langue</string>
+    <string name="menu_theme">Changer de thème</string>
+    <string name="choose_language">Choisir la langue</string>
+    <string name="arabic">Arabe</string>
+    <string name="french">Français</string>
+    <string name="english">Anglais</string>
+    <string name="appointment_canceled">Rendez-vous annulé avec succès</string>
+    <string name="barber_not_available">Le barbier n est pas disponible</string>
+    <string name="unable_to_refresh_ui">Impossible de rafraîchir l interface : le barbier n est pas disponible</string>
+    <string name="new_requests">Nouvelles demandes</string>
+    <string name="accepted_requests">Demandes acceptées</string>
+    <string name="request_history">Historique des demandes</string>
+    <string name="shop_name">Nom du magasin</string>
+    <string name="shop_address">Adresse du magasin</string>
+    <string name="your_team">Votre équipe</string>
+    <string name="leave_shop">Quitter le magasin</string>
+    <string name="shops">Magasins</string>
+    <string name="history">Historique</string>
+    <string name="profile">Profil</string>
+    <string name="barbers">Barbiers</string>
+    <string name="appointments">Rendez-vous</string>
+    <string name="available_barbers">Barbiers disponibles</string>
 </resources>

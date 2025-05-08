@@ -24,7 +24,6 @@ import com.example.projet_de_stage.fragment.fragmentBarber.BarberHome
 import com.example.projet_de_stage.fragment.fragmentBarber.ProfileFragment
 import com.example.projet_de_stage.view.LoginActivity
 import com.example.projet_de_stage.viewModel.BarberViewModel
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationBarView
@@ -243,7 +242,7 @@ class BarberActivityHome : AppCompatActivity() {
 
         // Save the selected language in SharedPreferences
         val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
-        prefs.edit().putString("lang", languageCode).apply()
+        prefs.edit() { putString("lang", languageCode) }
 
         // Recreate the activity to apply the new language settings
         recreate()

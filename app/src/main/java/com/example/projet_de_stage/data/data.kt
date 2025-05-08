@@ -35,7 +35,6 @@ data class Barber(
     var phone: String = "",
     var password: String = "",
     var birthDate: String = "",
-    val shopId: String = "",
     val imageRes: Int = R.drawable.my_profile,
     val rating: Float = 0f,
     val numberOfRatings: Int = 0,

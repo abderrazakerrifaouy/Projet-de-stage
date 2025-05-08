@@ -69,7 +69,7 @@ class ShopAdapter(
             // Set the shop name, address, and number of barbers in the shop
             tvBarbershopName.text = shop.name
             tvLocation.text = shop.address
-            tvBarbersCount.text = "${shop.barbers.size} available barbers" // Change the text to English
+            tvBarbersCount.text = "${shop.barbers.size} ${itemView.context.getString(R.string.barbers)}" // Change the text to English
 
             // Optionally, show ratings and reviews if required, by adding the corresponding TextViews and logic
             // Example: tvRating.text = "${shop.rating} (${shop.reviews})"
