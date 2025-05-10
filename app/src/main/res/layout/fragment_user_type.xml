@@ -13,35 +13,29 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- شعار التطبيق -->
-
-
-        <!-- عنوان رئيسي -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="حلول الحجز الذكي للحلاقين"
+            android:text="@string/main_title"
             android:textSize="24sp"
             android:textColor="@color/button_primary"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginBottom="16dp"/>
 
-        <!-- شرح التطبيق -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="يواجه العديد من العملاء صعوبة في حجز مواعيد الحلاقة بشكل منظم، وغالباً ما يعتمدون على الاتصالات الهاتفية التي تؤدي إلى تداخل المواعيد وضياع الوقت. من ناحية أخرى، يعاني الحلاقون وأصحاب المحلات من صعوبة إدارة الجداول يدوياً مما يسبب أخطاء متكررة.\n\nيمنحك تطبيقنا حلاً شاملاً ينظم عملية الحجز ويوفر الوقت للجميع، ويضمن تجربة سلسة وخالية من المتاعب."
+            android:text="@string/app_description"
             android:textSize="18sp"
             android:textColor="@color/black_50"
             android:lineSpacingExtra="8dp"
             android:layout_marginBottom="32dp"/>
 
-        <!-- فوائد التطبيق -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="مميزات التطبيق:"
+            android:text="@string/app_features_title"
             android:textSize="20sp"
             android:textColor="@color/button_primary"
             android:textStyle="bold"
@@ -56,7 +50,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• حجز مواعيد سريع ومنظم للعملاء"
+                android:text="@string/feature_1"
                 android:textSize="16sp"
                 android:textColor="@color/black_50"
                 android:layout_marginBottom="4dp"/>
@@ -64,7 +58,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• إدارة سهلة للمواعيد للحلاقين"
+                android:text="@string/feature_2"
                 android:textSize="16sp"
                 android:textColor="@color/black_50"
                 android:layout_marginBottom="4dp"/>
@@ -72,7 +66,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• تحكم كامل لأصحاب المحلات بالفريق"
+                android:text="@string/feature_3"
                 android:textSize="16sp"
                 android:textColor="@color/black_50"
                 android:layout_marginBottom="4dp"/>
@@ -80,16 +74,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• نظام تقييم لضمان جودة الخدمة"
+                android:text="@string/feature_4"
                 android:textSize="16sp"
                 android:textColor="@color/black_50"/>
         </LinearLayout>
 
-        <!-- اختيار نوع المستخدم -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="اختر نوع حسابك:"
+            android:text="@string/choose_account_type"
             android:textSize="20sp"
             android:textColor="@color/button_primary"
             android:textStyle="bold"
@@ -106,7 +99,7 @@
                 android:id="@+id/radioAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="صاحب محل (مدير النظام)"
+                android:text="@string/radio_admin"
                 android:textSize="18sp"
                 android:layout_marginBottom="12dp"
                 android:padding="12dp"
@@ -116,7 +109,7 @@
                 android:id="@+id/radioBarber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="حلاق"
+                android:text="@string/radio_barber"
                 android:textSize="18sp"
                 android:layout_marginBottom="12dp"
                 android:padding="12dp"
@@ -126,7 +119,7 @@
                 android:id="@+id/radioCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="عميل"
+                android:text="@string/radio_customer"
                 android:textSize="18sp"
                 android:padding="12dp"
                 android:background="@drawable/radio_button_background"/>

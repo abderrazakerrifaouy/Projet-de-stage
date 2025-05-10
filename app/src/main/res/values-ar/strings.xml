@@ -11,11 +11,23 @@
     <string name="current_shop_title">صالونك الحالي</string>
     <string name="shop_location">الرياض، حي الملك فهد</string>
     <string name="view_shop">عرض الصالون</string>
-
+    <string name="main_title">حلول الحجز الذكي للحلاقين</string>
+    <string name="app_description">يواجه العديد من العملاء صعوبة في حجز مواعيد الحلاقة بشكل منظم، وغالباً ما يعتمدون على الاتصالات الهاتفية التي تؤدي إلى تداخل المواعيد وضياع الوقت. من ناحية أخرى، يعاني الحلاقون وأصحاب المحلات من صعوبة إدارة الجداول يدوياً مما يسبب أخطاء متكررة.\n\nيمنحك تطبيقنا حلاً شاملاً ينظم عملية الحجز ويوفر الوقت للجميع، ويضمن تجربة سلسة وخالية من المتاعب.</string>
+    <string name="app_features_title">مميزات التطبيق:</string>
+    <string name="feature_1">• حجز مواعيد سريع ومنظم للعملاء</string>
+    <string name="feature_2">• إدارة سهلة للمواعيد للحلاقين</string>
+    <string name="feature_3">• تحكم كامل لأصحاب المحلات بالفريق</string>
+    <string name="feature_4">• نظام تقييم لضمان جودة الخدمة</string>
+    <string name="choose_account_type">اختر نوع حسابك:</string>
+    <string name="radio_admin">صاحب محل</string>
+    <string name="select_account_type_warning">الرجاء اختيار نوع حسابك للمتابعة</string>
+    <string name="radio_barber">حلاق</string>
+    <string name="radio_customer">عميل</string>
     <string name="membership_status_title">حالة الانضمام</string>
     <string name="not_joined_shop">لم تنضم لأي محل بعد</string>
     <string name="can_join_shops">يمكنك الانضمام إلى أحد المحلات التالية التي تبحث عن عمال</string>
-
+    <string name="invalid_email">البريد الإلكتروني غير صالح</string>
+    <string name="invalid_password">كلمة السر يجب أن تكون 8 أحرف على الأقل</string>
     <string name="today_appointments">مواعيد اليوم</string>
     <string name="hint_email">البريد الإلكتروني</string>
     <string name="hint_password">كلمة السر</string>

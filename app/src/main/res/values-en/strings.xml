@@ -11,6 +11,7 @@
     <string name="password_requirements">Please create a password with at least 6 alphanumeric characters.\nThe password should be something others cannot guess.</string>
     <string name="password_hint">Password</string>
     <string name="next">Next</string>
+
     <string name="search_for_account">Search for my account</string>
     <string name="nav_home">Home</string>
     <string name="nav_appointments">Appointments</string>
@@ -105,4 +106,18 @@
     <string name="barbers">Barbers</string>
     <string name="appointments">Appointments</string>
     <string name="available_barbers">Available barbers</string>
+    <string name="main_title">Smart Booking Solutions for Barbers</string>
+    <string name="app_description">Many customers face difficulties in booking barber appointments in an organized way, often relying on phone calls that lead to overlapping appointments and wasted time. On the other hand, barbers and shop owners struggle with managing schedules manually, leading to repeated mistakes.\n\nOur app provides a comprehensive solution that organizes the booking process and saves time for everyone, ensuring a smooth and hassle-free experience.</string>
+    <string name="app_features_title">App Features:</string>
+    <string name="feature_1">• Quick and organized appointment booking for customers</string>
+    <string name="feature_2">• Easy schedule management for barbers</string>
+    <string name="feature_3">• Complete control for shop owners over the team</string>
+    <string name="feature_4">• Rating system to ensure service quality</string>
+    <string name="choose_account_type">Choose your account type:</string>
+    <string name="radio_admin">Shop Owner </string>
+    <string name="select_account_type_warning">Please select your account type to continue</string>
+    <string name="radio_barber">Barber</string>
+    <string name="radio_customer">Customer</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="invalid_password">Password must be at least 8 characters</string>
 </resources>

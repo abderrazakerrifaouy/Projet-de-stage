@@ -53,7 +53,7 @@ class WelcomeFragment : Fragment() {
 
             // Check if a selection has been made
             if (selectedId == -1) {
-                Toast.makeText(context, "الرجاء اختيار نوع حسابك للمتابعة", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.select_account_type_warning), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
