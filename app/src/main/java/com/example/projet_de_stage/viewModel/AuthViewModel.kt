@@ -78,7 +78,6 @@ class AuthViewModel(
     fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             try {
-                // Login the user with the provided email and password
                 val uid = repository.loginUser(email, password)
                 _authState.value = Result.success(uid)
             } catch (e: Exception) {

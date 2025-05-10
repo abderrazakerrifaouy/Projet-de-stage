@@ -10,6 +10,16 @@
     android:background="#FFFFFF">
 
     <!-- Email or Phone Input -->
+    <Spinner
+        android:id="@+id/languageSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:spinnerMode="dropdown"
+        />
 
     <!-- Password Input -->
 
@@ -35,7 +45,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/edittext_border"
-        android:hint=" البريد الإلكتروني"
+        android:hint="@string/hint_email"
         android:inputType="textEmailAddress|textCapWords"
         android:padding="12dp"
         android:textDirection="rtl"
@@ -52,7 +62,7 @@
         android:layout_marginTop="35dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/edittext_border"
-        android:hint="كلمة السر"
+        android:hint="@string/hint_password"
         android:inputType="textEmailAddress|textCapWords"
         android:padding="12dp"
         android:textDirection="rtl"
@@ -70,24 +80,38 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/button_border"
        app:backgroundTint="@color/blue_500"
-        android:text="تسجيل الدخول"
+        android:text="@string/btn_login"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
+    <TextView
+        android:id="@+id/tvErrorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnLogin"
+        android:layout_marginTop="8dp"
+        android:textColor="#FF0000"
+        android:textSize="14sp"
+        android:textAlignment="center"
+        android:visibility="gone"
+
+        android:text="@string/error_input" />
 
 
     <TextView
         android:id="@+id/tvForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLogin"
+        android:layout_below="@+id/tvErrorMessage"
         android:layout_alignParentEnd="true"
         android:layout_gravity="center"
         android:layout_marginTop="19dp"
         android:layout_marginEnd="148dp"
         android:layout_marginBottom="16dp"
-        android:text="هل نسيت كلمة السر؟"
+        android:text="@string/forgot_password"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
+
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCreateAccount"
@@ -97,7 +121,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_border"
         app:backgroundTint="@color/blue_50"
-        android:text="إنشاء حساب جديد"
+        android:text="@string/btn_create_account"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp" />
 

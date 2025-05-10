@@ -98,4 +98,10 @@
     <string name="barbers">Barbiers</string>
     <string name="appointments">Rendez-vous</string>
     <string name="available_barbers">Barbiers disponibles</string>
+    <string name="hint_email">Adresse e-mail</string>
+    <string name="hint_password">Mot de passe</string>
+    <string name="btn_login">Connexion</string>
+    <string name="btn_create_account">Créer un nouveau compte</string>
+    <string name="forgot_password">Mot de passe oublié ?</string>
+    <string name="error_input">Erreur de saisie</string>
 </resources>

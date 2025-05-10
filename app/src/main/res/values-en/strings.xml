@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="hint_email">Email address</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_create_account">Create New Account</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="error_input">Input error</string>
     <string name="app_name">Blade Link</string>
     <string name="create_password_title">Create a password</string>
     <string name="password_requirements">Please create a password with at least 6 alphanumeric characters.\nThe password should be something others cannot guess.</string>

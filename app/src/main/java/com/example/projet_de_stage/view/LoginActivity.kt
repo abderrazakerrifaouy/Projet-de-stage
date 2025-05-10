@@ -1,10 +1,15 @@
 package com.example.projet_de_stage.view
 
+import android.annotation.SuppressLint
 import com.example.projet_de_stage.R
 import android.os.Bundle
 import android.widget.Button
 import android.content.Intent
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import android.widget.Toast
@@ -18,6 +23,7 @@ import com.example.projet_de_stage.view.barberUser.BarberActivityHome
 import com.example.projet_de_stage.view.client.HomeActivityClient
 import com.example.projet_de_stage.viewModel.AuthViewModel
 import androidx.core.content.edit
+import java.util.Locale
 
 /**
  * LoginActivity is responsible for handling user login functionality.
@@ -31,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
      * This method is called when the activity is created.
      * It sets up the UI elements and handles the login and navigation actions.
      */
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -40,11 +47,47 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.btnLogin)
         val createAccountButton = findViewById<Button>(R.id.btnCreateAccount)
         val forgotPasswordTextView = findViewById<TextView>(R.id.tvForgotPassword)
+        val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessage)
+        val languageSpinner = findViewById<Spinner>(R.id.languageSpinner)
+        val languageNames = resources.getStringArray(R.array.language_names)
+        val languageCodes = resources.getStringArray(R.array.language_codes)
+
+
+
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, languageNames)
+        languageSpinner.adapter = spinnerAdapter
+
+
+        val currentLocale = resources.configuration.locales[0].language
+        val defaultIndex = languageCodes.indexOf(currentLocale).takeIf { it != -1 } ?: 0
+        languageSpinner.setSelection(defaultIndex)
+
+        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedLangCode = languageCodes[position]
+                val currentLangCode = resources.configuration.locales[0].language
+
+                if (selectedLangCode != currentLangCode) {
+                    changeAppLanguage(selectedLangCode)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
         // Handle login button click
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
+            if (!checkFormEmail(email)) {
+                tvErrorMessage.text = "البريد الإلكتروني غير صالح"
+                return@setOnClickListener
+            }
+            if (!checkFormPassword(password)) {
+                tvErrorMessage.text = "كلمة السر يجب أن تكون 8 أحرف على الأقل"
+                return@setOnClickListener
+            }
+
             viewModelAuth.loginUser(email, password)
         }
 
@@ -135,4 +178,32 @@ class LoginActivity : AppCompatActivity() {
     private fun showError(message: String) {
         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
     }
+    /**
+     * Checks if the provided email is in a valid format.
+     */
+    private fun checkFormEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        }
+    /**
+     * Checks if the provided password is at least 8 characters long.
+     */
+    private fun checkFormPassword(password: String): Boolean {
+        return password.length >= 8
+    }
+    /**
+     * Changes the application's language based on the provided language code.
+     * @param languageCode The language code to set as the new default locale.
+     */
+    private fun changeAppLanguage(languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
+
+        val intent = Intent(this, LoginActivity::class.java)
+        finish()
+        startActivity(intent)
+    }
+
 }
