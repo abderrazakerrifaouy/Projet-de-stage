@@ -55,7 +55,7 @@
                     android:id="@+id/textViewBarberCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3 حلاقين"
+                    android:text=""
                     android:textSize="14sp"
                     android:textColor="@color/blue_200"/>
             </LinearLayout>
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="طلب الانضمام"
+            android:text="@string/join_request"
             android:backgroundTint="@color/blue_500"
             android:textColor="#FFFFFF"
             android:textAllCaps="false"

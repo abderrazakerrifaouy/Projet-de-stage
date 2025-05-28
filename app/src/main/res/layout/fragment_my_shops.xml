@@ -28,7 +28,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="محلاتي"
+                android:text="@string/shops"
                 android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />

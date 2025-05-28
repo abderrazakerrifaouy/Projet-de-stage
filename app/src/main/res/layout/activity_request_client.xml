@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:src="@drawable/app_name"
-            />
+            android:contentDescription="@string/app_logo_description" />
 
         <!-- Barber Info -->
         <androidx.cardview.widget.CardView
@@ -34,7 +34,8 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@drawable/app_name"
-                    android:layout_marginEnd="16dp"/>
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/barber_info_title" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -46,14 +47,14 @@
                         android:id="@+id/tvShopName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Safi city"
+                        android:text="@string/shop_name"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/tvBarberName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="محمد أحمد"
+                        android:text="@string/barber_name"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
 
@@ -74,7 +75,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="اختر الخدمة"
+            android:text="@string/choose_service"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"/>
@@ -90,26 +91,26 @@
                 android:id="@+id/rbHaircut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="حلاقة الرأس"/>
+                android:text="@string/service_haircut"/>
 
             <RadioButton
                 android:id="@+id/rbBeard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="حلاقة اللحية"/>
+                android:text="@string/service_beard"/>
 
             <RadioButton
                 android:id="@+id/rbBoth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="حلاقة الرأس واللحية"/>
+                android:text="@string/service_both"/>
         </RadioGroup>
 
         <!-- Date & Time -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="اختر التاريخ والوقت"
+            android:text="@string/choose_date_time"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"/>
@@ -119,10 +120,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="اختر التاريخ"
+            android:text="@string/select_date"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
-
-
 
         <!-- Submit Button -->
         <Button
@@ -130,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="حجز الموعد"
+            android:text="@string/book_appointment"
             android:backgroundTint="@color/blue_700"
             style="@style/Widget.Material3.Button"/>
     </LinearLayout>

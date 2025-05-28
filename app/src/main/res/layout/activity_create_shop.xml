@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:layout_marginBottom="72dp">
+
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -22,7 +23,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="إضافة محل جديد"
+            android:text="@string/add_new_shop"
             android:textAlignment="center"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -32,7 +33,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="صورة المحل"
+            android:text="@string/shop_image"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"/>
 
@@ -61,14 +62,14 @@
                     android:id="@+id/btnUploadImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="رفع صورة"
+                    android:text="@string/upload_image"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_marginBottom="8dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="الحجم الأقصى: 2MB"
+                    android:text="@string/max_size_2mb"
                     android:textSize="12sp"
                     android:textColor="@color/text_primary"/>
             </LinearLayout>
@@ -87,7 +88,7 @@
                 android:id="@+id/etShopName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="اسم المحل"
+                android:hint="@string/shop_name"
                 android:inputType="textCapWords"
                 android:textDirection="rtl"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +105,7 @@
                 android:id="@+id/etShopDescription"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:hint="وصف المحل"
+                android:hint="@string/shop_description"
                 android:gravity="top|start"
                 android:inputType="textMultiLine|textCapSentences"
                 android:textDirection="rtl"/>
@@ -122,20 +123,16 @@
                 android:id="@+id/etLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="موقع المحل"
+                android:hint="@string/shop_location"
                 android:inputType="textCapSentences"
                 android:textDirection="rtl"/>
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Phone Number -->
-
-
 
         <!-- Working Hours -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ساعات العمل"
+            android:text="@string/working_hours"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"/>
 
@@ -156,14 +153,14 @@
                     android:id="@+id/etOpeningTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="فتح"
+                    android:hint="@string/opening"
                     android:inputType="time"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="إلى"
+                android:text="@string/to"
                 android:textSize="16sp"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="8dp"/>
@@ -179,7 +176,7 @@
                     android:id="@+id/etClosingTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="إغلاق"
+                    android:hint="@string/closing"
                     android:inputType="time"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -188,17 +185,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="20dp"
-            >
+            android:layout_margin="20dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nbarbers"
+                android:text="@string/n_barbers"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
+
             <View
                 android:layout_width="20dp"
                 android:layout_height="0dp"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -209,7 +208,7 @@
                     android:id="@+id/NBarbers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="min 3"
+                    android:hint="@string/min_3"
                     android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -219,7 +218,7 @@
             android:id="@+id/btnSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="حفظ البيانات"
+            android:text="@string/save_data"
             style="@style/Widget.Material3.Button"/>
 
     </LinearLayout>

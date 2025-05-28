@@ -32,7 +32,7 @@
                     android:id="@+id/btnUploadImageBarber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="رفع صورة"
+                    android:text="@string/upload_image"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_marginBottom="8dp"/>
 

@@ -28,14 +28,13 @@
                 android:src="@drawable/my_profile"
                 android:scaleType="centerCrop"
                 android:background="@drawable/circle_background"
-                android:contentDescription="صورة الحلاق"/>
+                android:contentDescription="@string/profile_picture_description"/>
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="أحمد محمد"
                 android:textSize="22sp"
                 android:textStyle="bold"/>
 
@@ -44,7 +43,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="خبرة: 5 سنوات"
                 android:textColor="@color/secondary_text"
                 android:textSize="16sp"/>
         </LinearLayout>
@@ -67,7 +65,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="معلومات الاتصال"
+                android:text="@string/contact_info"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"/>
@@ -90,7 +88,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="example@email.com"
                     android:textSize="16sp"/>
             </LinearLayout>
 
@@ -112,7 +109,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="+966501234567"
                     android:textSize="16sp"/>
             </LinearLayout>
 
@@ -134,7 +130,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="الرياض، حي الملك فهد"
                     android:textSize="16sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -145,7 +140,7 @@
         android:id="@+id/btnEditProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="تعديل الملف الشخصي"
+        android:text="@string/edit_profile"
         android:textSize="16sp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
@@ -155,7 +150,7 @@
         android:id="@+id/btnLogAut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" تسجيل الخروج"
+        android:text="@string/logout"
         android:textSize="16sp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"

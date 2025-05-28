@@ -9,9 +9,19 @@
     <string name="nav_appointments">المواعيد</string>
     <string name="nav_profile">الملف الشخصي</string>
     <string name="current_shop_title">صالونك الحالي</string>
-    <string name="shop_location">الرياض، حي الملك فهد</string>
     <string name="view_shop">عرض الصالون</string>
     <string name="main_title">حلول الحجز الذكي للحلاقين</string>
+    <string name="manage_shops">إدارة المحلات</string>
+    <string name="join_request">طلب الانضمام</string>
+    <string name="accept">قبول</string>
+    <string name="profile_picture_description">صورة العميل</string>
+    <string name="contact_info">معلومات الاتصال</string>
+    <string name="edit_profile">تعديل الملف الشخصي</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="search_barbershop">ابحث عن صالون حلاقة</string>
+    <string name="save">حفظ</string>
+    <string name="booking_history">سجل الحجوزات</string>
+    <string name="reject">رفض</string>
     <string name="app_description">يواجه العديد من العملاء صعوبة في حجز مواعيد الحلاقة بشكل منظم، وغالباً ما يعتمدون على الاتصالات الهاتفية التي تؤدي إلى تداخل المواعيد وضياع الوقت. من ناحية أخرى، يعاني الحلاقون وأصحاب المحلات من صعوبة إدارة الجداول يدوياً مما يسبب أخطاء متكررة.\n\nيمنحك تطبيقنا حلاً شاملاً ينظم عملية الحجز ويوفر الوقت للجميع، ويضمن تجربة سلسة وخالية من المتاعب.</string>
     <string name="app_features_title">مميزات التطبيق:</string>
     <string name="feature_1">• حجز مواعيد سريع ومنظم للعملاء</string>
@@ -59,7 +69,6 @@
     <string name="todo">TODO</string>
     <string name="empty_shops">Empty shops illustration</string>
     <string name="search">البحث عن طلب ….</string>
-    <string name="shop_image">صورة المحل</string>
     <string name="accepted">مقبول</string>
     <string name="barber_requests">طلبات الحلاقة</string>
     <string name="join_requests">طلبات الانضمام</string>
@@ -129,7 +138,23 @@
     <string name="new_requests">طلبات جديدة</string>
     <string name="accepted_requests">الطلبات المقبولة</string>
     <string name="request_history">سجل الطلبات</string>
+        <string name="app_logo_description">شعار التطبيق</string>
+        <string name="barber_info_title">معلومات الحلاق</string>
+        <string name="barber_name">محمد أحمد</string>
+    <string name="upload_image">رفع صورة</string>
+    <string name="forgot_password_title">نسيت كلمة المرور؟</string>
+    <string name="forgot_password_description">أدخل بريدك الإلكتروني أو رقم هاتفك لإعادة تعيين كلمة المرور</string>
+    <string name="hint_email_or_phone">البريد الإلكتروني أو رقم الهاتف</string>
+    <string name="send_reset_link">إرسال رابط التعيين</string>
+    <string name="back_to_login">العودة لتسجيل الدخول ←</string>
 
+    <string name="choose_service">اختر الخدمة</string>
+        <string name="service_haircut">حلاقة الرأس</string>
+        <string name="service_beard">حلاقة اللحية</string>
+        <string name="service_both">حلاقة الرأس واللحية</string>
+        <string name="choose_date_time">اختر التاريخ والوقت</string>
+        <string name="select_date">اختر التاريخ</string>
+        <string name="book_appointment">حجز الموعد</string>
     <string name="shop_name">اسم المحل</string>
     <string name="shop_address">عنوان المحل</string>
     <string name="your_team">فريقك</string>
@@ -142,5 +167,18 @@
     <string name="available_barbers">الحلاقون المتاحون</string>
 
     ```
+
+    <string name="add_new_shop">إضافة محل جديد</string>
+    <string name="shop_image">صورة المحل</string>
+    <string name="max_size_2mb">الحجم الأقصى: 2MB</string>
+    <string name="shop_description">وصف المحل</string>
+    <string name="shop_location">موقع المحل</string>
+    <string name="working_hours">ساعات العمل</string>
+    <string name="opening">فتح</string>
+    <string name="to">إلى</string>
+    <string name="closing">إغلاق</string>
+    <string name="n_barbers">عدد الحلاقين</string>
+    <string name="min_3">الحد الأدنى 3</string>
+    <string name="save_data">حفظ البيانات</string>
 
 </resources>

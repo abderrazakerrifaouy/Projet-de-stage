@@ -10,7 +10,7 @@
         android:id="@+id/searchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ابحث عن صالون حلاقة"
+        android:hint="@string/search_barbershop"
         app:strokeColor="@color/colorPrimary"
         app:strokeWidth="1dp"
         style="@style/Widget.Material3.SearchBar"
